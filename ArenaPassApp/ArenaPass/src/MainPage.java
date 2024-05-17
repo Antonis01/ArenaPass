@@ -19,12 +19,13 @@ public class MainPage extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(buyTicketButton ,"View Tickets Form will be opened.");
+                new BuyTicket().setVisible(true);
             }
         });
         buySeasonTicketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(buyTicketButton ,"View Season Tickets Form will be opened.");
+                JOptionPane.showMessageDialog(buySeasonTicketButton ,"View Season Tickets Form will be opened.");
             }
         });
     }
