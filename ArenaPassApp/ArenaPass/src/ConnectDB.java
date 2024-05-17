@@ -2,7 +2,7 @@ import java.sql.*;
 
 public class ConnectDB {
     // JDBC URL, username, and password of MySQL server
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/ArenaPass";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/arenapass";
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "";
 
