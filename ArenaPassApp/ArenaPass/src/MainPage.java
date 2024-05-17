@@ -2,10 +2,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainPage {
+public class MainPage extends JFrame {
     private JButton showFanIDButton;
     private JButton buySeasonTicketButton;
     private JButton buyTicketButton;
+    JPanel MainPageForm;
 
     public MainPage() {
         showFanIDButton.addActionListener(new ActionListener() {
