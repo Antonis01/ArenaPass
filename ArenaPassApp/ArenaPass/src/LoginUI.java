@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -9,7 +8,7 @@ public class LoginUI extends JFrame{
     private JPasswordField passwordField;
     private JButton loginButton;
     JPanel LoginForm;
-    private JButton REGISTERButton;
+    private JButton registerButton;
 
     public LoginUI()   {
         loginButton.addActionListener(new ActionListener() {
@@ -32,5 +31,15 @@ public class LoginUI extends JFrame{
             }
         });
 
+        registerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                LoginForm.setVisible(false);
+                dispose();
+                new RegisterUI().setVisible(true);
+
+
+            }
+        });
     }
 }
