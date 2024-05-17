@@ -6,27 +6,70 @@ public class MainPage extends JFrame {
     private JButton showFanIDButton;
     private JButton buySeasonTicketButton;
     private JButton buyTicketButton;
-    JPanel MainPageForm;
+    private JPanel MainPageForm;
+    private JComboBox mainMenuDropDown;
+    private JTextField textField1;
+    private JButton logoutBtn;
 
     public MainPage() {
-        showFanIDButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(showFanIDButton ,"View FanID will be opened.");
-            }
-        });
-        buyTicketButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(buyTicketButton ,"View Tickets Form will be opened.");
-                new BuyTicket().setVisible(false);
-            }
-        });
-        buySeasonTicketButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(buySeasonTicketButton ,"View Season Tickets Form will be opened.");
-            }
-        });
+        setupFrame();
+        setUpActions();
+    }
+
+    private void setupFrame() {
+        add(MainPageForm);
+        setTitle("ArenaPass MainPage");
+        setSize(1920, 1080);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void setUpActions() {
+        mainMenuDropDown.addActionListener(this::switchPanel);
+        logoutBtn.addActionListener(this::logout);
+    }
+
+    private void switchPanel(ActionEvent actionEvent) {
+        JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
+
+        switch (mainMenuDropDown.getSelectedIndex()){
+            case 0:
+                setVisible(false);
+                dispose();
+                new MainPage().setVisible(true);
+                break;
+            case 1:
+                setVisible(false);
+                dispose();
+                new BuyTicket().setVisible(true);
+                break;
+            case 2:
+                // new BuySeasonTicket().setVisible(true);
+                break;
+            case 3:
+                // cancel reservation
+                break;
+            case 4:
+                // ticket history
+                break;
+            case 5:
+                // Leaderboards
+                break;
+            case 6:
+                // Busses
+                break;
+            case 7:
+                // Feedback
+                break;
+            case 8:
+                // contact us
+                break;
+        }
+    }
+
+    private void logout(ActionEvent actionEvent) {
+        setVisible(false);
+        dispose();
+        new LoginUI().setVisible(true);
     }
 }

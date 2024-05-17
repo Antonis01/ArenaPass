@@ -2,14 +2,16 @@ import javax.swing.*;
 
 
 public class BuyTicket extends JFrame{
-    JFrame frame = new JFrame();
     private JLabel logo;
+    private JButton button1;
+    private JPanel BuyTicketForm;
+    private JPanel BuyTicketPanel;
 
     public BuyTicket(){
-        frame.setTitle("Buy Tickets");
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(1920,1080);
-        frame.setVisible(true);
+        dispose();
+        add(BuyTicketForm);
+        setTitle("Buy Tickets");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(1920,1080);
     }
-
 }
