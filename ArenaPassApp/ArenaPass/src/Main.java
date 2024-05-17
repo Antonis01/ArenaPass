@@ -1,6 +1,6 @@
 import javax.swing.*;
 
-public class Main extends JFrame{
+public class Main {
     public static void main(String[] args) {
         LoginUI l = new LoginUI();
         l.setContentPane(l.LoginForm);

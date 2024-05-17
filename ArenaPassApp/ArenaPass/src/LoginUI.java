@@ -1,29 +1,23 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class LoginUI extends JFrame{
-    private JTextField UsernameField;
-    private JPasswordField PasswordField;
-    private JButton LoginButton;
-    private JButton RegisterButton;
-    private JButton ForgotPasswordButton;
-    public JPanel LoginForm;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private JButton loginButton;
+    JPanel LoginForm;
 
-    public LoginUI() {
-        LoginButton.addActionListener(new ActionListener() {
+    public LoginUI()   {
+        loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
-                if (ConnectDB.Connector(UsernameField.getText(), new String(PasswordField.getPassword()))) {
+                if (ConnectDB.Connector(usernameField.getText(), new String(passwordField.getPassword()))) {
                     JOptionPane.showMessageDialog(null, "Login successful!");
                     System.out.println("Login successful!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Login failed!");
                 }
-
-
             }
         });
     }
