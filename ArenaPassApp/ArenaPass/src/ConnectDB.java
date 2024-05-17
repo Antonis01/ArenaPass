@@ -34,6 +34,7 @@ public class ConnectDB {
                     }
 
                 }
+                System.out.println("Username or password is incorrect!");
                 // Close resources
                 resultSet.close();
                 statement.close();
