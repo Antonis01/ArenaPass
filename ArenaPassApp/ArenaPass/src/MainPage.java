@@ -56,7 +56,9 @@ public class MainPage extends JFrame {
                 // Leaderboards
                 break;
             case 6:
-                // Busses
+                setVisible(false);
+                dispose();
+                new Busses().setVisible(true);
                 break;
             case 7:
                 // Feedback
