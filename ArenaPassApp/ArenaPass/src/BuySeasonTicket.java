@@ -1,27 +1,31 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class MainPage extends JFrame {
-    private JButton showFanIDButton;
-    private JButton buySeasonTicketButton;
-    private JButton buyTicketButton;
-    private JPanel MainPageForm;
+public class BuySeasonTicket extends JFrame{
+    private JPanel BuySeasonTicketForm;
     private JComboBox mainMenuDropDown;
-    private JTextField textField1;
     private JButton logoutBtn;
+    private JTextField textField1;
+    private JButton button1;
+    private JButton button2;
+    private JButton button3;
+    private JButton button4;
+    private JButton button5;
+    private JButton button6;
+    private JButton button7;
+    private JButton button8;
 
-    public MainPage() {
+    public BuySeasonTicket(){
         setupFrame();
         setUpActions();
     }
 
-    private void setupFrame() {
-        add(MainPageForm);
-        setTitle("ArenaPass MainPage");
-        setSize(1920, 1080);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private void setupFrame(){
+        dispose();
+        add(BuySeasonTicketForm);
+        setTitle("Buy Tickets");
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setSize(1920,1080);
     }
 
     private void setUpActions() {
@@ -56,15 +60,10 @@ public class MainPage extends JFrame {
                 // Leaderboards
                 break;
             case 6:
-                setVisible(false);
-                dispose();
-                new Busses().setVisible(true);
+                // Busses
                 break;
             case 7:
                 // Feedback
-                setVisible(false);
-                dispose();
-                new FeedBack().setVisible(true);
                 break;
             case 8:
                 // contact us
@@ -78,3 +77,5 @@ public class MainPage extends JFrame {
         new LoginUI().setVisible(true);
     }
 }
+
+

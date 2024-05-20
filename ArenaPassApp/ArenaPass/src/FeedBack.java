@@ -1,33 +1,40 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class MainPage extends JFrame {
-    private JButton showFanIDButton;
-    private JButton buySeasonTicketButton;
-    private JButton buyTicketButton;
-    private JPanel MainPageForm;
+public class FeedBack extends JFrame {
+    private JPanel FeedBackForm;
     private JComboBox mainMenuDropDown;
     private JTextField textField1;
     private JButton logoutBtn;
+    private JTextField textField2;
+    private JTextField textField3;
+    private JButton sumbitBtn;
 
-    public MainPage() {
+
+    public FeedBack() {
         setupFrame();
         setUpActions();
     }
-
     private void setupFrame() {
-        add(MainPageForm);
-        setTitle("ArenaPass MainPage");
+        add(FeedBackForm);
+        setTitle("ArenaPass FeedBack");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
     private void setUpActions() {
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
+        sumbitBtn.addActionListener(this::submitForm);
     }
+
+    private void submitForm(ActionEvent actionEvent){
+        JOptionPane.showMessageDialog(sumbitBtn,"successfully submit");
+        setVisible(false);
+        dispose();
+        new MainPage().setVisible(true);
+    }
+
 
     private void switchPanel(ActionEvent actionEvent) {
         JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
@@ -56,15 +63,10 @@ public class MainPage extends JFrame {
                 // Leaderboards
                 break;
             case 6:
-                setVisible(false);
-                dispose();
-                new Busses().setVisible(true);
+                // Busses
                 break;
             case 7:
                 // Feedback
-                setVisible(false);
-                dispose();
-                new FeedBack().setVisible(true);
                 break;
             case 8:
                 // contact us
@@ -78,3 +80,4 @@ public class MainPage extends JFrame {
         new LoginUI().setVisible(true);
     }
 }
+
