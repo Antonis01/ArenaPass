@@ -45,7 +45,7 @@ public class seatSelect extends JFrame {
 
         private void createSeatButtons () {
             JButton[] jButton = new JButton[100];
-            ArrayList isFree = new ArrayList(100);
+            ArrayList<Integer> isFree = new ArrayList<Integer>(100);
             reserveSeats(isFree);
 
             for(int i =0;i<100;i++){
@@ -60,7 +60,7 @@ public class seatSelect extends JFrame {
                      jButton[i].setBackground(Color.RED);
 
                 else
-                    jButton[i].setBackground(Color.RED);
+                    jButton[i].setBackground(Color.GREEN);
                 jButton[i].setForeground(Color.BLACK);
                 jButton[i].setOpaque(true);
 
