@@ -96,6 +96,9 @@ public class BuyTicket extends JFrame{
                 break;
             case 7:
                 // Feedback
+                setVisible(false);
+                dispose();
+                new FeedBack().setVisible(true);
                 break;
             case 8:
                 // contact us
