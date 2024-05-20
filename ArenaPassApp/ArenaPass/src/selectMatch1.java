@@ -28,6 +28,14 @@ public class selectMatch1 extends JFrame{
     private void setUpActions() {
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
+        button1.addActionListener(this::seatSelect);
+
+    }
+
+    private void seatSelect(ActionEvent actionEvent) {
+        setVisible(false);
+        dispose();
+        new seatSelect().setVisible(true);
     }
 
     private void switchPanel(ActionEvent actionEvent) {
