@@ -36,6 +36,7 @@
                 <item value="Busses"/>
                 <item value="Feedback"/>
                 <item value="Contact us"/>
+                <item value="Chatroom"/>
               </model>
             </properties>
           </component>

@@ -71,6 +71,12 @@ public class MainPage extends JFrame {
             case 8:
                 // contact us
                 break;
+            case 9:
+                // Chatroom
+                setVisible(false);
+                dispose();
+                new ChatRoom().setVisible(true);
+                break;
         }
     }
 

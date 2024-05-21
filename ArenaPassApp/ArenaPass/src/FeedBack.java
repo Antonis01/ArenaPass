@@ -8,7 +8,7 @@ public class FeedBack extends JFrame {
     private JButton logoutBtn;
     private JTextField textField2;
     private JTextField textField3;
-    private JButton sumbitBtn;
+    private JButton submitBtn;
 
 
     public FeedBack() {
@@ -25,11 +25,11 @@ public class FeedBack extends JFrame {
     private void setUpActions() {
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
-        sumbitBtn.addActionListener(this::submitForm);
+        submitBtn.addActionListener(this::submitForm);
     }
 
     private void submitForm(ActionEvent actionEvent){
-        JOptionPane.showMessageDialog(sumbitBtn,"successfully submit");
+        JOptionPane.showMessageDialog(submitBtn,"successfully submit");
         setVisible(false);
         dispose();
         new MainPage().setVisible(true);
@@ -67,9 +67,18 @@ public class FeedBack extends JFrame {
                 break;
             case 7:
                 // Feedback
+                setVisible(false);
+                dispose();
+                new FeedBack().setVisible(true);
                 break;
             case 8:
                 // contact us
+                break;
+            case 9:
+                // Chatroom
+                setVisible(false);
+                dispose();
+                new ChatRoom().setVisible(true);
                 break;
         }
     }
