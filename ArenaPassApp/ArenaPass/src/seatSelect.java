@@ -43,89 +43,97 @@ public class seatSelect extends JFrame {
     }
 
 
-        private void createSeatButtons () {
-            JButton[] jButton = new JButton[100];
-            ArrayList<Integer> isFree = new ArrayList<Integer>(100);
-            reserveSeats(isFree);
+    private void createSeatButtons() {
+        JButton[] jButton = new JButton[100];
+        ArrayList<Integer> isFree = new ArrayList<Integer>(100);
+        reserveSeats(isFree);
 
-            for(int i =0;i<100;i++){
-                System.out.println(isFree.get(i));
-            }
+        for (int i = 0; i < 100; i++) {
+            jButton[i] = new JButton(Integer.toString(i + 1));
+            jButton[i].setPreferredSize(new Dimension(50, 50));
+            seatPanel.add(jButton[i]);
+            if (isFree.get(i).equals(0))
+                jButton[i].setBackground(Color.RED);
 
-            for (int i = 0; i < 100; i++) {
-                jButton[i] = new JButton(Integer.toString(i + 1));
-                jButton[i].setPreferredSize(new Dimension(50, 50));
-                seatPanel.add(jButton[i]);
-                if(isFree.get(i).equals(0))
-                     jButton[i].setBackground(Color.RED);
+            else
+                jButton[i].setBackground(Color.GREEN);
 
-                else
-                    jButton[i].setBackground(Color.GREEN);
-                jButton[i].setForeground(Color.BLACK);
-                jButton[i].setOpaque(true);
+            jButton[i].setForeground(Color.BLACK);
+            jButton[i].setOpaque(true);
 
-                //jButton[j].addActionListener(this);
-                //counter++;
-            }
-
+            int finalI = i;
+            jButton[i].addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (isFree.get(finalI).equals(0))
+                        JOptionPane.showMessageDialog(null, "Seat Taken");
+                    else {
+                        selectedSeat.setText("Selected Seat: " + String.valueOf(finalI + 1));
+                        selectedSeat.setVisible(true);
+                        checkoutButton.setVisible(true);
+                    }
+                }
+            });
         }
 
+    }
 
-        private void setupFrame () {
-            add(SelectTeamForm1);
-            setTitle("Select Team");
-            setSize(1920, 1080);
-            setVisible(true);
-            selectedSeat.setVisible(false);
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        }
+    private void setupFrame() {
+        add(SelectTeamForm1);
+        setTitle("Select Seat");
+        setSize(1920, 1080);
+        selectedSeat.setVisible(false);
+        checkoutButton.setVisible(false);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
 
-        private void setUpActions () {
-            mainMenuDropDown.addActionListener(this::switchPanel);
-            logoutBtn.addActionListener(this::logout);
-        }
+    private void setUpActions() {
+        mainMenuDropDown.addActionListener(this::switchPanel);
+        logoutBtn.addActionListener(this::logout);
+    }
 
-        private void switchPanel (ActionEvent actionEvent){
-            JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
+    private void switchPanel(ActionEvent actionEvent) {
+        JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
 
-            switch (mainMenuDropDown.getSelectedIndex()) {
-                case 0:
-                    setVisible(false);
-                    dispose();
-                    new MainPage().setVisible(true);
-                    break;
-                case 1:
-                    setVisible(false);
-                    dispose();
-                    new BuyTicket().setVisible(true);
-                    break;
-                case 2:
-                    // new BuySeasonTicket().setVisible(true);
-                    break;
-                case 3:
-                    // cancel reservation
-                    break;
-                case 4:
-                    // ticket history
-                    break;
-                case 5:
-                    // Leaderboards
-                    break;
-                case 6:
-                    // Busses
-                    break;
-                case 7:
-                    // Feedback
-                    break;
-                case 8:
-                    // contact us
-                    break;
-            }
+        switch (mainMenuDropDown.getSelectedIndex()) {
+            case 0:
+                setVisible(false);
+                dispose();
+                new MainPage().setVisible(true);
+                break;
+            case 1:
+                setVisible(false);
+                dispose();
+                new BuyTicket().setVisible(true);
+                break;
+            case 2:
+                // new BuySeasonTicket().setVisible(true);
+                break;
+            case 3:
+                // cancel reservation
+                break;
+            case 4:
+                // ticket history
+                break;
+            case 5:
+                // Leaderboards
+                break;
+            case 6:
+                // Busses
+                break;
+            case 7:
+                // Feedback
+                break;
+            case 8:
+                // contact us
+                break;
         }
+    }
 
-        private void logout (ActionEvent actionEvent){
-            setVisible(false);
-            dispose();
-            new LoginUI().setVisible(true);
-        }
-        }
+    private void logout(ActionEvent actionEvent) {
+        setVisible(false);
+        dispose();
+        new LoginUI().setVisible(true);
+    }
+}
