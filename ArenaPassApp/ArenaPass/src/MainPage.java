@@ -44,7 +44,9 @@ public class MainPage extends JFrame {
                 new BuyTicket().setVisible(true);
                 break;
             case 2:
-                // new BuySeasonTicket().setVisible(true);
+                setVisible(false);
+                dispose();
+                new BuySeasonTicket().setVisible(true);
                 break;
             case 3:
                 // cancel reservation

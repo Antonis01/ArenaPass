@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="BuySeasonTicket">
-  <grid id="27dc6" binding="BuySeasonTicketForm" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="BuySeasonTicketForm" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1097" height="736"/>
+      <xy x="20" y="20" width="1586" height="1228"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="1ffae" layout-manager="GridLayoutManager" row-count="10" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="1ffae" layout-manager="GridLayoutManager" row-count="16" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -84,15 +84,6 @@
               <text value=""/>
             </properties>
           </component>
-          <component id="449c4" class="javax.swing.JLabel">
-            <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <icon value="images/PAS_Lamia_1964_logo.png"/>
-              <text value=""/>
-            </properties>
-          </component>
           <component id="808ac" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
@@ -131,84 +122,201 @@
           </component>
           <vspacer id="3ef9b">
             <constraints>
-              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+              <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
             </constraints>
           </vspacer>
-          <component id="2ece6" class="javax.swing.JButton" binding="button1" default-binding="true">
+          <component id="2ece6" class="javax.swing.JButton" binding="seasonBtn1">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
-          <component id="75d87" class="javax.swing.JButton" binding="button2" default-binding="true">
+          <component id="75d87" class="javax.swing.JButton" binding="seasonBtn2">
             <constraints>
               <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
-          <component id="ed1cb" class="javax.swing.JButton" binding="button3" default-binding="true">
+          <component id="ed1cb" class="javax.swing.JButton" binding="seasonBtn3">
             <constraints>
               <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
-          <component id="9234c" class="javax.swing.JButton" binding="button4" default-binding="true">
+          <component id="9234c" class="javax.swing.JButton" binding="seasonBtn4">
             <constraints>
               <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
-          <component id="a9896" class="javax.swing.JButton" binding="button5" default-binding="true">
+          <component id="a9896" class="javax.swing.JButton" binding="seasonBtn5">
             <constraints>
               <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
-          <component id="5484b" class="javax.swing.JButton" binding="button6" default-binding="true">
+          <component id="5484b" class="javax.swing.JButton" binding="seasonBtn6">
             <constraints>
               <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
-          <component id="8ea56" class="javax.swing.JButton" binding="button7" default-binding="true">
+          <component id="8ea56" class="javax.swing.JButton" binding="seasonBtn7">
             <constraints>
               <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
           <component id="163e2" class="javax.swing.JLabel">
             <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <icon value="images/Asteras_Tripolis_FC_logo.svg.png"/>
               <text value=""/>
             </properties>
           </component>
-          <component id="66b27" class="javax.swing.JButton" binding="button8" default-binding="true">
+          <component id="66b27" class="javax.swing.JButton" binding="seasonBtn9">
+            <constraints>
+              <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="BUY"/>
+            </properties>
+          </component>
+          <component id="648f0" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/Panseraikos_new_emblem.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="52b55" class="javax.swing.JButton" binding="seasonBtn10">
+            <constraints>
+              <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="BUY"/>
+            </properties>
+          </component>
+          <component id="f3e6" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/A.E._Kifisia_F.C._official_logo.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="34b14" class="javax.swing.JButton" binding="seasonBtn11">
+            <constraints>
+              <grid row="11" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="BUY"/>
+            </properties>
+          </component>
+          <component id="eee9d" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/panetolikosfc-removebg-preview.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="1b34f" class="javax.swing.JButton" binding="seasonBtn12">
+            <constraints>
+              <grid row="12" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="BUY"/>
+            </properties>
+          </component>
+          <component id="27a1c" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/Volos_F.C._logo (1).png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="9a7b4" class="javax.swing.JButton" binding="seasonBtn13">
+            <constraints>
+              <grid row="13" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="BUY"/>
+            </properties>
+          </component>
+          <component id="78268" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="14" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/ΠΑΣ_Γιάννινα.svg (1).png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="18478" class="javax.swing.JButton" binding="seasonBtn14">
+            <constraints>
+              <grid row="14" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="BUY"/>
+            </properties>
+          </component>
+          <component id="d5208" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/AEK_Athens_FC_logo.svg.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="449c4" class="javax.swing.JLabel">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <icon value="images/PAS_Lamia_1964_logo.png"/>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="14852" class="javax.swing.JButton" binding="seasonBtn8">
             <constraints>
               <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Button"/>
+              <text value="BUY"/>
             </properties>
           </component>
         </children>
       </grid>
+      <component id="e4369" class="javax.swing.JScrollBar" binding="scrollBar1" default-binding="true">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="0" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+      </component>
     </children>
   </grid>
 </form>
