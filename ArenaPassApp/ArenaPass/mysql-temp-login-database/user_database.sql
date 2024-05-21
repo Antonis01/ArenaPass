@@ -1,5 +1,9 @@
 use arenapass;
 
+
+
+------------ CREATE TABLES SECTION ------------
+
 CREATE TABLE fans (
     fan_acount_id INT(9) NOT NULL AUTO_INCREMENT,
     fan_username VARCHAR(30) NOT NULL,
@@ -20,16 +24,13 @@ CREATE TABLE fans (
 
 CREATE TABLE tickets (
     ticket_number INT(9) NOT NULL AUTO_INCREMENT,
-    ticket_seat_section VARCHAR(4) NOT NULL,
-    ticket_seat_number VARCHAR(4) NOT NULL,
+    ticket_seat_id INT(8) NOT NULL,
     ticket_match_id INT(9) NOT NULL,
     ticket_fan_pass_id INT(9) NOT NULL,
     ticket_purchase_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (ticket_number),
-    UNIQUE (ticket_section,ticket_seat),
-    CONSTRAINT SEAT_SECTION FOREIGN KEY (ticket_seat_section) REFERENCES seats(seat_section),
-    CONSTRAINT SEAT_NUMBER FOREIGN KEY (ticket_seat_number) REFERENCES seats(seat_number),
-    CONSTRAINT MATCH FOREIGN KEY (ticket_match_id) REFERENCES matches(match_id),
+    CONSTRAINT SEAT FOREIGN KEY (ticket_seat_id) REFERENCES seats(seat_id),
+    CONSTRAINT MATCH_ID FOREIGN KEY (ticket_match_id) REFERENCES matches(match_id),
     CONSTRAINT FAN FOREIGN KEY (ticket_fan_pass_id) REFERENCES fans(fan_pass_id)
 );
 
@@ -76,3 +77,76 @@ CREATE TABLE teams (
     UNIQUE (team_name),
     CONSTRAINT TEAM_STADIUM FOREIGN KEY (team_def_home_stadium_id) REFERENCES stadiums(stadium_id)
 );
+
+
+
+------------ QYERIES SECTION ------------ (FOR TESTING)
+
+
+select fan_acount_id,fan_username,fan_pass_id,ticket_number,ticket_purchase_datetime
+from fans,tickets
+where fans.fan_pass_id = tickets.ticket_fan_pass_id AND fans.fan_pass_id = 1001;
+
+
+------------ TRIGGERS SECTION ------------
+
+DELIMITER $
+CREATE TRIGGER check_ban_status BEFORE INSERT ON tickets -- VERIFIED TO BE WORKING THROUGH 'select * from tickets' AND 'ERROR 1644 (45000): Fan is not qualified to buy ticket!'
+FOR EACH ROW 
+BEGIN
+    DECLARE f_status ENUM ('VERIFIED','BANNED','PENDING');
+
+    SELECT fan_acount_status INTO f_status
+    FROM fans
+    WHERE fans.fan_pass_id = NEW.ticket_fan_pass_id;
+
+    IF f_status != 'VERIFIED' THEN
+        SIGNAL SQLSTATE VALUE '45000'
+        SET MESSAGE_TEXT = 'Fan is not qualified to buy ticket!';
+    END IF;
+END$
+
+DELIMITER ;
+
+
+
+DELIMITER $
+CREATE TRIGGER check_double_ticket BEFORE INSERT ON tickets -- VERIFIED TO BE WORKING THROUGH 'select * from tickets' AND ERROR 1644 (45001): Fan alreade has ticket for same match!
+FOR EACH ROW 
+BEGIN
+    DECLARE t_count INT(2);
+
+    SELECT count(*) INTO t_count
+    FROM tickets
+    WHERE tickets.ticket_fan_pass_id = NEW.ticket_fan_pass_id AND tickets.ticket_match_id=NEW.ticket_match_id
+    GROUP BY tickets.ticket_fan_pass_id;
+
+    IF t_count >=1 THEN
+        SIGNAL SQLSTATE VALUE '45001'
+        SET MESSAGE_TEXT = 'Fan alreade has ticket for same match!';
+    END IF;
+
+END$
+
+DELIMITER ;
+
+
+DELIMITER $
+CREATE TRIGGER check_same_team BEFORE INSERT ON matches -- VERIFIED TO BE WORKING THROUGH  'select * from matches;' AND ERROR 1644 (45003): Match cannot be set: same away and home team!
+FOR EACH ROW 
+BEGIN
+
+    IF NEW.match_home_team = NEW.match_away_team THEN
+        SIGNAL SQLSTATE VALUE '45003'
+        SET MESSAGE_TEXT = 'Match cannot be set: same away and home team!';
+    END IF;
+
+END$
+
+DELIMITER ;
+
+
+
+
+
+
