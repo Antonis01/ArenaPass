@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Busses">
-  <grid id="27dc6" binding="BussesForm" layout-manager="GridLayoutManager" row-count="14" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="BussesForm" layout-manager="GridLayoutManager" row-count="12" column-count="6" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="1196" height="531"/>
@@ -163,35 +163,25 @@
         </constraints>
         <properties>
           <model>
-            <item value="AEK "/>
+            <item value="AEK"/>
             <item value="OLYMPIACOS"/>
-            <item value="PAOK "/>
+            <item value="PAOK"/>
             <item value="PAO"/>
             <item value="ARIS"/>
             <item value="LAMIA"/>
-            <item value="OFI "/>
+            <item value="OFI"/>
             <item value="ATROMITOS"/>
           </model>
         </properties>
       </component>
-      <vspacer id="fc090">
-        <constraints>
-          <grid row="11" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
       <vspacer id="b1df5">
-        <constraints>
-          <grid row="12" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
-      <vspacer id="80ef0">
         <constraints>
           <grid row="10" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <vspacer id="9030f">
         <constraints>
-          <grid row="13" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="11" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="1b2dd" class="javax.swing.JButton" binding="submitButton" default-binding="true">
