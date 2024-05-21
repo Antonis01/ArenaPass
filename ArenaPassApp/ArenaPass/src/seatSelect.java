@@ -22,7 +22,7 @@ public class seatSelect extends JFrame {
 
     public static void setSection(String text)
     {
-        section= Integer.parseInt(text);
+        section = Integer.parseInt(text);
 
     }
 
