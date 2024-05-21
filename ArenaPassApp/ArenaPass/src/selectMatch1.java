@@ -11,6 +11,8 @@ public class selectMatch1 extends JFrame{
     private JButton logoutBtn;
     private JButton button1;
     private JButton button2;
+    private JLabel sectionLabel;
+    private JTextField selectedSection;
 
     public selectMatch1() {
         setupFrame();
@@ -33,10 +35,17 @@ public class selectMatch1 extends JFrame{
     }
 
     private void seatSelect(ActionEvent actionEvent) {
-        setVisible(false);
-        dispose();
-        new seatSelect().setVisible(true);
+        if(selectedSection.getText().isEmpty())
+            JOptionPane.showMessageDialog(null,"No section selected");
+        else {
+            seatSelect.setSection(selectedSection.getText());
+            setVisible(false);
+            dispose();
+            new seatSelect().setVisible(true);
+        }
     }
+
+
 
     private void switchPanel(ActionEvent actionEvent) {
         JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());

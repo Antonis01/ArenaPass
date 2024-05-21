@@ -18,6 +18,13 @@ public class seatSelect extends JFrame {
     private JLabel seatAvailability;
     private JLabel sectionNumber;
     private JPanel seatPanel;
+    private static int section;
+
+    public static void setSection(String text)
+    {
+        section= Integer.parseInt(text);
+
+    }
 
     public seatSelect() {
         setupFrame();
@@ -41,7 +48,6 @@ public class seatSelect extends JFrame {
             //System.out.println(temp);
         }
     }
-
 
     private void createSeatButtons() {
         JButton[] jButton = new JButton[100];
@@ -82,6 +88,7 @@ public class seatSelect extends JFrame {
         add(SelectTeamForm1);
         setTitle("Select Seat");
         setSize(1920, 1080);
+        sectionNumber.setText("Section "+section);
         selectedSeat.setVisible(false);
         checkoutButton.setVisible(false);
         setVisible(true);
@@ -91,6 +98,14 @@ public class seatSelect extends JFrame {
     private void setUpActions() {
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
+        checkoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Transaction Completed");
+                new seatSelect().setVisible(false);
+                new MainPage().setVisible(true);
+            }
+        });
     }
 
     private void switchPanel(ActionEvent actionEvent) {
