@@ -5,7 +5,7 @@ use arenapass;
 ------------ CREATE TABLES SECTION ------------
 
 CREATE TABLE fans (
-    fan_acount_id INT(9) NOT NULL AUTO_INCREMENT,
+    fan_account_id INT(9) NOT NULL AUTO_INCREMENT,
     fan_username VARCHAR(30) NOT NULL,
     fan_password VARCHAR(30) NOT NULL,
     fan_legal_name VARCHAR(30) NOT NULL,
@@ -15,15 +15,17 @@ CREATE TABLE fans (
     fan_citizen_id_dob DATE NOT NULL, /*dob=date of birth*/
     fan_registration_date DATE DEFAULT(CURRENT_DATE()),
     fan_pass_id INT(9) NOT NULL,
-    fan_acount_status ENUM ('VERIFIED','BANNED','PENDING') NOT NULL,
-    PRIMARY KEY (fan_acount_id),
+    fan_account_status ENUM ('VERIFIED','BANNED','PENDING') NOT NULL,
+    fan_phone VARCHAR(30) NOT NULL,
+    fan_email VARCHAR(30) NOT NULL,
+    PRIMARY KEY (fan_account_id),
     UNIQUE (fan_pass_id),
     UNIQUE (fan_username),
     UNIQUE (fan_citizen_id_number)
 );
 
 CREATE TABLE tickets (
-    ticket_number INT(9) NOT NULL AUTO_INCREMENT,
+    ticket_number INT(8) NOT NULL AUTO_INCREMENT,
     ticket_seat_id INT(8) NOT NULL,
     ticket_match_id INT(9) NOT NULL,
     ticket_fan_pass_id INT(9) NOT NULL,
@@ -65,17 +67,42 @@ CREATE TABLE stadiums(
     stadium_id INT(3) NOT NULL AUTO_INCREMENT,
     stadium_name VARCHAR(30) NOT NULL,
     stadium_max_capacity INT(6) NOT NULL,
+    stadium_city VARCHAR(30) NOT NULL,
     PRIMARY KEY (stadium_id)
 );
 
 CREATE TABLE teams (
     team_id INT(3) NOT NULL AUTO_INCREMENT,
     team_name VARCHAR(30) NOT NULL,
-    team_def_home_stadium_id INT(3),
+    team_def_home_stadium_id INT(3), --team default home stadium
     team_points INT(3) NOT NULL DEFAULT 0,
     PRIMARY KEY (team_id),
     UNIQUE (team_name),
     CONSTRAINT TEAM_STADIUM FOREIGN KEY (team_def_home_stadium_id) REFERENCES stadiums(stadium_id)
+);
+
+CREATE TABLE season_tickets(
+    season_ticket_number INT(8) NOT NULL AUTO_INCREMENT,
+    season_ticket_seat_id INT(8) NOT NULL,
+    season_ticket_team_id INT(3) NOT NULL,
+    season_ticket_stadium_id INT(3) NOT NULL,
+    season_ticket_fan_pass_id INT(9) NOT NULL,
+    season_ticket_purchase_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (season_ticket_number),
+    CONSTRAINT SEASON_SEAT FOREIGN KEY (season_ticket_seat_id) REFERENCES seats(seat_id),
+    CONSTRAINT SEASON_FAN FOREIGN KEY (season_ticket_fan_pass_id) REFERENCES fans(fan_pass_id),
+    CONSTRAINT SEASON_TEAM FOREIGN KEY (season_ticket_team_id) REFERENCES teams(team_id),
+    CONSTRAINT SEASON_STADIUM FOREIGN KEY (season_ticket_stadium_id) REFERENCES stadiums(stadium_id)
+);
+
+CREATE TABLE reservations(
+    reservation_id INT(8) NOT NULL AUTO_INCREMENT,
+    reservation_fan_pass_id INT(9) NOT NULL,
+    reservation_ticket_number INT(8) NOT NULL,
+    reservation_seat_id INT(8) NOT NULL,
+    reservation_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reservation_type ENUM ('TICKET','SEASON TICKET','NOT AVAILABLE'),
+    PRIMARY KEY (reservation_id)
 );
 
 
@@ -83,7 +110,7 @@ CREATE TABLE teams (
 ------------ QYERIES SECTION ------------ (FOR TESTING)
 
 
-select fan_acount_id,fan_username,fan_pass_id,ticket_number,ticket_purchase_datetime
+select fan_account_id,fan_username,fan_pass_id,ticket_number,ticket_purchase_datetime
 from fans,tickets
 where fans.fan_pass_id = tickets.ticket_fan_pass_id AND fans.fan_pass_id = 1001;
 
@@ -96,7 +123,7 @@ FOR EACH ROW
 BEGIN
     DECLARE f_status ENUM ('VERIFIED','BANNED','PENDING');
 
-    SELECT fan_acount_status INTO f_status
+    SELECT fan_account_status INTO f_status
     FROM fans
     WHERE fans.fan_pass_id = NEW.ticket_fan_pass_id;
 
@@ -143,6 +170,23 @@ BEGIN
 
 END$
 
+DELIMITER ;
+
+DELIMITER $
+CREATE TRIGGER check_ban_status_season BEFORE INSERT ON season_tickets
+FOR EACH ROW 
+BEGIN
+    DECLARE f_status ENUM ('VERIFIED','BANNED','PENDING');
+
+    SELECT fan_acount_status INTO f_status
+    FROM fans
+    WHERE fans.fan_pass_id = NEW.season_ticket_fan_pass_id;
+
+    IF f_status != 'VERIFIED' THEN
+        SIGNAL SQLSTATE VALUE '45005'
+        SET MESSAGE_TEXT = 'Fan is not qualified to buy ticket!';
+    END IF;
+END$
 DELIMITER ;
 
 

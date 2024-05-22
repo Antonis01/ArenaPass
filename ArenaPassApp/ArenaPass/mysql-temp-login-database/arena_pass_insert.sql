@@ -16,7 +16,7 @@ INSERT INTO matches (match_stadium_id, match_home_team, match_away_team, match_d
 (2, 3, 4, '2024-05-21', '18:00:00', 20000, 20000, 'NO RESTRICTION');
 
 -- Insert into fans
-INSERT INTO fans (fan_username, fan_password, fan_legal_name, fan_legal_surname, fan_citizen_id_number, fan_citizen_id_expiration_date, fan_citizen_id_dob, fan_pass_id, fan_acount_status) VALUES 
+INSERT INTO fans (fan_username, fan_password, fan_legal_name, fan_legal_surname, fan_citizen_id_number, fan_citizen_id_expiration_date, fan_citizen_id_dob, fan_pass_id, fan_account_status) VALUES 
 ('fan1', 'pass1', 'John', 'Doe', 12345678, '2030-01-01', '1990-01-01', 1001, 'VERIFIED'),
 ('fan2', 'pass2', 'Jane', 'Smith', 87654321, '2030-01-01', '1991-02-02', 1002, 'VERIFIED'),
 ('fan3', 'pass3', 'Alice', 'Johnson', 11223344, '2030-01-01', '1992-03-03', 1003, 'VERIFIED'),
@@ -66,7 +66,7 @@ INSERT INTO tickets (ticket_seat_id, ticket_match_id, ticket_fan_pass_id) VALUES
 
 --THESE INSERTS ARE CREATED AFTER THE CREATION OF THE TRIGGER 'check_ban_status' TO TEST IF IT'S WORKING -- VERIFIED TO BE WORKING THROUGH 'select * from tickets' AND 'ERROR 1644 (45000): Fan is not qualified to buy ticket!'
 
-INSERT INTO fans (fan_username, fan_password, fan_legal_name, fan_legal_surname, fan_citizen_id_number, fan_citizen_id_expiration_date, fan_citizen_id_dob, fan_pass_id, fan_acount_status) VALUES 
+INSERT INTO fans (fan_username, fan_password, fan_legal_name, fan_legal_surname, fan_citizen_id_number, fan_citizen_id_expiration_date, fan_citizen_id_dob, fan_pass_id, fan_account_status) VALUES 
 ('fan6', 'pass6', 'tik', 'tok', 34892605, '2030-01-01', '1990-01-01', 1006, 'BANNED');
 
 INSERT INTO tickets (ticket_seat_id, ticket_match_id, ticket_fan_pass_id) VALUES
@@ -91,4 +91,10 @@ INSERT INTO matches (match_stadium_id, match_home_team, match_away_team, match_d
 INSERT INTO matches (match_stadium_id, match_home_team, match_away_team, match_date, match_time, match_ht_max_capacity, match_at_max_capacity, match_restrictions) VALUES 
 (1, 1, 4, '2024-07-20', '15:00:00', 25000, 25000, 'NO RESTRICTION');
 
+--THESE INSERTS ARE CREATED AFTER THE CREATION OF THE TRIGGER 'check_ban_status_season' TO TEST IF IT'S WORKING
 
+INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id, season_ticket_fan_pass_id) VALUES
+(20, 2, 1, 1005);
+
+INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id, season_ticket_fan_pass_id) VALUES
+(19, 2, 1, 1006);
