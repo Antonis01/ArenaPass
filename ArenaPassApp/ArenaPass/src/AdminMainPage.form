@@ -78,7 +78,6 @@
           <model>
             <item value="Menu"/>
             <item value="SelectModifyMatch"/>
-            <item value="ModifyMatch"/>
           </model>
         </properties>
       </component>
