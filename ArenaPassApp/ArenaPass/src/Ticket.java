@@ -1,17 +1,17 @@
 public class Ticket {
     int ticketNumber;
-    Match match;
+    Integer matchID;
 
-    public Ticket(int ticketNumber, Match match) {
+    public Ticket(int ticketNumber, Integer matchID) {
         this.ticketNumber = ticketNumber;
-        this.match = match;
+        this.matchID = matchID;
     }
 
     public int getTicketNumber() {
         return ticketNumber;
     }
 
-    public Match getMatch() {
-        return match;
+    public Integer getMatch() {
+        return matchID;
     }
 }
