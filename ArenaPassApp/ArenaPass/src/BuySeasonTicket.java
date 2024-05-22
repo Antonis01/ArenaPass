@@ -45,27 +45,30 @@ public class BuySeasonTicket extends JFrame{
     private void setUpActions() {
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
-        seasonBtn1.addActionListener(this::buySeasonTicket1);
-        //seasonBtn2.addActionListener(this::buySeasonTicket2);
-        //seasonBtn3.addActionListener(this::buySeasonTicket3);
-        //seasonBtn4.addActionListener(this::buySeasonTicket4);
-        //seasonBtn5.addActionListener(this::buySeasonTicket5);
-        //seasonBtn6.addActionListener(this::buySeasonTicket6);
-        //seasonBtn7.addActionListener(this::buySeasonTicket7);
-        //seasonBtn8.addActionListener(this::buySeasonTicket8);
-        //seasonBtn9.addActionListener(this::buySeasonTicket9);
-        //seasonBtn10.addActionListener(this::buySeasonTicket10);
-        //seasonBtn11.addActionListener(this::buySeasonTicket11);
-        //seasonBtn12.addActionListener(this::buySeasonTicket12);
-        //seasonBtn13.addActionListener(this::buySeasonTicket13);
-        //seasonBtn14.addActionListener(this::buySeasonTicket14);
+        seasonBtn1.addActionListener(this::buySeasonTicket);
+        seasonBtn2.addActionListener(this::buySeasonTicket);
+        seasonBtn3.addActionListener(this::buySeasonTicket);
+        seasonBtn4.addActionListener(this::buySeasonTicket);
+        seasonBtn5.addActionListener(this::buySeasonTicket);
+        seasonBtn6.addActionListener(this::buySeasonTicket);
+        seasonBtn7.addActionListener(this::buySeasonTicket);
+        seasonBtn8.addActionListener(this::buySeasonTicket);
+        seasonBtn9.addActionListener(this::buySeasonTicket);
+        seasonBtn10.addActionListener(this::buySeasonTicket);
+        seasonBtn11.addActionListener(this::buySeasonTicket);
+        seasonBtn12.addActionListener(this::buySeasonTicket);
+        seasonBtn13.addActionListener(this::buySeasonTicket);
+        seasonBtn14.addActionListener(this::buySeasonTicket);
     }
 
-    private void buySeasonTicket1(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(null, "Season Ticket for Olympiacos");
+    private void buySeasonTicket(ActionEvent actionEvent) {
+        JButton button = (JButton) actionEvent.getSource();
+        String buttonText = button.getToolTipText();
+        JOptionPane.showMessageDialog(null, "Season Ticket for " + buttonText);
         setVisible(false);
         dispose();
         new seatSelect().setVisible(true);
+
     }
 
     private void switchPanel(ActionEvent actionEvent) {

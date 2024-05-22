@@ -131,6 +131,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Olympiacos"/>
             </properties>
           </component>
           <component id="75d87" class="javax.swing.JButton" binding="seasonBtn2">
@@ -139,6 +140,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Panathinaikos"/>
             </properties>
           </component>
           <component id="ed1cb" class="javax.swing.JButton" binding="seasonBtn3">
@@ -147,6 +149,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Aris"/>
             </properties>
           </component>
           <component id="9234c" class="javax.swing.JButton" binding="seasonBtn4">
@@ -155,6 +158,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="AEK"/>
             </properties>
           </component>
           <component id="a9896" class="javax.swing.JButton" binding="seasonBtn5">
@@ -163,6 +167,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="PAOK"/>
             </properties>
           </component>
           <component id="5484b" class="javax.swing.JButton" binding="seasonBtn6">
@@ -171,6 +176,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="OFI"/>
             </properties>
           </component>
           <component id="8ea56" class="javax.swing.JButton" binding="seasonBtn7">
@@ -179,6 +185,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Atromitos"/>
             </properties>
           </component>
           <component id="163e2" class="javax.swing.JLabel">
@@ -188,6 +195,7 @@
             <properties>
               <icon value="images/Asteras_Tripolis_FC_logo.svg.png"/>
               <text value=""/>
+              <toolTipText value="Asteras"/>
             </properties>
           </component>
           <component id="66b27" class="javax.swing.JButton" binding="seasonBtn9">
@@ -213,6 +221,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Panseraikos"/>
             </properties>
           </component>
           <component id="f3e6" class="javax.swing.JLabel">
@@ -230,6 +239,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Kifisia"/>
             </properties>
           </component>
           <component id="eee9d" class="javax.swing.JLabel">
@@ -247,6 +257,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Panetolikos"/>
             </properties>
           </component>
           <component id="27a1c" class="javax.swing.JLabel">
@@ -264,6 +275,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="Volos"/>
             </properties>
           </component>
           <component id="78268" class="javax.swing.JLabel">
@@ -281,6 +293,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="PAS Giannina"/>
             </properties>
           </component>
           <component id="d5208" class="javax.swing.JLabel">
@@ -307,6 +320,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="PAS Lamia"/>
             </properties>
           </component>
         </children>

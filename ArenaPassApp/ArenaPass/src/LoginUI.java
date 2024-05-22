@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.Objects;
 
 public class LoginUI extends JFrame {
     private JTextField usernameField;
@@ -11,6 +12,7 @@ public class LoginUI extends JFrame {
     public LoginUI() {
         setupFrame();
         setUpActions();
+        setEnterKeyAction();
     }
 
     private void setupFrame() {
@@ -25,10 +27,20 @@ public class LoginUI extends JFrame {
         registerButton.addActionListener(this::openRegisterUI);
     }
 
+    private void setEnterKeyAction() {
+        getRootPane().setDefaultButton(loginButton);
+    }
+
     private void login(ActionEvent actionEvent) {
         if (ConnectDB.Connector(usernameField.getText(), new String(passwordField.getPassword()))) {
-            JOptionPane.showMessageDialog(null, "Login successful!");
-            openMainPage();
+            String role = ConnectDB.getRole(usernameField.getText(), new String(passwordField.getPassword()));
+            if(role.equals("admin")) {
+                JOptionPane.showMessageDialog(null, "Admin login successful!");
+                openAdminPage();
+            }else{
+                JOptionPane.showMessageDialog(null, "Login successful!");
+                openMainPage();
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Login failed!");
         }
@@ -44,5 +56,11 @@ public class LoginUI extends JFrame {
         LoginForm.setVisible(false);
         dispose();
         new MainPage().setVisible(true);
+    }
+
+    private void openAdminPage() {
+        LoginForm.setVisible(false);
+        dispose();
+        new AdminMainPage().setVisible(true);
     }
 }
