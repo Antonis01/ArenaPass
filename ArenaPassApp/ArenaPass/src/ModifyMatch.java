@@ -41,7 +41,7 @@ public class ModifyMatch extends JFrame{
             case 0:
                 setVisible(false);
                 dispose();
-                new AdminMainPage().setVisible(true);
+                new FederationAdminMainPage().setVisible(true);
                 break;
             case 1:
                 setVisible(false);

@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.util.Objects;
 
 public class LoginUI extends JFrame {
     private JTextField usernameField;
@@ -62,7 +61,7 @@ public class LoginUI extends JFrame {
     private void openAdminPage() {
         LoginForm.setVisible(false);
         dispose();
-        new AdminMainPage().setVisible(true);
+        new FederationAdminMainPage().setVisible(true);
     }
 
     private void openAppAdminPage(){
