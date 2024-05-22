@@ -36,7 +36,8 @@ public class LoginUI extends JFrame {
             String role = ConnectDB.getRole(usernameField.getText(), new String(passwordField.getPassword()));
             if(role.equals("admin")) {
                 JOptionPane.showMessageDialog(null, "Admin login successful!");
-                openAdminPage();
+                //openAdminPage();
+                openAppAdminPage();
             }else{
                 JOptionPane.showMessageDialog(null, "Login successful!");
                 openMainPage();
@@ -62,5 +63,11 @@ public class LoginUI extends JFrame {
         LoginForm.setVisible(false);
         dispose();
         new AdminMainPage().setVisible(true);
+    }
+
+    private void openAppAdminPage(){
+        LoginForm.setVisible(false);
+        dispose();
+        new AppAdminMainPage().setVisible(true);
     }
 }

@@ -15,7 +15,7 @@ public class AdminMainPage extends JFrame {
 
     private void setupFrame() {
         add(AdminMainPageForm);
-        setTitle("ArenaPass MainPage");
+        setTitle("ArenaPass AdminMainPage");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
