@@ -5,7 +5,7 @@ public class AdminMainPage extends JFrame {
     private JPanel AdminMainPageForm;
     private JTextField textField1;
     private JButton logoutBtn;
-    private JComboBox mainMenuDropDown;
+    private JComboBox AdminMenuDropDown;
 
 
     public AdminMainPage() {
@@ -22,28 +22,28 @@ public class AdminMainPage extends JFrame {
     }
 
     private void setUpActions() {
-        mainMenuDropDown.addActionListener(this::switchPanel);
+        AdminMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
     }
 
     private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
+        JOptionPane.showMessageDialog(AdminMenuDropDown, AdminMenuDropDown.getSelectedItem());
 
-        switch (mainMenuDropDown.getSelectedIndex()){
+        switch (AdminMenuDropDown.getSelectedIndex()){
             case 0:
                 setVisible(false);
                 dispose();
-                new MainPage().setVisible(true);
+                new AdminMainPage().setVisible(true);
                 break;
             case 1:
                 setVisible(false);
                 dispose();
-                new BuyTicket().setVisible(true);
+                new SelectMatchModify().setVisible(true);
                 break;
             case 2:
                 setVisible(false);
                 dispose();
-                new BuySeasonTicket().setVisible(true);
+                new ModifyMatch().setVisible(true);
                 break;
             case 3:
                 // cancel reservation

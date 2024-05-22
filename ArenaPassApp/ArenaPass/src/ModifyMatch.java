@@ -1,7 +1,8 @@
 import javax.swing.*;
 
-public class ModifyMatch {
-    private JPanel panel1;
+
+public class ModifyMatch extends JFrame{
+    private JPanel ModifyMatch;
     private JComboBox AdminMenuDropBox;
     private JTextField textField1;
     private JButton logoutBtn;
@@ -14,4 +15,18 @@ public class ModifyMatch {
     private JButton AwayStantBtn;
     private JButton HomeStantBtn;
     private JButton UpdateBtn;
+
+    public ModifyMatch(){
+
+        setupFrame();
+    }
+
+    private void setupFrame() {
+        add(ModifyMatch);
+        setTitle("ArenaPass ModifyMatchPage");
+        setSize(1920, 1080);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
 }
