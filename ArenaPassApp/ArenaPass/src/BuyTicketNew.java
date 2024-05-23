@@ -1,11 +1,14 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 
+import static java.awt.GridBagConstraints.LINE_START;
 import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
 public class BuyTicketNew extends JFrame {
@@ -29,8 +32,22 @@ public class BuyTicketNew extends JFrame {
         return size;
     }
 
-    private String getTeamName(int teamID) throws SQLException {
+    private String getLogo(int teamID) throws SQLException {
+        String query = "SELECT team_logo_path FROM teams WHERE team_id = ?";
+        Connection connection = ConnectDB.createConnection();
+        Statement statement = connection.createStatement();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1,teamID);
+        try{
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return "/images/"+rs.getString(1);
+        } catch (SQLException e) {
+            return "FALSE ID";
+        }
+    }
 
+    private String getTeamName(int teamID) throws SQLException {
         String query = "SELECT team_name FROM teams WHERE team_id = ?";
         Connection connection = ConnectDB.createConnection();
         Statement statement = connection.createStatement();
@@ -43,12 +60,24 @@ public class BuyTicketNew extends JFrame {
         } catch (SQLException e) {
             return "FALSE ID";
         }
-
-
-
     }
 
-    public BuyTicketNew() throws SQLException {
+    private String getGameStadium(int teamID) throws SQLException {
+        String query = "SELECT stadium_name FROM stadiums WHERE stadium_id = ?";
+        Connection connection = ConnectDB.createConnection();
+        Statement statement = connection.createStatement();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setInt(1,teamID);
+        try{
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getString(1);
+        } catch (SQLException e) {
+            return "FALSE ID";
+        }
+    }
+
+    public BuyTicketNew() throws SQLException, IOException {
         matchesPanel.setVisible(true);
         setupFrame();
         setUpActions();
@@ -56,7 +85,7 @@ public class BuyTicketNew extends JFrame {
 
     }
 
-    private void setupMatches() throws SQLException {
+    private void setupMatches() throws SQLException, IOException {
         String query = "SELECT * FROM matches";
         Connection connection = ConnectDB.createConnection();
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -72,8 +101,8 @@ public class BuyTicketNew extends JFrame {
         int i=0;
         while(rs.next())
         {
-            matchPanels[i]= new JPanel(new GridLayout(1,6));
-            matchPanels[i].setPreferredSize(new Dimension(0,100));
+            matchPanels[i]= new JPanel(new GridLayout());
+            matchPanels[i].setMaximumSize(new Dimension(0,100));
 
             //matchPanels[i].setBorder(new EmptyBorder(0,0,250,0));
 
@@ -83,37 +112,49 @@ public class BuyTicketNew extends JFrame {
             Date matchDate = rs.getDate(5);
             Time matchTime = rs.getTime(6);
 
-            String teamLogo= null;
             Match currentMatch = new Match(getTeamName(homeTeamID),getTeamName(awayTeamID),stadiumID);
             matches.add(currentMatch);
 
-            JLabel homeIcon = new JLabel(currentMatch.getHomeTeam());
-            JLabel awayIcon = new JLabel(currentMatch.getAwayTeam());
+            JLabel homeIcon = new JLabel();
+            JLabel awayIcon = new JLabel();
             JLabel fixture = new JLabel(currentMatch.getHomeTeam() +" VS " +currentMatch.getAwayTeam());
             JLabel gameDate = new JLabel(matchDate.toString());
             JLabel gameTime = new JLabel(matchTime.toString());
+            JLabel gameStadium = new JLabel(getGameStadium(stadiumID));
             JButton buyBttn = new JButton("BUY");
 
+            Image logoHome = ImageIO.read(getClass().getResource(getLogo(homeTeamID)));
+            homeIcon.setIcon(new ImageIcon(logoHome));
+            Image logoAway = ImageIO.read(getClass().getResource(getLogo(awayTeamID)));
+            awayIcon.setIcon(new ImageIcon(logoAway));
 
-            homeIcon.setForeground(Color.GREEN);
-            awayIcon.setForeground(Color.BLUE);
+            /*homeIcon.setForeground(Color.GREEN);
+            awayIcon.setForeground(Color.BLUE);*/
+
+            //buyBttn.setMaximumSize(new Dimension(0,100));
+            buyBttn.setOpaque(true);
 
             matchPanels[i].add(homeIcon);
             matchPanels[i].add(awayIcon);
             matchPanels[i].add(fixture);
             matchPanels[i].add(gameDate);
             matchPanels[i].add(gameTime);
-            //matchPanels[i].add(buyBttn);
-            buyBttn.setMaximumSize(new Dimension(0,100));
-            buyBttn.setOpaque(true);
+            matchPanels[i].add(gameStadium);
             matchPanels[i].add(buyBttn);
 
-            matchPanels[i].setVisible(true);
-            matchesPanel.add(matchPanels[i],BorderLayout.LINE_END);
+            buyBttn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new SelectTeam(currentMatch.getHomeTeam(), currentMatch.getAwayTeam(),logoHome,logoAway );
+                }
+            });
+
+            //matchPanels[i].setVisible(true);
+
+            matchesPanel.add(matchPanels[i]);
 
             i++;
         }
-       //scrollPanel.add(matchesPanel);
     }
 
     private void setupFrame() {
@@ -167,6 +208,7 @@ public class BuyTicketNew extends JFrame {
                 break;
         }
     }
+
     private void logout(ActionEvent actionEvent) {
         setVisible(false);
         dispose();

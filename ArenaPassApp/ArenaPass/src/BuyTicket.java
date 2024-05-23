@@ -39,11 +39,11 @@ public class BuyTicket extends JFrame{
 
     private void buyTicket1(ActionEvent actionEvent) {
         JOptionPane.showMessageDialog(null, "Selected Match: 1");
-        SelectTeam.setTeamNames("Olympiakos","Panathinaikos");
-        SelectTeam.setTeamLogos("Olympiacos_FC_logo.svg.png","Panathinaikos_F.C._logo.svg.png");
+        /*SelectTeam.setTeamNames("Olympiakos","Panathinaikos");
+        SelectTeam.setTeamLogos("Olympiacos_FC_logo.svg.png","Panathinaikos_F.C._logo.svg.png");*/
         setVisible(false);
         dispose();
-        new SelectTeam().setVisible(true);
+        //new SelectTeam().setVisible(true);
 
         // new selectMatch1().setVisible(true);
     }
