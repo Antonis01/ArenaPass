@@ -10,6 +10,16 @@ INSERT INTO teams (team_name, team_def_home_stadium_id) VALUES
 ('Team 3', 2),
 ('Team 4', 2);
 
+UPDATE teams SET team_name = 'Panseraikos',team_logo_path='Panseraikos_new_emblem.png' where team_id=1;
+UPDATE teams SET team_name = 'Lamia',team_logo_path='PAS_Lamia_1964_logo.png' where team_id=2;
+UPDATE teams SET team_name = 'Asteras Tripolis',team_logo_path='Asteras_Tripolis_FC_logo.svg.png' where team_id=3;
+UPDATE teams SET team_name = 'Atromitos',team_logo_path='Atromitos.png' where team_id=4;
+
+UPDATE teams SET team_logo_path='Panseraikos_new_emblem.png' where team_id=1;
+UPDATE teams SET team_logo_path='PAS_Lamia_1964_logo.png' where team_id=2;
+UPDATE teams SET team_logo_path='Asteras_Tripolis_FC_logo.svg.png' where team_id=3;
+UPDATE teams SET team_logo_path='Atromitos.png' where team_id=4;
+
 -- Insert into matches
 INSERT INTO matches (match_stadium_id, match_home_team, match_away_team, match_date, match_time, match_ht_max_capacity, match_at_max_capacity, match_restrictions) VALUES 
 (1, 1, 2, '2024-05-20', '15:00:00', 25000, 25000, 'NO RESTRICTION'),
