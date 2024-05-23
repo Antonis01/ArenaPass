@@ -2,14 +2,18 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.util.ArrayList;
+
+import static javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED;
 
 public class BuyTicketNew extends JFrame {
     private JComboBox mainMenuDropDown;
     private JLabel logo;
     private JTextField textField1;
     private JButton logoutBtn;
+    private JScrollPane scrollPanel;
     private JPanel matchesPanel;
     private JPanel BuyTicketNewForm;
 
@@ -48,6 +52,11 @@ public class BuyTicketNew extends JFrame {
         matchesPanel.setVisible(true);
         setupFrame();
         setUpActions();
+        setupMatches();
+
+    }
+
+    private void setupMatches() throws SQLException {
         String query = "SELECT * FROM matches";
         Connection connection = ConnectDB.createConnection();
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
@@ -61,52 +70,50 @@ public class BuyTicketNew extends JFrame {
         JPanel[] matchPanels = new JPanel[rows];
         ArrayList<Match> matches = new ArrayList<>(rows);
         int i=0;
-            while(rs.next())
-            {
-                matchPanels[i]= new JPanel(new GridLayout(1,6));
-                matchPanels[i].setPreferredSize(new Dimension(-1,100));
+        while(rs.next())
+        {
+            matchPanels[i]= new JPanel(new GridLayout(1,6));
+            matchPanels[i].setPreferredSize(new Dimension(0,100));
 
-                //matchPanels[i].setBorder(new EmptyBorder(0,0,250,0);
+            //matchPanels[i].setBorder(new EmptyBorder(0,0,250,0));
 
-                int stadiumID=rs.getInt(2);
-                int homeTeamID=rs.getInt(3);
-                int awayTeamID=rs.getInt(4);
-                Date matchDate = rs.getDate(5);
-                Time matchTime = rs.getTime(6);
+            int stadiumID=rs.getInt(2);
+            int homeTeamID=rs.getInt(3);
+            int awayTeamID=rs.getInt(4);
+            Date matchDate = rs.getDate(5);
+            Time matchTime = rs.getTime(6);
 
-                String teamLogo= null;
-                Match currentMatch = new Match(getTeamName(homeTeamID),getTeamName(awayTeamID),stadiumID);
-                matches.add(currentMatch);
+            String teamLogo= null;
+            Match currentMatch = new Match(getTeamName(homeTeamID),getTeamName(awayTeamID),stadiumID);
+            matches.add(currentMatch);
 
-                JLabel homeIcon = new JLabel(currentMatch.getHomeTeam());
-                JLabel awayIcon = new JLabel(currentMatch.getAwayTeam());
-                JLabel fixture = new JLabel(currentMatch.getHomeTeam() +" VS " +currentMatch.getAwayTeam());
-                JLabel gameDate = new JLabel(matchDate.toString());
-                JLabel gameTime = new JLabel(matchTime.toString());
-                JButton buyBttn = new JButton("BUY");
-
-                homeIcon.setForeground(Color.GREEN);
-                awayIcon.setForeground(Color.BLUE);
-
-                matchPanels[i].add(homeIcon);
-                matchPanels[i].add(awayIcon);
-                matchPanels[i].add(fixture);
-                matchPanels[i].add(gameDate);
-                matchPanels[i].add(gameTime);
-                matchPanels[i].add(buyBttn);
-
-                matchPanels[i].setVisible(true);
-
-                matchesPanel.add(matchPanels[i],BorderLayout.LINE_START);
-
-                i++;
-            }
+            JLabel homeIcon = new JLabel(currentMatch.getHomeTeam());
+            JLabel awayIcon = new JLabel(currentMatch.getAwayTeam());
+            JLabel fixture = new JLabel(currentMatch.getHomeTeam() +" VS " +currentMatch.getAwayTeam());
+            JLabel gameDate = new JLabel(matchDate.toString());
+            JLabel gameTime = new JLabel(matchTime.toString());
+            JButton buyBttn = new JButton("BUY");
 
 
-    }
+            homeIcon.setForeground(Color.GREEN);
+            awayIcon.setForeground(Color.BLUE);
 
-    void setupMatches(){
+            matchPanels[i].add(homeIcon);
+            matchPanels[i].add(awayIcon);
+            matchPanels[i].add(fixture);
+            matchPanels[i].add(gameDate);
+            matchPanels[i].add(gameTime);
+            //matchPanels[i].add(buyBttn);
+            buyBttn.setMaximumSize(new Dimension(0,100));
+            buyBttn.setOpaque(true);
+            matchPanels[i].add(buyBttn);
 
+            matchPanels[i].setVisible(true);
+            matchesPanel.add(matchPanels[i],BorderLayout.LINE_END);
+
+            i++;
+        }
+       //scrollPanel.add(matchesPanel);
     }
 
     private void setupFrame() {

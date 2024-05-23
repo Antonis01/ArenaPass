@@ -34,7 +34,7 @@ public class FanIdApplicationPage extends JFrame {
             case 0:
                 setVisible(false);
                 dispose();
-                new AdminMainPage().setVisible(true);
+                new AppAdminMainPage().setVisible(true);
                 break;
             case 1:
                 setVisible(false);
