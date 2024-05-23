@@ -76,6 +76,7 @@ CREATE TABLE teams (
     team_name VARCHAR(30) NOT NULL,
     team_def_home_stadium_id INT(3), --team default home stadium
     team_points INT(3) NOT NULL DEFAULT 0,
+    team_logo_path VARCHAR(100) DEFAULT NULL,
     PRIMARY KEY (team_id),
     UNIQUE (team_name),
     CONSTRAINT TEAM_STADIUM FOREIGN KEY (team_def_home_stadium_id) REFERENCES stadiums(stadium_id)
@@ -188,6 +189,8 @@ BEGIN
     END IF;
 END$
 DELIMITER ;
+
+
 
 
 
