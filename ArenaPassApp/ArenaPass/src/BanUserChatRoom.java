@@ -1,22 +1,20 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class FanIdApplicationPage extends JFrame {
-    private JPanel FanIdApplicationPage;
+public class BanUserChatRoom extends JFrame{
+    private JPanel BanUserChatRoomForm;
     private JComboBox AppAdminMenuDropDown;
-    private JButton logoutBtn;
     private JTextField textField1;
-    private JButton APPROVEBtn;
-    private JButton REJECTBtn;
+    private JButton logoutBtn;
 
-    public FanIdApplicationPage() {
+    public BanUserChatRoom() {
         setupFrame();
         setUpActions();
     }
 
     private void setupFrame() {
-        add(FanIdApplicationPage);
-        setTitle("ArenaPass FanIdApplicationPage");
+        add(BanUserChatRoomForm);
+        setTitle("ArenaPass BanUserChatRoomPage");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,6 +44,7 @@ public class FanIdApplicationPage extends JFrame {
                 dispose();
                 new BanUserChatRoom().setVisible(true);
                 break;
+
         }
     }
 
@@ -54,7 +53,6 @@ public class FanIdApplicationPage extends JFrame {
         dispose();
         new LoginUI().setVisible(true);
     }
+
+
 }
-
-
-
