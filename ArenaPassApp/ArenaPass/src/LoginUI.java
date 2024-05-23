@@ -32,15 +32,15 @@ public class LoginUI extends JFrame {
 
     private void login(ActionEvent actionEvent) {
         if (ConnectDB.Connector(usernameField.getText(), new String(passwordField.getPassword()))) {
-            String role = ConnectDB.getRole(usernameField.getText(), new String(passwordField.getPassword()));
-            if(role.equals("admin")) {
-                JOptionPane.showMessageDialog(null, "Admin login successful!");
+            //String role = ConnectDB.getRole(usernameField.getText(), new String(passwordField.getPassword()));
+            //if(role.equals("admin")) {
+              //  JOptionPane.showMessageDialog(null, "Admin login successful!");
                 //openAdminPage();
-                openAppAdminPage();
-            }else{
+                //openAppAdminPage();
+            //}else{
                 JOptionPane.showMessageDialog(null, "Login successful!");
                 openMainPage();
-            }
+            //}
         } else {
             JOptionPane.showMessageDialog(null, "Login failed!");
         }
