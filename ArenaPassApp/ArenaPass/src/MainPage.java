@@ -32,7 +32,7 @@ public class MainPage extends JFrame {
         logoutBtn.addActionListener(this::logout);
     }
 
-    private void switchPanel(ActionEvent actionEvent) throws SQLException, IOException {
+    private void switchPanel(ActionEvent actionEvent) {
         JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
 
         switch (mainMenuDropDown.getSelectedIndex()){
@@ -44,7 +44,13 @@ public class MainPage extends JFrame {
             case 1:
                 setVisible(false);
                 dispose();
-                new BuyTicketNew().setVisible(true);
+                try {
+                    new BuyTicketNew().setVisible(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 2:
                 setVisible(false);

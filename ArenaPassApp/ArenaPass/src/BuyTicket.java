@@ -45,7 +45,7 @@ public class BuyTicket extends JFrame{
         dispose();
         //new SelectTeam().setVisible(true);
 
-        new chooseMatch().setVisible(true);
+        //new chooseMatch().setVisible(true);
     }
 
     private void buyTicket2(ActionEvent actionEvent) {
