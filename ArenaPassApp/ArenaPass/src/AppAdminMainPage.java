@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class AppAdminMainPage extends JFrame {
-    private JPanel panel1;
     private JPanel AppAdminMainPageForm;
     private JComboBox AppAdminMenuDropDown;
     private JTextField textField1;
@@ -40,6 +39,12 @@ private void switchPanel(ActionEvent actionEvent) {
             dispose();
             new FanIdApplicationPage().setVisible(true);
             break;
+        case 2:
+            setVisible(false);
+            dispose();
+            new BanUserChatRoom().setVisible(true);
+            break;
+
     }
 }
 

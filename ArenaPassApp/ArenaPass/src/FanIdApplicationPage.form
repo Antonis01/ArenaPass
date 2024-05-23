@@ -70,6 +70,7 @@
           <model>
             <item value="Home"/>
             <item value="FanID Application Form"/>
+            <item value="Ban Users Chatroom"/>
           </model>
         </properties>
       </component>
