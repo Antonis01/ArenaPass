@@ -1,6 +1,3 @@
-use arenapass;
-
-
 
 /*  CREATE TABLES SECTION */
 
@@ -25,56 +22,56 @@ CREATE TABLE fans (
 );
 
 CREATE TABLE reservations(
-                             reservation_id INT(8) NOT NULL AUTO_INCREMENT,
-                             reservation_fan_pass_id INT(9) NOT NULL,
-                             reservation_ticket_number INT(8) NOT NULL,
-                             reservation_seat_id INT(8) NOT NULL,
-                             reservation_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                             reservation_type ENUM ('TICKET','SEASON TICKET','NOT AVAILABLE'),
-                             PRIMARY KEY (reservation_id)
+    reservation_id INT(8) NOT NULL AUTO_INCREMENT,
+    reservation_fan_pass_id INT(9) NOT NULL,
+    reservation_ticket_number INT(8) NOT NULL,
+    reservation_seat_id INT(8) NOT NULL,
+    reservation_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    reservation_type ENUM ('TICKET','SEASON TICKET','NOT AVAILABLE'),
+    PRIMARY KEY (reservation_id)
 );
 
 CREATE TABLE stadiums(
-                         stadium_id INT(3) NOT NULL AUTO_INCREMENT,
-                         stadium_name VARCHAR(30) NOT NULL,
-                         stadium_max_capacity INT(6) NOT NULL,
-                         stadium_city VARCHAR(30) NOT NULL,
-                         PRIMARY KEY (stadium_id)
+    stadium_id INT(3) NOT NULL AUTO_INCREMENT,
+    stadium_name VARCHAR(30) NOT NULL,
+    stadium_max_capacity INT(6) NOT NULL,
+    stadium_city VARCHAR(30) NOT NULL,
+    PRIMARY KEY (stadium_id)
 );
 
 CREATE TABLE seats(
-                      seat_id INT(8) NOT NULL AUTO_INCREMENT,
-                      seat_stadium_id INT(3) NOT NULL,
-                      seat_section VARCHAR(4) NOT NULL,
-                      seat_number VARCHAR(4) NOT NULL,
-                      PRIMARY KEY (seat_id),
-                      UNIQUE (seat_section,seat_number),
-                      CONSTRAINT SEAT_STADIUM FOREIGN KEY (seat_stadium_id) REFERENCES stadiums(stadium_id)
+    seat_id INT(8) NOT NULL AUTO_INCREMENT,
+    seat_stadium_id INT(3) NOT NULL,
+    seat_section VARCHAR(4) NOT NULL,
+    seat_number VARCHAR(4) NOT NULL,
+    PRIMARY KEY (seat_id),
+    UNIQUE (seat_section,seat_number),
+    CONSTRAINT SEAT_STADIUM FOREIGN KEY (seat_stadium_id) REFERENCES stadiums(stadium_id)
 );
 
 CREATE TABLE teams (
-                       team_id INT(3) NOT NULL AUTO_INCREMENT,
-                       team_name VARCHAR(30) NOT NULL,
-                       team_def_home_stadium_id INT(3), /* team default home stadium */
-                       team_points INT(3) NOT NULL DEFAULT 0,
-                       team_logo_path VARCHAR(100) DEFAULT NULL,
-                       PRIMARY KEY (team_id),
-                       UNIQUE (team_name),
-                       CONSTRAINT TEAM_STADIUM FOREIGN KEY (team_def_home_stadium_id) REFERENCES stadiums(stadium_id)
+    team_id INT(3) NOT NULL AUTO_INCREMENT,
+    team_name VARCHAR(30) NOT NULL,
+    team_def_home_stadium_id INT(3), /* team default home stadium */
+    team_points INT(3) NOT NULL DEFAULT 0,
+    team_logo_path VARCHAR(100) DEFAULT NULL,
+    PRIMARY KEY (team_id),
+    UNIQUE (team_name),
+    CONSTRAINT TEAM_STADIUM FOREIGN KEY (team_def_home_stadium_id) REFERENCES stadiums(stadium_id)
 );
 
 CREATE TABLE season_tickets(
-                               season_ticket_number INT(8) NOT NULL AUTO_INCREMENT,
-                               season_ticket_seat_id INT(8) NOT NULL,
-                               season_ticket_team_id INT(3) NOT NULL,
-                               season_ticket_stadium_id INT(3) NOT NULL,
-                               season_ticket_fan_pass_id INT(9) NOT NULL,
-                               season_ticket_purchase_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                               PRIMARY KEY (season_ticket_number),
-                               CONSTRAINT SEASON_SEAT FOREIGN KEY (season_ticket_seat_id) REFERENCES seats(seat_id),
-                               CONSTRAINT SEASON_FAN FOREIGN KEY (season_ticket_fan_pass_id) REFERENCES fans(fan_pass_id),
-                               CONSTRAINT SEASON_TEAM FOREIGN KEY (season_ticket_team_id) REFERENCES teams(team_id),
-                               CONSTRAINT SEASON_STADIUM FOREIGN KEY (season_ticket_stadium_id) REFERENCES stadiums(stadium_id)
+    season_ticket_number INT(8) NOT NULL AUTO_INCREMENT,
+    season_ticket_seat_id INT(8) NOT NULL,
+    season_ticket_team_id INT(3) NOT NULL,
+    season_ticket_stadium_id INT(3) NOT NULL,
+    season_ticket_fan_pass_id INT(9) NOT NULL,
+    season_ticket_purchase_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (season_ticket_number),
+    CONSTRAINT SEASON_SEAT FOREIGN KEY (season_ticket_seat_id) REFERENCES seats(seat_id),
+    CONSTRAINT SEASON_FAN FOREIGN KEY (season_ticket_fan_pass_id) REFERENCES fans(fan_pass_id),
+    CONSTRAINT SEASON_TEAM FOREIGN KEY (season_ticket_team_id) REFERENCES teams(team_id),
+    CONSTRAINT SEASON_STADIUM FOREIGN KEY (season_ticket_stadium_id) REFERENCES stadiums(stadium_id)
 );
 
 CREATE TABLE matches(
@@ -95,15 +92,15 @@ CREATE TABLE matches(
 );
 
 CREATE TABLE tickets (
-                         ticket_number INT(8) NOT NULL AUTO_INCREMENT,
-                         ticket_seat_id INT(8) NOT NULL,
-                         ticket_match_id INT(9) NOT NULL,
-                         ticket_fan_pass_id INT(9) NOT NULL,
-                         ticket_purchase_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                         PRIMARY KEY (ticket_number),
-                         CONSTRAINT SEAT FOREIGN KEY (ticket_seat_id) REFERENCES seats(seat_id),
-                         CONSTRAINT MATCH_ID FOREIGN KEY (ticket_match_id) REFERENCES matches(match_id),
-                         CONSTRAINT FAN FOREIGN KEY (ticket_fan_pass_id) REFERENCES fans(fan_pass_id)
+    ticket_number INT(8) NOT NULL AUTO_INCREMENT,
+    ticket_seat_id INT(8) NOT NULL,
+    ticket_match_id INT(9) NOT NULL,
+    ticket_fan_pass_id INT(9) NOT NULL,
+    ticket_purchase_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (ticket_number),
+    CONSTRAINT SEAT FOREIGN KEY (ticket_seat_id) REFERENCES seats(seat_id),
+    CONSTRAINT MATCH_ID FOREIGN KEY (ticket_match_id) REFERENCES matches(match_id),
+    CONSTRAINT FAN FOREIGN KEY (ticket_fan_pass_id) REFERENCES fans(fan_pass_id)
 );
 
 
@@ -125,7 +122,7 @@ where fans.fan_pass_id = tickets.ticket_fan_pass_id AND fans.fan_pass_id = 1001;
 /* ------------ TRIGGERS SECTION ------------ */
 
 DELIMITER $
-CREATE TRIGGER check_ban_status BEFORE INSERT ON tickets /*-- VERIFIED TO BE WORKING THROUGH 'select * from tickets' AND 'ERROR 1644 (45000): Fan is not qualified to buy ticket!' */
+CREATE TRIGGER check_ban_status BEFORE INSERT ON tickets /* VERIFIED TO BE WORKING THROUGH 'select * from tickets' AND 'ERROR 1644 (45000): Fan is not qualified to buy ticket!' */
 FOR EACH ROW 
 BEGIN
     DECLARE f_status ENUM ('VERIFIED','BANNED','PENDING');
@@ -142,10 +139,8 @@ END$
 
 DELIMITER ;
 
-
-
 DELIMITER $
-CREATE TRIGGER check_double_ticket BEFORE INSERT ON tickets -- VERIFIED TO BE WORKING THROUGH 'select * from tickets' AND ERROR 1644 (45001): Fan alreade has ticket for same match!
+CREATE TRIGGER check_double_ticket BEFORE INSERT ON tickets /* VERIFIED TO BE WORKING THROUGH 'select * from tickets' AND ERROR 1644 (45001): Fan alreade has ticket for same match! */
 FOR EACH ROW 
 BEGIN
     DECLARE t_count INT(2);
@@ -157,7 +152,7 @@ BEGIN
 
     IF t_count >=1 THEN
         SIGNAL SQLSTATE VALUE '45001'
-        SET MESSAGE_TEXT = 'Fan alreade has ticket for same match!';
+        SET MESSAGE_TEXT = 'Fan already has ticket for same match!';
     END IF;
 
 END$
@@ -166,7 +161,7 @@ DELIMITER ;
 
 
 DELIMITER $
-CREATE TRIGGER check_same_team BEFORE INSERT ON matches -- VERIFIED TO BE WORKING THROUGH  'select * from matches;' AND ERROR 1644 (45003): Match cannot be set: same away and home team!
+CREATE TRIGGER check_same_team BEFORE INSERT ON matches /* VERIFIED TO BE WORKING THROUGH  'select * from matches;' AND ERROR 1644 (45003): Match cannot be set: same away and home team! */
 FOR EACH ROW 
 BEGIN
 
@@ -196,7 +191,25 @@ BEGIN
 END$
 DELIMITER ;
 
+DELIMITER $
+CREATE TRIGGER check_double_season_ticket BEFORE INSERT ON season_tickets 
+FOR EACH ROW 
+BEGIN
+    DECLARE t_count INT(2);
 
+    SELECT count(*) INTO t_count
+    FROM season_tickets
+    WHERE season_tickets.season_ticket_fan_pass_id = NEW.season_ticket_fan_pass_id AND season_tickets.season_ticket_team_id=NEW.season_ticket_team_id
+    GROUP BY season_tickets.season_ticket_fan_pass_id;
+
+    IF t_count >=1 THEN
+        SIGNAL SQLSTATE VALUE '45001'
+        SET MESSAGE_TEXT = 'Fan already has season ticket for this team!';
+    END IF;
+
+END$
+
+DELIMITER ;
 
 
 
