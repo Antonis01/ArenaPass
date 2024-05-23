@@ -31,6 +31,8 @@ public class SelectTeam extends JFrame{
         team1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
                 new chooseMatch(match,homeTeamLogo,0);
             }
         });
@@ -38,6 +40,8 @@ public class SelectTeam extends JFrame{
         team2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
                 new chooseMatch(match,awayTeamLogo,1);
             }
         });
