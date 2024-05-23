@@ -10,7 +10,7 @@ qr = qrcode.QRCode(
 )
 
 # Add data to the QR code
-rng_num = random.randrange(1000000000, 10000000000)1
+rng_num = random.randrange(1000000000, 10000000000)
 qr.add_data(rng_num, 'alphanumeric', 'test')
 
 # Create the QR code
