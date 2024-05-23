@@ -1,5 +1,7 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class chooseMatch extends JFrame{
 
@@ -10,13 +12,18 @@ public class chooseMatch extends JFrame{
     private JTextField textField1;
     private JButton logoutBtn;
     private JButton button1;
-    private JButton button2;
     private JLabel sectionLabel;
     private JTextField selectedSection;
+    private JLabel teamLogo;
 
-    public chooseMatch() {
+    public chooseMatch(Match match, Image logo, int clicked) {
+        teamLogo.setIcon(new ImageIcon(logo));
+        if(clicked == 0)    teamLogo.setText(match.getHomeTeam());
+        else    teamLogo.setText(match.getAwayTeam());
         setupFrame();
         setUpActions();
+
+
     }
 
     private void setupFrame() {

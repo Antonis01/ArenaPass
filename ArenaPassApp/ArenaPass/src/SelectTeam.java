@@ -1,15 +1,13 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class SelectTeam extends JFrame{
     private JPanel teamsPanel;
     private JPanel SelectTeamForm;
-    private static String team1Name;
-    private static String team2Name;
-    private static String team1Logo;
-    private static String team2Logo;
 
 
     private void setupFrame() {
@@ -19,7 +17,7 @@ public class SelectTeam extends JFrame{
         setVisible(true);
     }
 
-    public SelectTeam(String homeTeamName,String awayTeamName,Image homeTeamLogo, Image awayTeamLogo){
+    public SelectTeam(Match match,Image homeTeamLogo, Image awayTeamLogo){
         setupFrame();
         //teamsPanel = new JPanel();
         teamsPanel.setLayout(new GridBagLayout());
@@ -30,7 +28,19 @@ public class SelectTeam extends JFrame{
         teamsPanel.add(team2);
 
         team1.setIcon(new ImageIcon(homeTeamLogo));
+        team1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new chooseMatch(match,homeTeamLogo,0);
+            }
+        });
         team2.setIcon(new ImageIcon(awayTeamLogo));
+        team2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new chooseMatch(match,awayTeamLogo,1);
+            }
+        });
 
         team1.setOpaque(true);
         team2.setOpaque(true);

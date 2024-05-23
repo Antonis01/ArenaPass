@@ -112,7 +112,7 @@ public class BuyTicketNew extends JFrame {
             Date matchDate = rs.getDate(5);
             Time matchTime = rs.getTime(6);
 
-            Match currentMatch = new Match(getTeamName(homeTeamID),getTeamName(awayTeamID),stadiumID);
+            Match currentMatch = new Match(getTeamName(homeTeamID),getTeamName(awayTeamID),stadiumID, matchDate, matchTime);
             matches.add(currentMatch);
 
             JLabel homeIcon = new JLabel();
@@ -145,7 +145,7 @@ public class BuyTicketNew extends JFrame {
             buyBttn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new SelectTeam(currentMatch.getHomeTeam(), currentMatch.getAwayTeam(),logoHome,logoAway );
+                    new SelectTeam(currentMatch,logoHome,logoAway );
                 }
             });
 
