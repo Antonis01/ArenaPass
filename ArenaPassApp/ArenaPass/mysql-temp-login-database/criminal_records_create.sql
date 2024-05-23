@@ -15,4 +15,4 @@ INSERT citizen_records (citizen_legal_name,citizen_legal_surname,citizen_id_numb
 ('Bob','Brown','44332211','2030-01-01','1993-04-04','VERIFIED'),
 ('Charlie','Davis','55667788','2030-01-01','1994-05-05','VERIFIED'),
 ('tik','tok','34892605','2030-01-01','1990-01-01','BANNED'),
-('John','Smith','87654321','2030-02-02','2003-11-11','BANNED');
+('John','Smith','87654021','2030-02-02','2003-11-11','BANNED');
