@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 public class AppAdminMainPage extends JFrame {
     private JPanel AppAdminMainPageForm;
@@ -37,7 +38,11 @@ private void switchPanel(ActionEvent actionEvent) {
         case 1:
             setVisible(false);
             dispose();
-            new FanIdApplicationPage().setVisible(true);
+            try {
+                new AdminFanApplicationList().setVisible(true);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             break;
         case 2:
             setVisible(false);

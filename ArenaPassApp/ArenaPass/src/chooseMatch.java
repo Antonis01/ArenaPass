@@ -52,8 +52,6 @@ public class chooseMatch extends JFrame{
         }
     }
 
-
-
     private void switchPanel(ActionEvent actionEvent) {
         JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
 
