@@ -34,7 +34,7 @@ public class seatSelect extends JFrame {
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                selectedSeat.setVisible(true);
+                //selectedSeat.setVisible(true);
             }
         });
     }
@@ -98,14 +98,23 @@ public class seatSelect extends JFrame {
     private void setUpActions() {
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
-        checkoutButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Transaction Completed");
-                new seatSelect().setVisible(false);
-                new MainPage().setVisible(true);
-            }
-        });
+        checkoutButton.addActionListener(this::checkout);
+    }
+
+    private void checkout(ActionEvent actionEvent) {
+        JOptionPane.showMessageDialog(null, "Transaction Completed");
+        //new seatSelect().setVisible(false);
+        //new MainPage().setVisible(true);
+        try {
+            Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py");
+            p.waitFor(); // wait for the process to finish
+            setVisible(false);
+            dispose();
+            new viewTicketDetails().setVisible(true);
+        } catch (Exception ee) {
+            ee.printStackTrace();
+        }
+
     }
 
     private void switchPanel(ActionEvent actionEvent) {

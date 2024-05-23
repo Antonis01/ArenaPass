@@ -10,6 +10,7 @@ public class MainPage extends JFrame {
     private JComboBox mainMenuDropDown;
     private JTextField textField1;
     private JButton logoutBtn;
+    private JLabel imageLabel;
 
     public MainPage() {
         setupFrame();
