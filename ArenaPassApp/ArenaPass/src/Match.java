@@ -1,31 +1,26 @@
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Match {
-    Team homeTeam;
-    Team awayTeam;
-    Stadium stadium;
-    DateTimeFormatter matchDateTime;
+    String homeTeam;
+    String awayTeam;
+    int stadiumID;
 
-    public Match(Team homeTeam, Team awayTeam, Stadium stadium, DateTimeFormatter matchDateTime) {
+    public Match(String homeTeam, String awayTeam, int stadiumID) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
-        this.stadium = stadium;
-        this.matchDateTime = matchDateTime;
+        this.stadiumID = stadiumID;
     }
 
-    public Team getHomeTeam() {
+    public String getHomeTeam() {
         return homeTeam;
     }
 
-    public Team getAwayTeam() {
+    public String getAwayTeam() {
         return awayTeam;
     }
 
-    public Stadium getStadium() {
-        return stadium;
-    }
-
-    public DateTimeFormatter getMatchDateTime() {
-        return matchDateTime;
+    public int getStadiumID() {
+        return stadiumID;
     }
 }

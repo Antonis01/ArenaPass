@@ -2,6 +2,7 @@ import java.util.Date;
 
 public class Account {
     String firstName;
+    String username;
     String lastName;
     String phoneNumber;
     String homeAddress;
@@ -11,7 +12,8 @@ public class Account {
     String password;
     Date birthDate;
 
-    public Account(String firstName, String lastName, String phoneNumber, String homeAddress, String city, String ID, String emailAddress, String password, Date birthDate) {
+    public Account(String username,String firstName, String lastName, String phoneNumber, String homeAddress, String city, String ID, String emailAddress, String password, Date birthDate) {
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;

@@ -21,7 +21,7 @@ public class chooseMatch extends JFrame{
 
     private void setupFrame() {
         add(SelectTeamForm1);
-        setTitle("Select Team");
+        setTitle("Choose Match");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

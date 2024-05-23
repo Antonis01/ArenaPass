@@ -6,10 +6,15 @@ public class ConnectDB {
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "";
 
+    public static Connection createConnection() throws SQLException {
+        Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+        return connection;
+    }
+
     public static boolean Connector(String username, String password) {
         try {
             // Establish a connection
-            Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
+            Connection connection = createConnection();
             if (connection != null) {
                 System.out.println("Connected to the database!");
                 // You can execute SQL queries here

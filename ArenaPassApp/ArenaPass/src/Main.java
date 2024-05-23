@@ -1,11 +1,12 @@
 import javax.swing.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Main {
-    ArrayList<Team> teams = new ArrayList<>(14);
-    ArrayList<Match> matches = new ArrayList<>(3);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
+        new BuyTicketNew().setVisible(true);
+        //new test().setVisible(true);
         new LoginUI().setVisible(true);
     }
 }

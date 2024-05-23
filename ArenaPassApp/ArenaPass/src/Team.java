@@ -1,13 +1,13 @@
 public class Team {
     String teamName;
     String teamCity;
-    Stadium stadium;
+    Integer stadiumID;
     String logopath;
 
-    public Team(String teamName, String teamCity, Stadium stadium, String logopath) {
+    public Team(String teamName, String teamCity, Integer stadium, String logopath) {
         this.teamName = teamName;
         this.teamCity = teamCity;
-        this.stadium = stadium;
+        this.stadiumID = stadium;
         this.logopath= logopath;
     }
 
@@ -19,7 +19,7 @@ public class Team {
         return teamCity;
     }
 
-    public Stadium getStadium() {
-        return stadium;
+    public Integer getStadium() {
+        return stadiumID;
     }
 }
