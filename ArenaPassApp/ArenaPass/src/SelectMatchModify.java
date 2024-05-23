@@ -43,6 +43,13 @@ public class SelectMatchModify extends JFrame{
                 dispose();
                 new SelectMatchModify().setVisible(true);
                 break;
+
+            case 2:
+                setVisible(false);
+                dispose();
+                new ModifyTickets().setVisible(true);
+                break;
+
         }
     }
 

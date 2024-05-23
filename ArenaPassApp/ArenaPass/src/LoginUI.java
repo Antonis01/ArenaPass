@@ -35,8 +35,8 @@ public class LoginUI extends JFrame {
             String role = ConnectDB.getRole(usernameField.getText(), new String(passwordField.getPassword()));
             if(role.equals("admin")) {
                 JOptionPane.showMessageDialog(null, "Admin login successful!");
-                //openAdminPage();
-                openAppAdminPage();
+                openAdminPage();
+              //  openAppAdminPage();
             }else{
                 JOptionPane.showMessageDialog(null, "Login successful!");
                 openMainPage();
