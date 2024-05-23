@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainPage extends JFrame {
     private JButton showFanIDButton;
@@ -30,7 +32,7 @@ public class MainPage extends JFrame {
         logoutBtn.addActionListener(this::logout);
     }
 
-    private void switchPanel(ActionEvent actionEvent) {
+    private void switchPanel(ActionEvent actionEvent) throws SQLException, IOException {
         JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
 
         switch (mainMenuDropDown.getSelectedIndex()){
@@ -42,7 +44,7 @@ public class MainPage extends JFrame {
             case 1:
                 setVisible(false);
                 dispose();
-                new BuyTicket().setVisible(true);
+                new BuyTicketNew().setVisible(true);
                 break;
             case 2:
                 setVisible(false);
