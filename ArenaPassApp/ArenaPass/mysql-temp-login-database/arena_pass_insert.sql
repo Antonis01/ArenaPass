@@ -15,11 +15,6 @@ UPDATE teams SET team_name = 'Lamia',team_logo_path='PAS_Lamia_1964_logo.png' wh
 UPDATE teams SET team_name = 'Asteras Tripolis',team_logo_path='Asteras_Tripolis_FC_logo.svg.png' where team_id=3;
 UPDATE teams SET team_name = 'Atromitos',team_logo_path='Atromitos.png' where team_id=4;
 
-UPDATE teams SET team_logo_path='Panseraikos_new_emblem.png' where team_id=1;
-UPDATE teams SET team_logo_path='PAS_Lamia_1964_logo.png' where team_id=2;
-UPDATE teams SET team_logo_path='Asteras_Tripolis_FC_logo.svg.png' where team_id=3;
-UPDATE teams SET team_logo_path='Atromitos.png' where team_id=4;
-
 -- Insert into matches
 INSERT INTO matches (match_stadium_id, match_home_team, match_away_team, match_date, match_time, match_ht_max_capacity, match_at_max_capacity, match_restrictions) VALUES 
 (1, 1, 2, '2024-05-20', '15:00:00', 25000, 25000, 'NO RESTRICTION'),
@@ -108,3 +103,14 @@ INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_t
 
 INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id, season_ticket_fan_pass_id) VALUES
 (19, 2, 1, 1006);
+
+--THESE INSERTS ARE CREATED AFTER THE CREATION OF THE TRIGGER 'check_double_season_ticket' TO TEST IF IT'S WORKING
+
+INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id, season_ticket_fan_pass_id) VALUES --WORKS --> DOESN'T RUN
+(21, 2, 1, 1005);
+
+INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id, season_ticket_fan_pass_id) VALUES --WORKS --> DOES RUN
+(19, 2, 1, 1004);
+
+INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id, season_ticket_fan_pass_id) VALUES --WORKS --> DOES RUN
+(20, 3, 1, 1005);
