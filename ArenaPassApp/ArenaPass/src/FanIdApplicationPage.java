@@ -49,7 +49,7 @@ public class FanIdApplicationPage extends JFrame {
         dispose();
         new LoginUI().setVisible(true);
     }
-
 }
+
 
 

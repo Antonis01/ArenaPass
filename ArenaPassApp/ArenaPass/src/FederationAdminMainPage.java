@@ -43,9 +43,8 @@ public class FederationAdminMainPage extends JFrame {
             case 2:
                 setVisible(false);
                 dispose();
-                new ModifyMatch().setVisible(true);
+                new ModifyTickets().setVisible(true);
                 break;
-            case 3:
         }
     }
 
