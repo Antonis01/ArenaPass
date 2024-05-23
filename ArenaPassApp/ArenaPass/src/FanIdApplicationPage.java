@@ -41,6 +41,11 @@ public class FanIdApplicationPage extends JFrame {
                 dispose();
                 new FanIdApplicationPage().setVisible(true);
                 break;
+            case 2:
+                setVisible(false);
+                dispose();
+                new BanUserChatRoom().setVisible(true);
+                break;
         }
     }
 
@@ -49,7 +54,7 @@ public class FanIdApplicationPage extends JFrame {
         dispose();
         new LoginUI().setVisible(true);
     }
-
 }
+
 
 

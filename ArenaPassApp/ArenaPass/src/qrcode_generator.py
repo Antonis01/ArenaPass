@@ -11,7 +11,8 @@ qr = qrcode.QRCode(
 
 # Add data to the QR code
 rng_num = random.randrange(1000000000, 10000000000)
-qr.add_data(rng_num, 'alphanumeric', 'test')
+data = "antonis" + " anastasiou" + str(rng_num)
+qr.add_data(data)
 
 # Create the QR code
 qr.make(fit=True)

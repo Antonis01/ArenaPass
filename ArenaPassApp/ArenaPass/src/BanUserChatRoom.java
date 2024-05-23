@@ -1,50 +1,50 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class FederationAdminMainPage extends JFrame {
-    private JPanel AdminMainPageForm;
+public class BanUserChatRoom extends JFrame{
+    private JPanel BanUserChatRoomForm;
+    private JComboBox AppAdminMenuDropDown;
     private JTextField textField1;
     private JButton logoutBtn;
-    private JComboBox AdminMenuDropDown;
 
-
-    public FederationAdminMainPage() {
+    public BanUserChatRoom() {
         setupFrame();
         setUpActions();
     }
 
     private void setupFrame() {
-        add(AdminMainPageForm);
-        setTitle("ArenaPass AdminMainPage");
+        add(BanUserChatRoomForm);
+        setTitle("ArenaPass BanUserChatRoomPage");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void setUpActions() {
-        AdminMenuDropDown.addActionListener(this::switchPanel);
+        AppAdminMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
     }
 
     private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(AdminMenuDropDown, AdminMenuDropDown.getSelectedItem());
+        JOptionPane.showMessageDialog(AppAdminMenuDropDown, AppAdminMenuDropDown.getSelectedItem());
 
-        switch (AdminMenuDropDown.getSelectedIndex()){
+        switch (AppAdminMenuDropDown.getSelectedIndex()) {
             case 0:
                 setVisible(false);
                 dispose();
-                new FederationAdminMainPage().setVisible(true);
+                new AppAdminMainPage().setVisible(true);
                 break;
             case 1:
                 setVisible(false);
                 dispose();
-                new SelectMatchModify().setVisible(true);
+                new FanIdApplicationPage().setVisible(true);
                 break;
             case 2:
                 setVisible(false);
                 dispose();
-                new ModifyTickets().setVisible(true);
+                new BanUserChatRoom().setVisible(true);
                 break;
+
         }
     }
 
@@ -53,5 +53,6 @@ public class FederationAdminMainPage extends JFrame {
         dispose();
         new LoginUI().setVisible(true);
     }
+
 
 }

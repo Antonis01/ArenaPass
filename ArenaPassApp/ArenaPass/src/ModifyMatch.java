@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 
-
 public class ModifyMatch extends JFrame{
     private JPanel ModifyMatch;
     private JComboBox AdminMenuDropDown;
@@ -14,7 +13,6 @@ public class ModifyMatch extends JFrame{
     private JButton TimeBtn;
     private JTextField textField4;
     private JButton ScoreBtn;
-    private JButton UpdateBtn;
 
     public ModifyMatch(){
         setupFrame();
@@ -51,7 +49,7 @@ public class ModifyMatch extends JFrame{
             case 2:
                 setVisible(false);
                 dispose();
-                new ModifyMatch().setVisible(true);
+                new ModifyTickets().setVisible(true);
                 break;
 
         }

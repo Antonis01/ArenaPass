@@ -145,6 +145,8 @@ public class BuyTicketNew extends JFrame {
             buyBttn.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    setVisible(false);
+                    dispose();
                     new SelectTeam(currentMatch,logoHome,logoAway );
                 }
             });

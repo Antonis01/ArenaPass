@@ -78,6 +78,7 @@
           <model>
             <item value="Menu"/>
             <item value="SelectModifyMatch"/>
+            <item value="ModifyTickets"/>
           </model>
         </properties>
       </component>
