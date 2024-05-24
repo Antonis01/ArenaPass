@@ -2,7 +2,7 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-ArenaPassApp/ArenaPass/src/Main.java
+!**/src/Main/**/out/
 
 ### Eclipse ###
 .apt_generated
