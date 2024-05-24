@@ -17,14 +17,24 @@ public class selectSection extends JFrame{
     private JLabel sectionLabel;
     private JLabel teamLogo;
     private JComboBox viewSections;
+    private Match match;
+    private String side;
 
     public selectSection(Match match, Image logo, int clicked) {
+        this.match = match;
         teamLogo.setIcon(new ImageIcon(logo));
-        if(clicked == 0)    teamLogo.setText(match.getHomeTeam());
-        else    teamLogo.setText(match.getAwayTeam());
+        if(clicked == 0)   {
+            teamLogo.setText(match.getHomeTeam());
+            this.side="HT";
+        }
+        else {
+            teamLogo.setText(match.getAwayTeam());
+            this.side="AT";
+        }
         setupFrame();
         setUpActions();
     }
+
 
     public selectSection(){
         setupFrame();
@@ -47,22 +57,21 @@ public class selectSection extends JFrame{
     }
 
 
+
     public void fillComboBox(JComboBox addSections) {
         try {
-            // Establish a connection
             Connection connection = ConnectDB.createConnection();
+            String sql = "SELECT DISTINCT seat_section FROM seats WHERE seat_stadium_id = ? AND seat_side = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
-            // Create a statement
-            Statement statement = connection.createStatement();
+            // Set the parameters for the placeholders
+            preparedStatement.setInt(1, match.getStadiumID());
+            preparedStatement.setString(2, side);
 
-            // Execute SQL query
-            String sql = "SELECT DISTINCT seat_section FROM seats;";
-            ResultSet resultSet = statement.executeQuery(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-            // Clear the comboBox
             addSections.removeAllItems();
 
-            // Add items to comboBox
             while (resultSet.next()) {
                 String item = resultSet.getString(1); // replace with your column
                 addSections.addItem(item);
@@ -77,10 +86,10 @@ public class selectSection extends JFrame{
         if(section == null || section.isEmpty())
             JOptionPane.showMessageDialog(null,"No section selected");
         else {
-            seatSelect.setSection(section);
+            //seatSelect.setSection(section);
             setVisible(false);
             dispose();
-            new seatSelect().setVisible(true);
+            new seatSelect(match,section).setVisible(true);
         }
     }
 

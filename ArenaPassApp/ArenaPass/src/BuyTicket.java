@@ -101,14 +101,14 @@ public class BuyTicket extends JFrame {
             matchPanels[i].setMaximumSize(new Dimension(0,100));
 
             //matchPanels[i].setBorder(new EmptyBorder(0,0,250,0));
-
+            int matchID=rs.getInt(1);
             int stadiumID=rs.getInt(2);
             int homeTeamID=rs.getInt(3);
             int awayTeamID=rs.getInt(4);
             Date matchDate = rs.getDate(5);
             Time matchTime = rs.getTime(6);
 
-            Match currentMatch = new Match(getTeamName(homeTeamID),getTeamName(awayTeamID),stadiumID, matchDate, matchTime);
+            Match currentMatch = new Match(matchID,getTeamName(homeTeamID),getTeamName(awayTeamID),stadiumID, matchDate, matchTime);
             matches.add(currentMatch);
 
             JLabel homeIcon = new JLabel();

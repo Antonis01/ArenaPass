@@ -1,9 +1,11 @@
+import com.mysql.cj.exceptions.ConnectionIsClosedException;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class seatSelect extends JFrame {
@@ -20,41 +22,75 @@ public class seatSelect extends JFrame {
     private JLabel seatAvailability;
     private JLabel sectionNumber;
     private JPanel seatPanel;
-    private static String section;
+    private  String section;
+    private Match currMatch;
+    private int seatNum;
 
-    public static void setSection(String text)
+    /*public static void setSection(String text)
     {
         section = text;
 
-    }
+    }*/
 
-    public seatSelect() {
+    public seatSelect(Match currMatch, String section) {
+        this.currMatch= currMatch;
+        this.section=section;
+        getTotalSeats();
         setupFrame();
         setUpActions();
         seatPanel.setLayout(new GridLayout(10, 10));
         createSeatButtons();
     }
 
-    private void reserveSeats(ArrayList seat) {
-        int temp;
-        for (int i = 0; i < 100; i++) {
-            temp = (Math.random() <= 0.5) ? 0 : 1;
-            seat.add(temp);
-            System.out.println(seat.get(i));
-            //System.out.println(temp);
+    private void getTotalSeats() {
+        try{
+            Connection conn = ConnectDB.createConnection();
+            String sql = "SELECT COUNT(*) FROM seats WHERE seat_section = ? AND seat_stadium_id = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, section);
+            ps.setInt(2, currMatch.getStadiumID());
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            this.seatNum=rs.getInt(1);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void reserveSeats(int[] seat) {
+        int i;
+        for(i=0;i<seatNum;i++)
+            seat[i]=1;
+        i=0;
+        try {
+            Connection conn = ConnectDB.createConnection();
+            String sql = "SELECT reservations.reservation_seat_id from reservations,seats where reservations.reservation_type=1 AND reservations.reservation_match_id = ? AND seats.seat_section = ? AND reservations.reservation_seat_id = seats.seat_id;";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, currMatch.getMatchID());
+            ps.setString(2, section);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                seat[i]=0;
+                i++;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
         }
     }
 
     private void createSeatButtons() {
-        JButton[] jButton = new JButton[100];
-        ArrayList<Integer> isFree = new ArrayList<Integer>(100);
+        //this.seatNum=getTotalSeats();
+        JButton[] jButton = new JButton[seatNum];
+        int[] isFree = new int[seatNum];
+
         reserveSeats(isFree);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < seatNum; i++) {
             jButton[i] = new JButton(Integer.toString(i + 1));
             jButton[i].setPreferredSize(new Dimension(50, 50));
             seatPanel.add(jButton[i]);
-            if (isFree.get(i).equals(0))
+            if (isFree[i]==0)
                 jButton[i].setBackground(Color.RED);
 
             else
@@ -67,7 +103,7 @@ public class seatSelect extends JFrame {
             jButton[i].addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (isFree.get(finalI).equals(0))
+                    if (isFree[finalI]==0)
                         JOptionPane.showMessageDialog(null, "Seat Taken");
                     else {
                         selectedSeat.setText("Selected Seat: " + String.valueOf(finalI + 1));
@@ -85,6 +121,7 @@ public class seatSelect extends JFrame {
         setTitle("Select Seat");
         setSize(1920, 1080);
         sectionNumber.setText("Section "+section);
+        seatAvailability.setText("Available seats: "+seatNum);
         selectedSeat.setVisible(false);
         checkoutButton.setVisible(false);
         setVisible(true);
