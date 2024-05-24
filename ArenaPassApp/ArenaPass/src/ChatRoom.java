@@ -57,7 +57,7 @@ private void switchPanel(ActionEvent actionEvent) {
                 throw new RuntimeException(e);
             }            break;
         case 2:
-            // new BuySeasonTicket().setVisible(true);
+            new BuySeasonTicket().setVisible(true);
             break;
         case 3:
             // cancel reservation
@@ -70,6 +70,9 @@ private void switchPanel(ActionEvent actionEvent) {
             break;
         case 6:
             // Busses
+            setVisible(false);
+            dispose();
+            new FeedBack().setVisible(true);
             break;
         case 7:
             // Feedback

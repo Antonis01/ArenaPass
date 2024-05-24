@@ -107,13 +107,24 @@ public class BuySeasonTicket extends JFrame{
                 // Leaderboards
                 break;
             case 6:
-                // Busses
+                setVisible(false);
+                dispose();
+                new Busses().setVisible(true);
                 break;
             case 7:
                 // Feedback
+                setVisible(false);
+                dispose();
+                new FeedBack().setVisible(true);
                 break;
             case 8:
                 // contact us
+                break;
+            case 9:
+                // Chatroom
+                setVisible(false);
+                dispose();
+                new ChatRoom().setVisible(true);
                 break;
         }
     }
