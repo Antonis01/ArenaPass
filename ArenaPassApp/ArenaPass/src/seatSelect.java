@@ -20,11 +20,11 @@ public class seatSelect extends JFrame {
     private JLabel seatAvailability;
     private JLabel sectionNumber;
     private JPanel seatPanel;
-    private static int section;
+    private static String section;
 
     public static void setSection(String text)
     {
-        section = Integer.parseInt(text);
+        section = text;
 
     }
 
@@ -33,12 +33,6 @@ public class seatSelect extends JFrame {
         setUpActions();
         seatPanel.setLayout(new GridLayout(10, 10));
         createSeatButtons();
-        button1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //selectedSeat.setVisible(true);
-            }
-        });
     }
 
     private void reserveSeats(ArrayList seat) {

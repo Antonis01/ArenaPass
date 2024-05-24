@@ -111,7 +111,7 @@ public class RegisterUI extends JFrame {
         uploadIDFrontBtn.addActionListener(this::uploadFileAction);
         uploadIDBackBtn.addActionListener(this::uploadFileAction);
         uploadPhotoBtn.addActionListener(this::uploadFileAction);
-       // registerBtn.addActionListener(this::register);
+        // registerBtn.addActionListener(this::register);
     }
 
     private void uploadFileAction(ActionEvent actionEvent) {

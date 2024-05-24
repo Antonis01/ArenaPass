@@ -2,7 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.*;
+
 
 public class selectSection extends JFrame{
 
@@ -14,8 +15,8 @@ public class selectSection extends JFrame{
     private JButton logoutBtn;
     private JButton button1;
     private JLabel sectionLabel;
-    private JTextField selectedSection;
     private JLabel teamLogo;
+    private JComboBox viewSections;
 
     public selectSection(Match match, Image logo, int clicked) {
         teamLogo.setIcon(new ImageIcon(logo));
@@ -42,14 +43,41 @@ public class selectSection extends JFrame{
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
         button1.addActionListener(this::seatSelect);
+        fillComboBox(viewSections);
+    }
 
+
+    public void fillComboBox(JComboBox addSections) {
+        try {
+            // Establish a connection
+            Connection connection = ConnectDB.createConnection();
+
+            // Create a statement
+            Statement statement = connection.createStatement();
+
+            // Execute SQL query
+            String sql = "SELECT DISTINCT seat_section FROM seats;";
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            // Clear the comboBox
+            addSections.removeAllItems();
+
+            // Add items to comboBox
+            while (resultSet.next()) {
+                String item = resultSet.getString(1); // replace with your column
+                addSections.addItem(item);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting to the database: " + e.getMessage());
+        }
     }
 
     private void seatSelect(ActionEvent actionEvent) {
-        if(selectedSection.getText().isEmpty())
+        String section = (String) viewSections.getSelectedItem();
+        if(section == null || section.isEmpty())
             JOptionPane.showMessageDialog(null,"No section selected");
         else {
-            seatSelect.setSection(selectedSection.getText());
+            seatSelect.setSection(section);
             setVisible(false);
             dispose();
             new seatSelect().setVisible(true);

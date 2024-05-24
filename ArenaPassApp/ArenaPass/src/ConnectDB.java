@@ -7,8 +7,7 @@ public class ConnectDB {
     private static final String JDBC_PASSWORD = "";
 
     public static Connection createConnection() throws SQLException {
-        Connection connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
-        return connection;
+        return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
     }
 
     public static boolean Connector(String username, String password) {
