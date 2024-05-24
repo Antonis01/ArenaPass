@@ -73,7 +73,7 @@ public class AdminFanApplicationList extends JFrame {
 
     private void setupFrame() {
         add(thisForm);
-        setTitle("Buy Ticket");
+        setTitle("Application List");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,44 +88,29 @@ public class AdminFanApplicationList extends JFrame {
     private void switchPanel(ActionEvent actionEvent) {
         JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
 
-        switch (mainMenuDropDown.getSelectedIndex()){
+        switch (mainMenuDropDown.getSelectedIndex()) {
             case 0:
                 setVisible(false);
                 dispose();
-                new MainPage().setVisible(true);
+                new AppAdminMainPage().setVisible(true);
                 break;
             case 1:
-                setVisible(false);
-                dispose();
                 try {
-                    new BuyTicket().setVisible(true);
-                }catch (SQLException sqle){
-                    sqle.printStackTrace();
-                } catch (IOException e) {
+                    new AdminFanApplicationList().setVisible(true);
+                } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+                setVisible(false);
+                dispose();
                 break;
             case 2:
-                // new BuySeasonTicket().setVisible(true);
+                setVisible(false);
+                dispose();
+                new BanUserChatRoom().setVisible(true);
                 break;
-            case 3:
-                // cancel reservation
-                break;
-            case 4:
-                // ticket history
-                break;
-            case 5:
-                // Leaderboards
-                break;
-            case 6:
-                // Busses
-                break;
-            case 7:
-                // Feedback
-                break;
-            case 8:
-                // contact us
-                break;
+
+                //new FanIdApplicationPage().setVisible(true);
         }
     }
 

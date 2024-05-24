@@ -58,7 +58,7 @@ public class FeedBack extends JFrame {
                     throw new RuntimeException(e);
                 }                break;
             case 2:
-                // new BuySeasonTicket().setVisible(true);
+                 new BuySeasonTicket().setVisible(true);
                 break;
             case 3:
                 // cancel reservation
@@ -71,6 +71,9 @@ public class FeedBack extends JFrame {
                 break;
             case 6:
                 // Busses
+                setVisible(false);
+                dispose();
+                new Busses().setVisible(true);
                 break;
             case 7:
                 // Feedback

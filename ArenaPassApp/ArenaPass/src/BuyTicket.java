@@ -183,14 +183,16 @@ public class BuyTicket extends JFrame {
                 dispose();
                 try {
                     new BuyTicket().setVisible(true);
-                }catch (SQLException sqle){
-                    sqle.printStackTrace();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
                 break;
             case 2:
-                // new BuySeasonTicket().setVisible(true);
+                setVisible(false);
+                dispose();
+                new BuySeasonTicket().setVisible(true);
                 break;
             case 3:
                 // cancel reservation
@@ -202,13 +204,24 @@ public class BuyTicket extends JFrame {
                 // Leaderboards
                 break;
             case 6:
-                // Busses
+                setVisible(false);
+                dispose();
+                new Busses().setVisible(true);
                 break;
             case 7:
                 // Feedback
+                setVisible(false);
+                dispose();
+                new FeedBack().setVisible(true);
                 break;
             case 8:
                 // contact us
+                break;
+            case 9:
+                // Chatroom
+                setVisible(false);
+                dispose();
+                new ChatRoom().setVisible(true);
                 break;
         }
     }

@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="thisForm" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1048" height="400"/>
+      <xy x="20" y="20" width="1055" height="400"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -22,15 +22,9 @@
             </constraints>
             <properties>
               <model>
-                <item value="HOME"/>
-                <item value="Buy Ticket"/>
-                <item value="Buy Season Ticket"/>
-                <item value="Cancel Reservation"/>
-                <item value="Ticket History"/>
-                <item value="Leaderboards"/>
-                <item value="Busses"/>
-                <item value="Feedback"/>
-                <item value="Contact us"/>
+                <item value="Home"/>
+                <item value="FanID Application Form"/>
+                <item value="Ban Users Chatroom"/>
               </model>
             </properties>
           </component>
