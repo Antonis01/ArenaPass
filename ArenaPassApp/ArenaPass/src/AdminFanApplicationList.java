@@ -95,13 +95,14 @@ public class AdminFanApplicationList extends JFrame {
                 new AppAdminMainPage().setVisible(true);
                 break;
             case 1:
-                setVisible(false);
-                dispose();
                 try {
                     new AdminFanApplicationList().setVisible(true);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
+
+                setVisible(false);
+                dispose();
                 break;
             case 2:
                 setVisible(false);
@@ -109,6 +110,7 @@ public class AdminFanApplicationList extends JFrame {
                 new BanUserChatRoom().setVisible(true);
                 break;
 
+                //new FanIdApplicationPage().setVisible(true);
         }
     }
 
