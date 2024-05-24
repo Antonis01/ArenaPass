@@ -15,6 +15,8 @@ CREATE TABLE fans (
     fan_account_status ENUM ('VERIFIED','BANNED','PENDING') NOT NULL,
     fan_phone VARCHAR(30) NOT NULL,
     fan_email VARCHAR(30) NOT NULL,
+    fan_address VARCHAR(100),
+    fan_city VARCHAR(100),
     PRIMARY KEY (fan_account_id),
     UNIQUE (fan_pass_id),
     UNIQUE (fan_username),
@@ -28,6 +30,7 @@ CREATE TABLE reservations(
     reservation_seat_id INT(8) NOT NULL,
     reservation_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reservation_type ENUM ('TICKET','SEASON TICKET','NOT AVAILABLE'),
+    reservation_match_id INT(6) NOT NULL,
     PRIMARY KEY (reservation_id)
 );
 
@@ -44,6 +47,7 @@ CREATE TABLE seats(
     seat_stadium_id INT(3) NOT NULL,
     seat_section VARCHAR(4) NOT NULL,
     seat_number VARCHAR(4) NOT NULL,
+    seat_side ENUM ('AT','HT'),
     PRIMARY KEY (seat_id),
     UNIQUE (seat_section,seat_number),
     CONSTRAINT SEAT_STADIUM FOREIGN KEY (seat_stadium_id) REFERENCES stadiums(stadium_id)
@@ -210,9 +214,5 @@ BEGIN
 END$
 
 DELIMITER ;
-
-
-
-
 
 

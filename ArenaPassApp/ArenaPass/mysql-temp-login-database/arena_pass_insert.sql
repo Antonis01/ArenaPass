@@ -30,30 +30,30 @@ INSERT INTO fans (fan_username, fan_password, fan_legal_name, fan_legal_surname,
 
 /* Insert into seats */
 /* Seats for Stadium A (10 entries, 2 sections) */
-INSERT INTO seats (seat_stadium_id, seat_section, seat_number) VALUES 
-(1, 'A1', '001'),
-(1, 'A1', '002'),
-(1, 'A1', '003'),
-(1, 'A1', '004'),
-(1, 'A1', '005'),
-(1, 'A2', '001'),
-(1, 'A2', '002'),
-(1, 'A2', '003'),
-(1, 'A2', '004'),
-(1, 'A2', '005');
+INSERT INTO seats (seat_stadium_id, seat_section, seat_number,seat_side) VALUES 
+(1, 'A1', '001','HT'),
+(1, 'A1', '002','HT'),
+(1, 'A1', '003','HT'),
+(1, 'A1', '004','HT'),
+(1, 'A1', '005','HT'),
+(1, 'A2', '001','AT'),
+(1, 'A2', '002','AT'),
+(1, 'A2', '003','AT'),
+(1, 'A2', '004','AT'),
+(1, 'A2', '005','AT');
 
 /* Seats for Stadium B (10 entries, 3 sections) */
 INSERT INTO seats (seat_stadium_id, seat_section, seat_number) VALUES 
-(2, 'B1', '001'),
-(2, 'B1', '002'),
-(2, 'B1', '003'),
-(2, 'B1', '004'),
-(2, 'B1', '005'),
-(2, 'B2', '001'),
-(2, 'B2', '002'),
-(2, 'B2', '003'),
-(2, 'B2', '004'),
-(2, 'B3', '001');
+(2, 'B1', '001','HT'),
+(2, 'B1', '002','HT'),
+(2, 'B1', '003','HT'),
+(2, 'B1', '004','HT'),
+(2, 'B1', '005','HT'),
+(2, 'B2', '001','AT'),
+(2, 'B2', '002','AT'),
+(2, 'B2', '003','AT'),
+(2, 'B2', '004','AT'),
+(2, 'B3', '001','AT');
 
 /* Insert into tickets */
 INSERT INTO tickets (ticket_seat_id, ticket_match_id, ticket_fan_pass_id) VALUES 
@@ -114,3 +114,9 @@ INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_t
 
 INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id, season_ticket_fan_pass_id) VALUES /*WORKS --> DOES RUN*/
 (20, 3, 1, 1005);
+
+
+/*-----------------------------------------*/
+
+INSERT INTO matches (match_stadium_id, match_home_team, match_away_team, match_date, match_time, match_ht_max_capacity, match_at_max_capacity, match_restrictions) VALUES 
+(1, 2, 4, '2024-05-20', '15:00:00', 25000, 25000, 'NO RESTRICTION');
