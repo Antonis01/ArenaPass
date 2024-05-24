@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.sql.SQLException;
 
 public class BanUserChatRoom extends JFrame{
     private JPanel BanUserChatRoomForm;
@@ -37,7 +38,11 @@ public class BanUserChatRoom extends JFrame{
             case 1:
                 setVisible(false);
                 dispose();
-                new FanIdApplicationPage().setVisible(true);
+                try {
+                    new AdminFanApplicationList().setVisible(true);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 2:
                 setVisible(false);

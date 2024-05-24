@@ -1,7 +1,9 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.*;
 
 
 public class RegisterUI extends JFrame {
@@ -9,7 +11,7 @@ public class RegisterUI extends JFrame {
 
     private JPanel RegisterForm;
     private JLabel titleRegister;
-    private JTextField inNameField;
+    private JTextField inFirstNameField;
     private JTextField inEmailField;
     private JButton uploadIDFrontBtn;
     private JTextField inBirthdate;
@@ -21,10 +23,45 @@ public class RegisterUI extends JFrame {
     private JButton uploadPhotoBtn;
     private JButton registerBtn;
     private JPasswordField inPasswordField;
+    private JTextField inLastNameField;
+    private JTextField inUsernameField;
 
     public RegisterUI() {
         setupFrame();
         setupActions();
+
+        registerBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(isNotEmpty()) {
+                    try {
+                        String query = "INSERT INTO fans (`fan_username`, `fan_password`, `fan_legal_name`, `fan_legal_surname`, `fan_citizen_id_number`, `fan_citizen_id_expiration_date`, `fan_citizen_id_dob`, `fan_registration_date`, `fan_account_status`, `fan_phone`, `fan_email`) VALUES ( ?, ?, ?, ?, ?, ?, ?,3, ?, ?)";
+                        Connection connection = ConnectDB.createConnection();
+                        Statement statement = connection.createStatement();
+                        ResultSet rs = null;
+                        PreparedStatement ps = connection.prepareStatement(query);
+                        ps.setInt(1, userID);
+                        ps.executeUpdate();
+
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+        });
+    }
+
+    private Boolean isNotEmpty(){
+        if(inFirstNameField.getText() == null) return false;
+        if(inEmailField.getText() == null) return false;
+        if(inBirthdate.getText() == null) return false;
+        if(inPhoneNumber.getText() == null) return false;
+        if(inHomeAddress.getText() == null) return false;
+        if(inCity.getText() == null) return false;
+        if(inCitizenID.getText() == null) return false;
+        if(inPasswordField.getText() == null) return false;
+
+        return true;
     }
 
     private void setupFrame() {
@@ -55,7 +92,7 @@ public class RegisterUI extends JFrame {
     }
 
     private void register(ActionEvent actionEvent) {
-        String name = inNameField.getText();
+        String name = inFirstNameField.getText();
         String email = inEmailField.getText();
         String birthdate = inBirthdate.getText();
         String phoneNumber = inPhoneNumber.getText();
