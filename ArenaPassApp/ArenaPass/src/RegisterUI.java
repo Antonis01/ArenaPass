@@ -25,6 +25,7 @@ public class RegisterUI extends JFrame {
     private JPasswordField inPasswordField;
     private JTextField inLastNameField;
     private JTextField inUsernameField;
+    private JTextField inIDExpDate;
 
     public RegisterUI() {
         setupFrame();
@@ -35,12 +36,11 @@ public class RegisterUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 if(isNotEmpty()) {
                     try {
-                        String query = "INSERT INTO fans (`fan_username`, `fan_password`, `fan_legal_name`, `fan_legal_surname`, `fan_citizen_id_number`, `fan_citizen_id_expiration_date`, `fan_citizen_id_dob`, `fan_registration_date`, `fan_account_status`, `fan_phone`, `fan_email`) VALUES ( ?, ?, ?, ?, ?, ?, ?,3, ?, ?)";
+                        String query = "INSERT INTO fans (`fan_username`, `fan_password`, `fan_legal_name`, `fan_legal_surname`, `fan_citizen_id_number`, `fan_citizen_id_expiration_date`, `fan_citizen_id_dob`, `fan_account_status`, `fan_phone`, `fan_email`) VALUES ( ?, ?, ?, ?, ?, ?, ?,3, ?, ?)";
                         Connection connection = ConnectDB.createConnection();
                         Statement statement = connection.createStatement();
-                        ResultSet rs = null;
                         PreparedStatement ps = connection.prepareStatement(query);
-                        ps.setInt(1, userID);
+                        ps.setString(1, inUsernameField.getText());
                         ps.executeUpdate();
 
                     } catch (SQLException ex) {
@@ -53,12 +53,14 @@ public class RegisterUI extends JFrame {
 
     private Boolean isNotEmpty(){
         if(inFirstNameField.getText() == null) return false;
+        if(inLastNameField.getText() == null) return false;
         if(inEmailField.getText() == null) return false;
         if(inBirthdate.getText() == null) return false;
         if(inPhoneNumber.getText() == null) return false;
         if(inHomeAddress.getText() == null) return false;
         if(inCity.getText() == null) return false;
         if(inCitizenID.getText() == null) return false;
+        if(inUsernameField.getText() == null) return false;
         if(inPasswordField.getText() == null) return false;
 
         return true;
