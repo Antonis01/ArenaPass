@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -45,7 +44,7 @@ public class MainPage extends JFrame {
                 setVisible(false);
                 dispose();
                 try {
-                    new BuyTicketNew().setVisible(true);
+                    new BuyTicket().setVisible(true);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 } catch (IOException e) {

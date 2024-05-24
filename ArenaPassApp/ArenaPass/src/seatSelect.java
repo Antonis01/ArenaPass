@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class seatSelect extends JFrame {
@@ -129,7 +131,13 @@ public class seatSelect extends JFrame {
             case 1:
                 setVisible(false);
                 dispose();
-                new BuyTicket().setVisible(true);
+                try {
+                    new BuyTicket().setVisible(true);
+                }catch (SQLException sqle){
+                    sqle.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 2:
                 // new BuySeasonTicket().setVisible(true);

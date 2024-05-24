@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class ChatRoom extends JFrame {
@@ -47,8 +49,13 @@ private void switchPanel(ActionEvent actionEvent) {
         case 1:
             setVisible(false);
             dispose();
-            new BuyTicket().setVisible(true);
-            break;
+            try {
+                new BuyTicket().setVisible(true);
+            }catch (SQLException sqle){
+                sqle.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }            break;
         case 2:
             // new BuySeasonTicket().setVisible(true);
             break;

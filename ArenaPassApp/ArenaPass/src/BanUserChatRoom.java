@@ -37,7 +37,7 @@ public class BanUserChatRoom extends JFrame{
             case 1:
                 setVisible(false);
                 dispose();
-                new FanIdApplicationPage().setVisible(true);
+                //new FanIdApplicationPage().setVisible(true);
                 break;
             case 2:
                 setVisible(false);

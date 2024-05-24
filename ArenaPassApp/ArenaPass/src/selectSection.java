@@ -1,9 +1,10 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
-public class chooseMatch extends JFrame{
+public class selectSection extends JFrame{
 
     private JPanel SelectTeamForm1;
     private JPanel selectTeamForm;
@@ -16,14 +17,17 @@ public class chooseMatch extends JFrame{
     private JTextField selectedSection;
     private JLabel teamLogo;
 
-    public chooseMatch(Match match, Image logo, int clicked) {
+    public selectSection(Match match, Image logo, int clicked) {
         teamLogo.setIcon(new ImageIcon(logo));
         if(clicked == 0)    teamLogo.setText(match.getHomeTeam());
         else    teamLogo.setText(match.getAwayTeam());
         setupFrame();
         setUpActions();
+    }
 
-
+    public selectSection(){
+        setupFrame();
+        setUpActions();
     }
 
     private void setupFrame() {
@@ -64,8 +68,13 @@ public class chooseMatch extends JFrame{
             case 1:
                 setVisible(false);
                 dispose();
-                new BuyTicket().setVisible(true);
-                break;
+                try {
+                    new BuyTicket().setVisible(true);
+                }catch (SQLException sqle){
+                    sqle.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }                break;
             case 2:
                 // new BuySeasonTicket().setVisible(true);
                 break;

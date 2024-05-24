@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class BuySeasonTicket extends JFrame{
     private JPanel BuySeasonTicketForm;
@@ -14,11 +16,11 @@ public class BuySeasonTicket extends JFrame{
     private JButton seasonBtn5;
     private JButton seasonBtn6;
     private JButton seasonBtn7;
+    private JButton seasonBtn8;
     private JButton seasonBtn9;
     private JButton seasonBtn10;
     private JButton seasonBtn11;
     private JButton seasonBtn12;
-    private JButton seasonBtn8;
     private JButton seasonBtn13;
     private JButton seasonBtn14;
     private JScrollBar scrollBar1;
@@ -67,7 +69,7 @@ public class BuySeasonTicket extends JFrame{
         JOptionPane.showMessageDialog(null, "Season Ticket for " + buttonText);
         setVisible(false);
         dispose();
-        new seatSelect().setVisible(true);
+        new selectSection().setVisible(true);
 
     }
 
@@ -83,8 +85,13 @@ public class BuySeasonTicket extends JFrame{
             case 1:
                 setVisible(false);
                 dispose();
-                new BuyTicket().setVisible(true);
-                break;
+                try {
+                    new BuyTicket().setVisible(true);
+                }catch (SQLException sqle){
+                    sqle.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }                break;
             case 2:
                 setVisible(false);
                 dispose();

@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.*;
 
 public class AdminFanApplicationList extends JFrame {
@@ -93,7 +94,13 @@ public class AdminFanApplicationList extends JFrame {
             case 1:
                 setVisible(false);
                 dispose();
-                new BuyTicket().setVisible(true);
+                try {
+                    new BuyTicket().setVisible(true);
+                }catch (SQLException sqle){
+                    sqle.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             case 2:
                 // new BuySeasonTicket().setVisible(true);
