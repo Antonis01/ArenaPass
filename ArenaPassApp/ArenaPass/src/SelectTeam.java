@@ -1,9 +1,7 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class SelectTeam extends JFrame{
     private JPanel teamsPanel;
@@ -33,7 +31,7 @@ public class SelectTeam extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 dispose();
-                new chooseMatch(match,homeTeamLogo,0);
+                new selectSection(match,homeTeamLogo,0);
             }
         });
         team2.setIcon(new ImageIcon(awayTeamLogo));
@@ -42,7 +40,7 @@ public class SelectTeam extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 dispose();
-                new chooseMatch(match,awayTeamLogo,1);
+                new selectSection(match,awayTeamLogo,1);
             }
         });
 
