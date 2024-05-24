@@ -55,6 +55,9 @@ public class AdminFanApplicationList extends JFrame {
                 int selectedUserID=  Integer.parseInt(value.toString());
                 System.out.println(selectedUserID);
                 new FanIdApplicationPage(selectedUserID).setVisible(true);
+
+                setVisible(false);
+                dispose();
             }
         });
 

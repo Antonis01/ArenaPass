@@ -34,6 +34,10 @@ public class FanIdApplicationPage extends JFrame {
                     PreparedStatement ps = connection.prepareStatement(query);
                     ps.setInt(1, userID);
                     ps.executeUpdate();
+
+                    new AdminFanApplicationList().setVisible(true);
+                    setVisible(false);
+                    dispose();
                 } catch (SQLException exception) {
                     throw new RuntimeException(exception);
                 }
@@ -52,6 +56,10 @@ public class FanIdApplicationPage extends JFrame {
                     PreparedStatement ps = connection.prepareStatement(query);
                     ps.setInt(1, userID);
                     ps.executeUpdate();
+
+                    new AdminFanApplicationList().setVisible(true);
+                    setVisible(false);
+                    dispose();
                 } catch (SQLException exception) {
                     throw new RuntimeException(exception);
                 }
