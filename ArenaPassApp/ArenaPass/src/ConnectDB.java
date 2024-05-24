@@ -10,6 +10,14 @@ public class ConnectDB {
         return DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
     }
 
+    public static Connection createConnectionFeedback(){
+        try {
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/feedback_db",JDBC_USER,JDBC_PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static boolean Connector(String username, String password) {
         try {
             // Establish a connection

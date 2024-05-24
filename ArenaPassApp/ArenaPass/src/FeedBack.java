@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class FeedBack extends JFrame {
@@ -8,8 +10,8 @@ public class FeedBack extends JFrame {
     private JComboBox mainMenuDropDown;
     private JTextField textField1;
     private JButton logoutBtn;
-    private JTextField textField2;
-    private JTextField textField3;
+    private JTextField categoryField;
+    private JTextField descriptionField;
     private JButton submitBtn;
 
 
@@ -31,7 +33,18 @@ public class FeedBack extends JFrame {
     }
 
     private void submitForm(ActionEvent actionEvent){
-        JOptionPane.showMessageDialog(submitBtn,"successfully submit");
+        String query="";
+        try {
+            Connection connection = ConnectDB.createConnectionFeedback();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1,categoryField.getText());
+            ps.setString(2,descriptionField.getText());
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null,"Successfully Submitted");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         setVisible(false);
         dispose();
         new MainPage().setVisible(true);

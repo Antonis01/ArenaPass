@@ -104,7 +104,7 @@
               <text value="Comments"/>
             </properties>
           </component>
-          <component id="5ba14" class="javax.swing.JTextField" binding="textField2">
+          <component id="5ba14" class="javax.swing.JTextField" binding="categoryField">
             <constraints>
               <grid row="2" column="5" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -112,7 +112,7 @@
             </constraints>
             <properties/>
           </component>
-          <component id="ba9b3" class="javax.swing.JTextField" binding="textField3">
+          <component id="ba9b3" class="javax.swing.JTextField" binding="descriptionField">
             <constraints>
               <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="600" height="300"/>

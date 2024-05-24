@@ -6,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
         //new LoginUI().setVisible(true);
-        new AppAdminMainPage().setVisible(true);
+     //  new AppAdminMainPage().setVisible(true);
+        new AdminFeedbackReview().setVisible(true);
     }
 }

@@ -65,8 +65,7 @@ public class AdminFanApplicationList extends JFrame {
 
     }
 
-    public static void clearTable(JTable table) {
-        // Setting a new empty model to the table
+    private static void clearTable(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
     }
