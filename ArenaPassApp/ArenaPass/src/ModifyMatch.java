@@ -7,11 +7,11 @@ public class ModifyMatch extends JFrame{
     private JComboBox AdminMenuDropDown;
     private JTextField textField1;
     private JButton logoutBtn;
-    private JTextField textField2;
+    private JTextField changeDate;
     private JButton DateBtn;
-    private JTextField textField3;
+    private JTextField changeScore;
     private JButton TimeBtn;
-    private JTextField textField4;
+    private JTextField changeTime;
     private JButton ScoreBtn;
 
     public ModifyMatch(){

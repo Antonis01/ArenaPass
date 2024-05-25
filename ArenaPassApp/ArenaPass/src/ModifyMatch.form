@@ -62,7 +62,7 @@
               <text value="Logout"/>
             </properties>
           </component>
-          <component id="c6a65" class="javax.swing.JTextField" binding="textField3" default-binding="true">
+          <component id="c6a65" class="javax.swing.JTextField" binding="changeScore">
             <constraints>
               <grid row="10" column="2" row-span="3" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="100" height="-1"/>
@@ -90,7 +90,7 @@
               <text value="Change Date"/>
             </properties>
           </component>
-          <component id="91227" class="javax.swing.JTextField" binding="textField2" default-binding="true">
+          <component id="91227" class="javax.swing.JTextField" binding="changeDate">
             <constraints>
               <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="100" height="-1"/>
@@ -110,7 +110,7 @@
               <text value="Change Time"/>
             </properties>
           </component>
-          <component id="3c7d8" class="javax.swing.JTextField" binding="textField4" default-binding="true">
+          <component id="3c7d8" class="javax.swing.JTextField" binding="changeTime">
             <constraints>
               <grid row="7" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
                 <minimum-size width="100" height="-1"/>
