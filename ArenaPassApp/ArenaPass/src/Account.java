@@ -1,19 +1,21 @@
 import java.util.Date;
 
 public class Account {
+    int accID;
     String firstName;
     String username;
     String lastName;
     String phoneNumber;
     String homeAddress;
     String city;
-    String ID;
+    int ID;
     String emailAddress;
-    String password;
+    String password=null;
     Date birthDate;
 
 
-    public Account(String username,String firstName, String lastName, String phoneNumber, String homeAddress, String city, String ID, String emailAddress, String password, Date birthDate) {
+    public Account(int accID,String username,String firstName, String lastName, String phoneNumber, String homeAddress, String city, int ID, String emailAddress,Date birthDate) {
+        this.accID = accID;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,12 +24,19 @@ public class Account {
         this.city = city;
         this.ID = ID;
         this.emailAddress = emailAddress;
-        this.password = password;
         this.birthDate = birthDate;
+    }
+
+    public int getAccID() {
+        return accID;
     }
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getLastName() {
@@ -46,7 +55,7 @@ public class Account {
         return city;
     }
 
-    public String getID() {
+    public int getID() {
         return ID;
     }
 
@@ -56,5 +65,9 @@ public class Account {
 
     public String getPassword() {
         return password;
+    }
+
+    public Date getBirthDate() {
+        return birthDate;
     }
 }

@@ -1,16 +1,16 @@
 import java.util.Date;
 
 public class Fan extends Account{
-    boolean isApproved;
+    int accState;
 
-    public Fan(String username,String firstName, String lastName, String phoneNumber, String homeAddress, String city, String ID, String emailAddress, String password, Date birthDate, boolean isApproved) {
-        super(username,firstName, lastName, phoneNumber, homeAddress, city, ID, emailAddress, password, birthDate);
-        this.isApproved = isApproved;
+    public Fan(int accID,String username,String firstName, String lastName, String phoneNumber, String homeAddress, String city, int ID, String emailAddress, Date birthDate, int accState) {
+        super(accID,username,firstName, lastName, phoneNumber, homeAddress, city, ID, emailAddress, birthDate);
+        this.accState = accState;
     }
 
 
-    public boolean isApproved() {
-        return isApproved;
+    public int getAccState() {
+        return accState;
     }
 
     public String getUsername(){
