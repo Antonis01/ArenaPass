@@ -138,18 +138,9 @@ public class seatSelect extends JFrame {
 
     private void checkout(ActionEvent actionEvent) {
         JOptionPane.showMessageDialog(null, "Transaction Completed");
-        //new seatSelect().setVisible(false);
-        //new MainPage().setVisible(true);
         try {
-            Connection conn = ConnectDB.createConnection();
-            String sql = "INSERT INTO reservations (reservation_type, reservation_match_id, reservation_seat_id, reservation_user_id) VALUES (1, ?, ?, ?);";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setInt(1, currMatch.getMatchID());
-            ps.setInt(2, Integer.parseInt(selectedSeat.getText().substring(15)));
-            ps.setInt(3, LoginUI.getUserID());
-            ps.executeUpdate();
-
-            Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py");
+            int temp = LoginUI.getFanPassID();
+            Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py " + Integer.toString(temp));
             p.waitFor(); // wait for the process to finish
             setVisible(false);
             dispose();
