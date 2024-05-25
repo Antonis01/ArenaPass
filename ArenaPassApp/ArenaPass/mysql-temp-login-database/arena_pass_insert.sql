@@ -128,4 +128,31 @@ INSERT INTO season_tickets (season_ticket_seat_id,season_ticket_team_id,season_t
 /*-----------------------------------------*/
 
 INSERT INTO matches (match_stadium_id, match_home_team, match_away_team, match_date, match_time, match_ht_max_capacity, match_at_max_capacity, match_restrictions) VALUES 
-(1, 2, 4, '2024-05-20', '15:00:00', 25000, 25000, 'NO RESTRICTION');
+(1, 2, 4, '2024-05-05', '15:00:00', 25000, 25000, 'NO RESTRICTION');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(1,2,1,'2024-02-02','18:00:00',9000,9000,'NO RESTRICTION');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(2,2,1,'2024-06-28','18:00:00',9000,9000,'NO RESTRICTION');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(1,2,1,'2024-06-21','18:00:00',0,0,'NO FANS');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(1,2,1,'2024-08-21','18:00:00',9000,9000,'NO RESTRICTION');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(2,3,4,'2024-08-21','18:00:00',9000,0,'NO AWAY FANS');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(2,3,4,'2024-08-21','18:00:00',0,0,'NO FANS');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(2,3,4,'2024-08-22','18:00:00',9000,0,'NO AWAY FANS');
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(1,2,4,'2024-08-23','18:00:00',9000,0,2);
+
+INSERT INTO matches (match_stadium_id,match_home_team,match_away_team,match_date,match_time,match_ht_max_capacity,match_at_max_capacity,match_restrictions) VALUES
+(1,1,4,'2024-08-25','18:00:00',9000,3000,1);

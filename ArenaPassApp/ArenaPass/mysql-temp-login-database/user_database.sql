@@ -13,8 +13,8 @@ CREATE TABLE fans (
     fan_registration_date DATE DEFAULT(CURRENT_DATE()),
     fan_pass_id INT(9) NOT NULL,
     fan_account_status ENUM ('VERIFIED','BANNED','PENDING') NOT NULL,
-    fan_phone VARCHAR(30) ,
-    fan_email VARCHAR(30) ,
+    fan_phone VARCHAR(30),
+    fan_email VARCHAR(30),
     fan_address VARCHAR(100),
     fan_city VARCHAR(100),
     PRIMARY KEY (fan_account_id),
@@ -85,9 +85,9 @@ CREATE TABLE matches(
     match_away_team INT(3) NOT NULL,
     match_date DATE NOT NULL,
     match_time TIME NOT NULL,
-    match_ht_max_capacity INT(6) NOT NULL, /*ht=home team*/
-    match_at_max_capacity INT(6) NOT NULL, /*at=away team*/
-    match_restrictions ENUM('NO RESTRICTION','NO AWAY FANS','NO FANS'), /*for determining which sections/seats are available for buying will be set by external script by buying 'empty' tickets for all non available seats*/
+    match_ht_max_capacity INT(6) DEFAULT 0, /*ht=home team*/
+    match_at_max_capacity INT(6) DEFAULT 0, /*at=away team*/
+    match_restrictions ENUM('NO RESTRICTION','NO AWAY FANS','NO FANS') DEFAULT 'NO RESTRICTION', /*for determining which sections/seats are available for buying will be set by external script by buying 'empty' tickets for all non available seats*/
     PRIMARY KEY (match_id),
     CONSTRAINT MATCH_STADIUM FOREIGN KEY (match_stadium_id) REFERENCES stadiums(stadium_id),
     CONSTRAINT HOME_TEAM FOREIGN KEY (match_home_team) REFERENCES teams(team_id),
@@ -115,7 +115,7 @@ CREATE TABLE tickets (
 
 
 
-/* QYERIES SECTION ------------ (FOR TESTING) */
+/* ----------- QYERIES SECTION ------------ (FOR TESTING) */
 
 
 select fan_account_id,fan_username,fan_pass_id,ticket_number,ticket_purchase_datetime
@@ -215,4 +215,186 @@ END$
 
 DELIMITER ;
 
+DELIMITER $
 
+CREATE PROCEDURE season_reservations_match (IN r_match_id INT, IN r_team_id INT)
+BEGIN
+    DECLARE res_ticket_number INT;
+    DECLARE res_ticket_seat_id INT;
+    DECLARE res_ticket_fan_pass_id INT;
+
+    DECLARE finishedFlag INT;
+    DECLARE ticket_cursor CURSOR FOR
+    SELECT season_ticket_number,season_ticket_seat_id,season_ticket_fan_pass_id FROM season_tickets WHERE season_ticket_team_id=r_team_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finishedFlag=1;
+    OPEN ticket_cursor;
+
+
+    SET finishedFlag=0;
+    FETCH ticket_cursor INTO res_ticket_number, res_ticket_seat_id, res_ticket_fan_pass_id;
+
+     WHILE (finishedFlag=0) DO
+        /* INSERT INTO reservations (reservation_fan_pass_id,reservation_ticket_number,reservation_seat_id,reservation_match_id,reservation_type) VALUES
+        (res_ticket_fan_pass_id,res_ticket_number,res_ticket_seat_id,r_match_id,'SEASON TICKET'); */
+        UPDATE reservations SET reservation_fan_pass_id = res_ticket_fan_pass_id,reservation_ticket_number=res_ticket_number,reservation_match_id=r_match_id,reservation_type='SEASON TICKET'
+        WHERE reservation_match_id = r_match_id AND reservation_seat_id = res_ticket_seat_id;
+        FETCH ticket_cursor INTO res_ticket_number, res_ticket_seat_id, res_ticket_fan_pass_id;
+    END WHILE;
+    CLOSE ticket_cursor;
+END$
+
+DELIMITER ;
+
+
+DELIMITER $
+
+CREATE PROCEDURE set_home_available (IN r_match_id INT, IN r_stadium_id INT)
+BEGIN
+    DECLARE res_seat_id INT;
+    DECLARE finishedFlag INT DEFAULT 0;
+
+    /* Declare cursor for home team sections */
+    DECLARE seat_cursor_ht CURSOR FOR
+    SELECT seat_id FROM seats WHERE seat_stadium_id = r_stadium_id AND seat_side = 'HT';
+
+    /* Declare cursor for away team sections */
+    DECLARE seat_cursor_at CURSOR FOR
+    SELECT seat_id FROM seats WHERE seat_stadium_id = r_stadium_id AND seat_side = 'AT';
+
+    /* Declare handler for NOT FOUND to set the finished flag */
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finishedFlag = 1;
+
+    /* Open cursor for home team sections */
+    OPEN seat_cursor_ht;
+
+    /* Fetch first row */
+    FETCH seat_cursor_ht INTO res_seat_id;
+
+    /* Create reservations for home team as available */
+    WHILE (finishedFlag = 0) DO
+        INSERT INTO reservations (reservation_fan_pass_id, reservation_ticket_number, reservation_seat_id, reservation_type, reservation_match_id)
+        VALUES (-1, -1, res_seat_id, 'AVAILABLE', r_match_id);
+        FETCH seat_cursor_ht INTO res_seat_id;
+    END WHILE;
+    CLOSE seat_cursor_ht;
+
+    /* Reset finishedFlag for next use */
+    SET finishedFlag = 0;
+
+    /* Open cursor for away team sections */
+    OPEN seat_cursor_at;
+
+    /* Fetch first row */
+    FETCH seat_cursor_at INTO res_seat_id;
+
+    /* Create reservations for away team as not available */
+    WHILE (finishedFlag = 0) DO
+        INSERT INTO reservations (reservation_fan_pass_id, reservation_ticket_number, reservation_seat_id, reservation_type, reservation_match_id)
+        VALUES (-1, -1, res_seat_id, 'NOT AVAILABLE', r_match_id);
+        FETCH seat_cursor_at INTO res_seat_id;
+    END WHILE;
+    CLOSE seat_cursor_at;
+
+END$
+
+DELIMITER ;
+
+DELIMITER $
+
+CREATE PROCEDURE set_not_available (IN r_match_id INT, IN r_stadium_id INT)
+BEGIN
+
+    DECLARE res_seat_id INT;
+
+    DECLARE finishedFlag INT;
+    DECLARE seat_cursor CURSOR FOR
+    SELECT seat_id FROM seats WHERE seat_stadium_id=r_stadium_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finishedFlag=1;
+    OPEN seat_cursor;
+
+    SET finishedFlag=0;
+    FETCH seat_cursor INTO res_seat_id;
+
+     WHILE (finishedFlag=0) DO
+        INSERT INTO reservations (reservation_fan_pass_id,reservation_ticket_number,reservation_seat_id,reservation_type,reservation_match_id) VALUES
+        (-1,-1,res_seat_id,'NOT AVAILABLE',r_match_id);
+        FETCH seat_cursor INTO res_seat_id;
+    END WHILE;
+    CLOSE seat_cursor;
+END$
+
+DELIMITER ;
+
+DELIMITER $
+
+CREATE PROCEDURE set_available (IN r_match_id INT, IN r_stadium_id INT)
+BEGIN
+
+    DECLARE res_seat_id INT;
+
+    DECLARE finishedFlag INT;
+    DECLARE seat_cursor CURSOR FOR
+    SELECT seat_id FROM seats WHERE seat_stadium_id=r_stadium_id;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET finishedFlag=1;
+    OPEN seat_cursor;
+
+    SET finishedFlag=0;
+    FETCH seat_cursor INTO res_seat_id;
+
+     WHILE (finishedFlag=0) DO
+        INSERT INTO reservations (reservation_fan_pass_id,reservation_ticket_number,reservation_seat_id,reservation_type,reservation_match_id) VALUES
+        (-1,-1,res_seat_id,'AVAILABLE',r_match_id);
+        FETCH seat_cursor INTO res_seat_id;
+    END WHILE;
+    CLOSE seat_cursor;
+END$
+
+DELIMITER ;
+
+DELIMITER $
+
+CREATE TRIGGER set_reservation_availability AFTER INSERT ON matches
+FOR EACH ROW
+BEGIN
+    DECLARE ht_def_hs_id INT; /*home team default home stadium*/
+
+    /* SET AVAILABILITY FOR ALL SEATS OF MATCH */
+    IF NEW.match_restrictions = 3 THEN
+        CALL set_not_available(NEW.match_id,NEW.match_stadium_id); /*--> reservations*/
+    ELSEIF NEW.match_restrictions = 2 THEN
+        CALL set_home_available(NEW.match_id,NEW.match_stadium_id); /*--> reservations*/
+    ELSEIF NEW.match_restrictions = 1 THEN
+        CALL set_available(NEW.match_id,NEW.match_stadium_id); /*--> reservations*/
+    ELSE
+        SIGNAL SQLSTATE '45001' SET MESSAGE_TEXT = 'PROBLEM ELSE';
+    END IF;
+
+    /* RESERVE SEATS FOR SEASON TICKET HOLDERS */
+    SELECT teams.team_def_home_stadium_id INTO ht_def_hs_id
+    FROM teams
+    WHERE teams.team_id = NEW.match_home_team;
+    
+    IF NEW.match_restrictions != 3 AND NEW.match_stadium_id = ht_def_hs_id THEN
+        CALL season_reservations_match(NEW.match_id, NEW.match_home_team);
+    END IF;
+
+END$
+
+DELIMITER ;
+
+
+
+/*create reservations for bought tickets, convert reservation type from available to ticket*/
+/*DELIMITER $
+CREATE TRIGGER ticket_reservation AFTER INSERT ON tickets 
+FOR EACH ROW 
+BEGIN
+
+    DECLARE 
+
+    SELECT NEW.
+
+END$
+
+DELIMITER ;
+*/
