@@ -25,6 +25,7 @@ public class seatSelect extends JFrame {
     private  String section;
     private Match currMatch;
     private int seatNum;
+    private int freeSeats;
 
     /*public static void setSection(String text)
     {
@@ -36,10 +37,10 @@ public class seatSelect extends JFrame {
         this.currMatch= currMatch;
         this.section=section;
         getTotalSeats();
-        setupFrame();
         setUpActions();
         seatPanel.setLayout(new GridLayout(10, 10));
         createSeatButtons();
+        setupFrame();
     }
 
     private void getTotalSeats() {
@@ -55,6 +56,8 @@ public class seatSelect extends JFrame {
         }catch (SQLException e){
             e.printStackTrace();
         }
+
+        this.freeSeats=seatNum;
     }
 
     private void reserveSeats(int[] seat) {
@@ -83,17 +86,16 @@ public class seatSelect extends JFrame {
         //this.seatNum=getTotalSeats();
         JButton[] jButton = new JButton[seatNum];
         int[] isFree = new int[seatNum];
-
         reserveSeats(isFree);
 
         for (int i = 0; i < seatNum; i++) {
             jButton[i] = new JButton(Integer.toString(i + 1));
             jButton[i].setPreferredSize(new Dimension(50, 50));
             seatPanel.add(jButton[i]);
-            if (isFree[i]==0)
+            if (isFree[i]==0) {
+                this.freeSeats--;
                 jButton[i].setBackground(Color.RED);
-
-            else
+            } else
                 jButton[i].setBackground(Color.GREEN);
 
             jButton[i].setForeground(Color.BLACK);
@@ -121,7 +123,7 @@ public class seatSelect extends JFrame {
         setTitle("Select Seat");
         setSize(1920, 1080);
         sectionNumber.setText("Section "+section);
-        seatAvailability.setText("Available seats: "+seatNum);
+        seatAvailability.setText("Available seats: "+freeSeats);
         selectedSeat.setVisible(false);
         checkoutButton.setVisible(false);
         setVisible(true);
@@ -139,6 +141,14 @@ public class seatSelect extends JFrame {
         //new seatSelect().setVisible(false);
         //new MainPage().setVisible(true);
         try {
+            Connection conn = ConnectDB.createConnection();
+            String sql = "INSERT INTO reservations (reservation_type, reservation_match_id, reservation_seat_id, reservation_user_id) VALUES (1, ?, ?, ?);";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, currMatch.getMatchID());
+            ps.setInt(2, Integer.parseInt(selectedSeat.getText().substring(15)));
+            ps.setInt(3, LoginUI.getUserID());
+            ps.executeUpdate();
+
             Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py");
             p.waitFor(); // wait for the process to finish
             setVisible(false);

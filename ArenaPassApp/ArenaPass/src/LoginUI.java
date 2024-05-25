@@ -7,6 +7,7 @@ public class LoginUI extends JFrame {
     private JButton loginButton;
     private JPanel LoginForm;
     private JButton registerButton;
+    private Fan fan;
 
     public LoginUI() {
         setupFrame();
@@ -32,6 +33,7 @@ public class LoginUI extends JFrame {
 
     private void login(ActionEvent actionEvent) {
         if (ConnectDB.Connector(usernameField.getText(), new String(passwordField.getPassword()))) {
+
             openMainPage();
         } else {
             JOptionPane.showMessageDialog(null, "Login failed!");

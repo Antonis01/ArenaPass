@@ -12,6 +12,7 @@ public class Account {
     String password;
     Date birthDate;
 
+
     public Account(String username,String firstName, String lastName, String phoneNumber, String homeAddress, String city, String ID, String emailAddress, String password, Date birthDate) {
         this.username = username;
         this.firstName = firstName;

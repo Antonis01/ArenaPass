@@ -12,4 +12,10 @@ public class Fan extends Account{
     public boolean isApproved() {
         return isApproved;
     }
+
+    public String getUsername(){
+        return super.username;
+    }
+
+
 }
