@@ -385,16 +385,18 @@ DELIMITER ;
 
 
 /*create reservations for bought tickets, convert reservation type from available to ticket*/
-/*DELIMITER $
+
+DELIMITER $
 CREATE TRIGGER ticket_reservation AFTER INSERT ON tickets 
 FOR EACH ROW 
 BEGIN
 
-    DECLARE 
-
-    SELECT NEW.
+    UPDATE reservations SET reservation_fan_pass_id = NEW.ticket_fan_pass_id,reservation_ticket_number=NEW.ticket_number,reservation_type='TICKET'
+    WHERE reservation_match_id = NEW.ticket_match_id AND reservation_seat_id = NEW.ticket_seat_id;
 
 END$
 
 DELIMITER ;
-*/
+
+INSERT INTO tickets (ticket_seat_id, ticket_match_id, ticket_fan_pass_id) VALUES
+(7, 34, 1001);
