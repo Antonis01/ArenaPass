@@ -82,6 +82,25 @@ public class seatSelect extends JFrame {
         }
     }
 
+    private int getFanDataForQR(){
+        try {
+            Connection conn = ConnectDB.createConnection();
+            String sql = "SELECT reservation_id FROM reservations WHERE reservation_fan_pass_id = ? ORDER BY reservation_id DESC;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, Integer.toString(LoginUI.getFanPassID()));
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                System.out.println(rs.getInt(1));
+                return rs.getInt(1);
+            } else {
+                System.out.println("No reservations found for this fan pass id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     private void createSeatButtons() {
         //this.seatNum=getTotalSeats();
         JButton[] jButton = new JButton[seatNum];
@@ -140,7 +159,8 @@ public class seatSelect extends JFrame {
         JOptionPane.showMessageDialog(null, "Transaction Completed");
         try {
             int temp = LoginUI.getFanPassID();
-            Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py " + Integer.toString(temp));
+            String temp2 = Integer.toString(temp) + Integer.toString(getFanDataForQR());
+            Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py " + temp2);
             p.waitFor(); // wait for the process to finish
             setVisible(false);
             dispose();
