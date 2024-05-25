@@ -13,7 +13,7 @@ public class LoginUI extends JFrame {
     private JButton loginButton;
     private JPanel LoginForm;
     private JButton registerButton;
-    private Fan currFan;
+    private static Fan currFan;
 
     public LoginUI() {
         setupFrame();
@@ -81,7 +81,7 @@ public class LoginUI extends JFrame {
         new RegisterUI().setVisible(true);
     }
 
-    public int getFanPassID(){
+    public static int getFanPassID(){
         return currFan.getFanPassID();
     }
 

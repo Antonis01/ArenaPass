@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Main {
 
     public static void main(String[] args) throws SQLException {
-        new FederationAddNewMatch().setVisible(true);
-        //new LoginUI().setVisible(true);
+        //new FederationAddNewMatch().setVisible(true);
+        new LoginUI().setVisible(true);
     }
 }
