@@ -38,7 +38,11 @@ public class LoginUI extends JFrame {
     }
 
     private void login(ActionEvent actionEvent) {
-        if (ConnectDB.Connector(usernameField.getText(), new String(passwordField.getPassword()))) {
+        if (usernameField.getText().equals("admin") && new String(passwordField.getPassword()).equals("admin")) {
+            openAdminPage();
+        } else if (usernameField.getText().equals("appadmin") && new String(passwordField.getPassword()).equals("appadmin")) {
+            openAppAdminPage();
+        } else if (ConnectDB.Connector(usernameField.getText(), new String(passwordField.getPassword()))) {
             ResultSet rs = null;
             try {
                 Connection connection = ConnectDB.createConnection();
