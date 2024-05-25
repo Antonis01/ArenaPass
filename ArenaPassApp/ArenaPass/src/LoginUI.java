@@ -81,8 +81,8 @@ public class LoginUI extends JFrame {
         new RegisterUI().setVisible(true);
     }
 
-    public int getUserID(){
-        return currFan.getAccID();
+    public int getFanPassID(){
+        return currFan.getFanPassID();
     }
 
     private void openMainPage() {
