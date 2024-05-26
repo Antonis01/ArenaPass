@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.sql.SQLException;
 
 public class BuySeasonTicket extends JFrame{
     private JPanel BuySeasonTicketForm;
@@ -45,8 +43,9 @@ public class BuySeasonTicket extends JFrame{
     }
 
     private void setUpActions() {
-        mainMenuDropDown.addActionListener(this::switchPanel);
-        logoutBtn.addActionListener(this::logout);
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        logoutBtn.addActionListener(globalMenus::logout);
         seasonBtn1.addActionListener(this::buySeasonTicket);
         seasonBtn2.addActionListener(this::buySeasonTicket);
         seasonBtn3.addActionListener(this::buySeasonTicket);
@@ -70,70 +69,5 @@ public class BuySeasonTicket extends JFrame{
         setVisible(false);
         dispose();
         new selectSection().setVisible(true);
-
-    }
-
-    private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
-
-        switch (mainMenuDropDown.getSelectedIndex()){
-            case 0:
-                setVisible(false);
-                dispose();
-                new MainPage().setVisible(true);
-                break;
-            case 1:
-                setVisible(false);
-                dispose();
-                try {
-                    new BuyTicket().setVisible(true);
-                }catch (SQLException sqle){
-                    sqle.printStackTrace();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }                break;
-            case 2:
-                setVisible(false);
-                dispose();
-                new BuySeasonTicket().setVisible(true);
-                break;
-            case 3:
-                // cancel reservation
-                break;
-            case 4:
-                // ticket history
-                break;
-            case 5:
-                // Leaderboards
-                break;
-            case 6:
-                setVisible(false);
-                dispose();
-                new Busses().setVisible(true);
-                break;
-            case 7:
-                // Feedback
-                setVisible(false);
-                dispose();
-                new FeedBack().setVisible(true);
-                break;
-            case 8:
-                // contact us
-                break;
-            case 9:
-                // Chatroom
-                setVisible(false);
-                dispose();
-                new ChatRoom().setVisible(true);
-                break;
-        }
-    }
-
-    private void logout(ActionEvent actionEvent) {
-        setVisible(false);
-        dispose();
-        new LoginUI().setVisible(true);
     }
 }
-
-

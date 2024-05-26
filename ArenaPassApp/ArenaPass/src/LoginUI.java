@@ -38,7 +38,7 @@ public class LoginUI extends JFrame {
     }
 
     private void login(ActionEvent actionEvent) {
-        if (usernameField.getText().equals("admin") && new String(passwordField.getPassword()).equals("admin")) {
+        if (usernameField.getText().equals("fedadmin") && new String(passwordField.getPassword()).equals("fedadmin")) {
             openAdminPage();
         } else if (usernameField.getText().equals("appadmin") && new String(passwordField.getPassword()).equals("appadmin")) {
             openAppAdminPage();

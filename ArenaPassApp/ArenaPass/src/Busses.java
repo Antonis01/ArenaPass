@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.sql.SQLException;
 
 public class Busses extends JFrame {
     private JPanel BussesForm;
@@ -27,63 +25,6 @@ public class Busses extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void setUpActions() {
-        mainMenuDropDown.addActionListener(this::switchPanel);
-        logoutBtn.addActionListener(this::logout);
-        submitButton.addActionListener(this::submitButton);
-    }
-
-    private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
-        switch (mainMenuDropDown.getSelectedIndex()) {
-            case 0:
-                setVisible(false);
-                dispose();
-                new MainPage().setVisible(true);
-                break;
-            case 1:
-                setVisible(false);
-                dispose();
-                try {
-                    new BuyTicket().setVisible(true);
-                }catch (SQLException sqle){
-                    sqle.printStackTrace();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }                break;
-            case 2:
-                // new BuySeasonTicket().setVisible(true);
-                break;
-            case 3:
-                // cancel reservation
-                break;
-            case 4:
-                // ticket history
-                break;
-            case 5:
-                // Leaderboards
-                break;
-            case 6:
-                setVisible(false);
-                dispose();
-                new Busses().setVisible(true);
-                break;
-            case 7:
-                // Feedback
-                break;
-            case 8:
-                // contact us
-                break;
-        }
-    }
-
-    private void logout(ActionEvent actionEvent) {
-        setVisible(false);
-        dispose();
-        new LoginUI().setVisible(true);
-    }
-
-
     private void submitButton(ActionEvent actionEvent) {
 
         String field2 = textField2.getText();
@@ -96,14 +37,13 @@ public class Busses extends JFrame {
             JOptionPane.showMessageDialog(this, "All fields must be filled out.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        // Handle form submission logic
         JOptionPane.showMessageDialog(this, "Form submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-        // You can add additional logic here to save the data or perform other actions
     }
 
+    private void setUpActions() {
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        logoutBtn.addActionListener(globalMenus::logout);
+        submitButton.addActionListener(this::submitButton);
+    }
 }
-
-
-
-

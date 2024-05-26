@@ -6,13 +6,24 @@ import java.awt.event.ActionListener;
 public class SelectTeam extends JFrame{
     private JPanel teamsPanel;
     private JPanel SelectTeamForm;
+    private JComboBox mainMenuDropDown;
+    private JTextField textField1;
+    private JButton logoutBtn;
 
 
     private void setupFrame() {
-        setContentPane(SelectTeamForm);
+        setUpActions();
         setTitle("Select Team");
         setSize(1920, 1080);
         setVisible(true);
+    }
+
+    private void setUpActions() {
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        logoutBtn.addActionListener(globalMenus::logout);
+        setContentPane(SelectTeamForm);
+
     }
 
     public SelectTeam(Match match,Image homeTeamLogo, Image awayTeamLogo){
@@ -46,7 +57,5 @@ public class SelectTeam extends JFrame{
 
         team1.setOpaque(true);
         team2.setOpaque(true);
-
     }
-
 }

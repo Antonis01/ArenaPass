@@ -50,8 +50,9 @@ public class selectSection extends JFrame{
     }
 
     private void setUpActions() {
-        mainMenuDropDown.addActionListener(this::switchPanel);
-        logoutBtn.addActionListener(this::logout);
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        logoutBtn.addActionListener(globalMenus::logout);
         button1.addActionListener(this::seatSelect);
         fillComboBox(viewSections);
     }
@@ -91,54 +92,5 @@ public class selectSection extends JFrame{
             dispose();
             new seatSelect(match,section).setVisible(true);
         }
-    }
-
-    private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
-
-        switch (mainMenuDropDown.getSelectedIndex()){
-            case 0:
-                setVisible(false);
-                dispose();
-                new MainPage().setVisible(true);
-                break;
-            case 1:
-                setVisible(false);
-                dispose();
-                try {
-                    new BuyTicket().setVisible(true);
-                }catch (SQLException sqle){
-                    sqle.printStackTrace();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }                break;
-            case 2:
-                // new BuySeasonTicket().setVisible(true);
-                break;
-            case 3:
-                // cancel reservation
-                break;
-            case 4:
-                // ticket history
-                break;
-            case 5:
-                // Leaderboards
-                break;
-            case 6:
-                // Busses
-                break;
-            case 7:
-                // Feedback
-                break;
-            case 8:
-                // contact us
-                break;
-        }
-    }
-
-    private void logout(ActionEvent actionEvent) {
-        setVisible(false);
-        dispose();
-        new LoginUI().setVisible(true);
     }
 }

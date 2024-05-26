@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import java.sql.SQLException;
-
 
 public class ChatRoom extends JFrame {
     private JPanel ChatRoomForm;
@@ -14,88 +11,29 @@ public class ChatRoom extends JFrame {
     private JButton submitBtn;
 
 
-public ChatRoom() {
-    setupFrame();
-    setUpActions();
-}
-private void setupFrame() {
-    add(ChatRoomForm);
-    setTitle("ArenaPass ChatRoom");
-    setSize(1920, 1080);
-    setVisible(true);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-}
-private void setUpActions() {
-    mainMenuDropDown.addActionListener(this::switchPanel);
-    logoutBtn.addActionListener(this::logout);
-    submitBtn.addActionListener(this::submitForm);
-}
-
-private void submitForm(ActionEvent actionEvent){
-    JOptionPane.showMessageDialog(submitBtn,"successfully submit");
-    setVisible(false);
-    dispose();
-    new MainPage().setVisible(true);
-}
-private void switchPanel(ActionEvent actionEvent) {
-    JOptionPane.showMessageDialog(mainMenuDropDown, mainMenuDropDown.getSelectedItem());
-
-    switch (mainMenuDropDown.getSelectedIndex()){
-        case 0:
-            setVisible(false);
-            dispose();
-            new MainPage().setVisible(true);
-            break;
-        case 1:
-            setVisible(false);
-            dispose();
-            try {
-                new BuyTicket().setVisible(true);
-            }catch (SQLException sqle){
-                sqle.printStackTrace();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }            break;
-        case 2:
-            new BuySeasonTicket().setVisible(true);
-            break;
-        case 3:
-            // cancel reservation
-            break;
-        case 4:
-            // ticket history
-            break;
-        case 5:
-            // Leaderboards
-            break;
-        case 6:
-            // Busses
-            setVisible(false);
-            dispose();
-            new FeedBack().setVisible(true);
-            break;
-        case 7:
-            // Feedback
-            setVisible(false);
-            dispose();
-            new FeedBack().setVisible(true);
-            break;
-        case 8:
-            // contact us
-            break;
-        case 9:
-            // Chatroom
-            setVisible(false);
-            dispose();
-            new ChatRoom().setVisible(true);
-            break;
+    public ChatRoom() {
+        setupFrame();
+        setUpActions();
     }
-}
+    private void setupFrame() {
+        add(ChatRoomForm);
+        setTitle("ArenaPass ChatRoom");
+        setSize(1920, 1080);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    private void setUpActions() {
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        logoutBtn.addActionListener(globalMenus::logout);
+        submitBtn.addActionListener(this::submitForm);
+    }
 
-private void logout(ActionEvent actionEvent) {
-    setVisible(false);
-    dispose();
-    new LoginUI().setVisible(true);
-}
+    private void submitForm(ActionEvent actionEvent){
+        JOptionPane.showMessageDialog(submitBtn,"successfully submit");
+        setVisible(false);
+        dispose();
+        new MainPage().setVisible(true);
+    }
 }
 
