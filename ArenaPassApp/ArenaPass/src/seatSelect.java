@@ -23,6 +23,7 @@ public class seatSelect extends JFrame {
     private Match currMatch;
     private int seatNum;
     private int freeSeats;
+    private int selectedSeatID;
 
     public seatSelect(Match currMatch, String section) {
         this.currMatch= currMatch;
@@ -92,11 +93,34 @@ public class seatSelect extends JFrame {
         return -1;
     }
 
+    private void setupSeatID(int[] seat_id){
+        int i=0;
+        try {
+            Connection conn = ConnectDB.createConnection();
+            String sql = "SELECT reservations.reservation_seat_id from reservations,seats where reservations.reservation_match_id = ? AND seats.seat_section = ? AND reservations.reservation_seat_id = seats.seat_id;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, currMatch.getMatchID());
+            ps.setString(2, section);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                seat_id[i]= rs.getInt(1);
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void createSeatButtons() {
         //this.seatNum=getTotalSeats();
-        JButton[] jButton = new JButton[seatNum];
+        int[] seatID = new int[seatNum];
         int[] isFree = new int[seatNum];
+        JButton[] jButton = new JButton[seatNum];
         reserveSeats(isFree);
+        setupSeatID(seatID);
+
+        for(int i=0;i<seatNum;i++)
+            System.out.println(seatID[i]);
 
         for (int i = 0; i < seatNum; i++) {
             jButton[i] = new JButton(Integer.toString(i + 1));
@@ -118,7 +142,9 @@ public class seatSelect extends JFrame {
                     if (isFree[finalI]==0)
                         JOptionPane.showMessageDialog(null, "Seat Taken");
                     else {
-                        selectedSeat.setText("Selected Seat: " + String.valueOf(finalI + 1));
+                        selectedSeatID=seatID[finalI];
+                        System.out.println(selectedSeatID);
+                        selectedSeat.setText("Selected Seat: " + String.valueOf(selectedSeatID+1));
                         selectedSeat.setVisible(true);
                         checkoutButton.setVisible(true);
                     }
@@ -148,14 +174,21 @@ public class seatSelect extends JFrame {
     }
 
     private void checkout(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(null, "Transaction Completed");
+        int fanID = LoginUI.getFanPassID();
+        String query = "INSERT INTO tickets (ticket_seat_id,ticket_match_id,ticket_fan_pass_id) VALUES (?,?,?)";
         try {
-            int temp = LoginUI.getFanPassID();
-            String temp2 = Integer.toString(temp) + Integer.toString(getFanDataForQR());
+            Connection connection = ConnectDB.createConnection();
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1,selectedSeatID);
+            ps.setInt(2,currMatch.getMatchID());
+            ps.setInt(3,LoginUI.getFanPassID());
+            ps.executeUpdate();
+            String temp2 = Integer.toString(fanID) + Integer.toString(getFanDataForQR());
             Process p = Runtime.getRuntime().exec("python src/qrcode_generator.py " + temp2);
             p.waitFor(); // wait for the process to finish
             setVisible(false);
             dispose();
+            JOptionPane.showMessageDialog(null, "Transaction Completed");
             new viewTicketDetails().setVisible(true);
         } catch (Exception ee) {
             ee.printStackTrace();
