@@ -397,6 +397,3 @@ BEGIN
 END$
 
 DELIMITER ;
-
-INSERT INTO tickets (ticket_seat_id, ticket_match_id, ticket_fan_pass_id) VALUES
-(7, 34, 1001);
