@@ -99,11 +99,13 @@ public class FederationAddNewMatch extends JFrame {
         int restrictionsState=getRestrctionsState();
         switch (restrictionsState){
             case 1:
-                if(htCapacity>0 && atCapacity>0)
+                if(htCapacity>=0 && atCapacity>=0)
                     return true;
             case 2:
-                if(htCapacity>0)
+                if(htCapacity>=0)
                     return true;
+            case 3:
+                return true;
             default:
                 return false;
         }
@@ -181,7 +183,8 @@ public class FederationAddNewMatch extends JFrame {
         int htCapacity=0;
         int atCapacity=0;
         if(getRestrctionsState()==1)  { htCapacity=toNumber(homeCapacity); atCapacity=toNumber(awayCapacity);}
-        else if(getRestrctionsState()==2)   htCapacity=toNumber(homeCapacity);
+        else if(getRestrctionsState()==2)  { htCapacity=toNumber(homeCapacity); atCapacity=0; }
+        else if(getRestrctionsState()==3) { htCapacity=0; atCapacity=0; }
 
         Date selectedDate= Date.valueOf(datePicker.getDate());
         Time selectedTime = Time.valueOf(timePicker.getTime());
