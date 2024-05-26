@@ -81,7 +81,6 @@ public class AdminFanApplicationList extends JFrame {
     private void setUpActions() {
         mainMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
-
     }
 
     private void switchPanel(ActionEvent actionEvent) {

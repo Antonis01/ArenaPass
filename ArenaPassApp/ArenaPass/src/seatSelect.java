@@ -152,7 +152,7 @@ public class seatSelect extends JFrame {
         try {
             int temp = LoginUI.getFanPassID();
             String temp2 = Integer.toString(temp) + Integer.toString(getFanDataForQR());
-            Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py " + temp2);
+            Process p = Runtime.getRuntime().exec("python src/qrcode_generator.py " + temp2);
             p.waitFor(); // wait for the process to finish
             setVisible(false);
             dispose();
