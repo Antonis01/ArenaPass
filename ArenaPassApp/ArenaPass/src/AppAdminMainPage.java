@@ -49,7 +49,11 @@ private void switchPanel(ActionEvent actionEvent) {
             dispose();
             new BanUserChatRoom().setVisible(true);
             break;
-
+        case 3:
+            setVisible(false);
+            dispose();
+            new AdminFeedbackReview().setVisible(true);
+            break;
     }
 }
 

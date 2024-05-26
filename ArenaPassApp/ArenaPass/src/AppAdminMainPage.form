@@ -25,6 +25,7 @@
                 <item value="Home"/>
                 <item value="FanID Application Form"/>
                 <item value="Ban Users Chatroom"/>
+                <item value="Feedback Review"/>
               </model>
             </properties>
           </component>
