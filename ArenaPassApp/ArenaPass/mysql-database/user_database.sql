@@ -29,7 +29,7 @@ CREATE TABLE reservations(
     reservation_ticket_number INT(8) NOT NULL,
     reservation_seat_id INT(8) NOT NULL,
     reservation_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    reservation_type ENUM ('TICKET','SEASON TICKET','NOT AVAILABLE'),
+    reservation_type ENUM ('TICKET','SEASON TICKET','NOT AVAILABLE','AVAILABLE'),
     reservation_match_id INT(6) NOT NULL,
     PRIMARY KEY (reservation_id)
 );
@@ -184,7 +184,7 @@ FOR EACH ROW
 BEGIN
     DECLARE f_status ENUM ('VERIFIED','BANNED','PENDING');
 
-    SELECT fan_acount_status INTO f_status
+    SELECT fan_account_status INTO f_status
     FROM fans
     WHERE fans.fan_pass_id = NEW.season_ticket_fan_pass_id;
 
