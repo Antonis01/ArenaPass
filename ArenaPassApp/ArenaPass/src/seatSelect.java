@@ -296,7 +296,7 @@ public class seatSelect extends JFrame {
                     JOptionPane.showMessageDialog(null, "Transaction Completed");
                 }
             } catch (Exception ee) {
-                ee.printStackTrace();
+                JOptionPane.showMessageDialog(null,ee.getMessage());
             }
 
     }

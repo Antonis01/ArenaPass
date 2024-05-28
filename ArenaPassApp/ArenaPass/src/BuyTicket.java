@@ -82,7 +82,7 @@ public class BuyTicket extends JFrame {
     }
 
     private void setupMatches() throws SQLException, IOException {
-        String query = "SELECT * FROM matches";
+        String query = "SELECT * FROM matches where match_date>CURRENT_DATE() order by match_date ASC,match_time ASC";
         Connection connection = ConnectDB.createConnection();
         Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
         ResultSet rs = null;
