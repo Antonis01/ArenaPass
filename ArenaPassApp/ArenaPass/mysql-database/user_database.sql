@@ -49,7 +49,6 @@ CREATE TABLE seats(
     seat_number VARCHAR(4) NOT NULL,
     seat_side ENUM ('AT','HT'),
     PRIMARY KEY (seat_id),
-    UNIQUE (seat_section,seat_number),
     CONSTRAINT SEAT_STADIUM FOREIGN KEY (seat_stadium_id) REFERENCES stadiums(stadium_id)
 );
 
@@ -198,7 +197,7 @@ DELIMITER ;
 DELIMITER $
 CREATE TRIGGER check_double_season_ticket BEFORE INSERT ON season_tickets 
 FOR EACH ROW 
-BEGIN
+BEGIN   
     DECLARE t_count INT(2);
 
     SELECT count(*) INTO t_count
@@ -234,8 +233,12 @@ BEGIN
     FETCH ticket_cursor INTO res_ticket_number, res_ticket_seat_id, res_ticket_fan_pass_id;
 
      WHILE (finishedFlag=0) DO
+<<<<<<< Updated upstream
 
         UPDATE reservations SET reservation_fan_pass_id = res_ticket_fan_pass_id,reservation_ticket_number=res_ticket_number,reservation_match_id=r_match_id,reservation_type='SEASON TICKET'
+=======
+        UPDATE reservations SET reservation_fan_pass_id = res_ticket_fan_pass_id,reservation_ticket_number=res_ticket_number,reservation_type='SEASON TICKET'
+>>>>>>> Stashed changes
         WHERE reservation_match_id = r_match_id AND reservation_seat_id = res_ticket_seat_id;
         FETCH ticket_cursor INTO res_ticket_number, res_ticket_seat_id, res_ticket_fan_pass_id;
     END WHILE;
