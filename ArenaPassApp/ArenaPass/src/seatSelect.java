@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.sql.*;
 
 public class seatSelect extends JFrame {
@@ -35,7 +34,6 @@ public class seatSelect extends JFrame {
         this.section=section;
         getTotalSeats();
         setUpActions();
-        seatPanel.setLayout(new GridLayout(10, 10));
         createSeatButtons();
         setupFrame();
     }
@@ -90,7 +88,7 @@ public class seatSelect extends JFrame {
         i=0;
         try {
             Connection conn = ConnectDB.createConnection();
-            String sql = "SELECT reservations.reservation_seat_id from reservations,seats where reservations.reservation_type=1 AND reservations.reservation_match_id = ? AND seats.seat_section = ? AND reservations.reservation_seat_id = seats.seat_id;";
+            String sql = "SELECT reservations.reservation_seat_id from reservations,seats where reservations.reservation_type!=4 AND reservations.reservation_match_id = ? AND seats.seat_section = ? AND reservations.reservation_seat_id = seats.seat_id;";
 
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, currMatch.getMatchID());
@@ -151,17 +149,18 @@ public class seatSelect extends JFrame {
         return -1;
     }
 
-    private void setupSeatID(int[] seat_id){
+    private void setupSeatID(int[] seat_id,String[] seatName){
         int i=0;
         try {
             Connection conn = ConnectDB.createConnection();
-            String sql = "SELECT reservations.reservation_seat_id from reservations,seats where reservations.reservation_match_id = ? AND seats.seat_section = ? AND reservations.reservation_seat_id = seats.seat_id;";
+            String sql = "SELECT reservations.reservation_seat_id,seats.seat_number from reservations,seats where reservations.reservation_match_id = ? AND seats.seat_section = ? AND reservations.reservation_seat_id = seats.seat_id;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, currMatch.getMatchID());
             ps.setString(2, section);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 seat_id[i]= rs.getInt(1);
+                seatName[i]=rs.getString(2);
                 i++;
             }
         } catch (SQLException e) {
@@ -169,17 +168,18 @@ public class seatSelect extends JFrame {
         }
     }
 
-    private void setupSeatIDSeason(int[] seat_id){
+    private void setupSeatIDSeason(int[] seat_id, String[] seatName){
         int i=0;
         try {
             Connection conn = ConnectDB.createConnection();
-            String sql = "select seat_id FROM seats where seat_section=? and seat_stadium_id=?";
+            String sql = "select seat_id,seat_number FROM seats where seat_section=? and seat_stadium_id=?";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, section);
             ps.setInt(2, stadiumID);
             ResultSet rs = ps.executeQuery();
             while(rs.next()){
                 seat_id[i]= rs.getInt(1);
+                seatName[i]=rs.getString(2);
                 i++;
             }
         }
@@ -188,20 +188,34 @@ public class seatSelect extends JFrame {
         }
     }
 
+
+
+    private void setupPanel(JPanel panel,String[] seatNames){
+        char A;
+        int diff;
+        int rows;
+        int columns;
+        A=seatNames[seatNum-1].charAt(0);
+        diff=A-'A';
+        rows=diff+1;
+        columns=seatNum/rows;
+        panel.setLayout(new GridLayout(rows,columns));
+    }
+
     private void createSeatButtons() {
-        //this.seatNum=getTotalSeats();
         int[] seatID = new int[seatNum];
         int[] isFree = new int[seatNum];
+        String[] seatName= new String[seatNum];
         JButton[] jButton = new JButton[seatNum];
-        if(isSeason) { setupSeatIDSeason(seatID); reserveSeatsSeason(isFree,seatID); }
-        else { setupSeatID(seatID); reserveSeats(isFree,seatID); }
-
+        if(isSeason) { setupSeatIDSeason(seatID,seatName); reserveSeatsSeason(isFree,seatID); }
+        else { setupSeatID(seatID,seatName); reserveSeats(isFree,seatID); }
+        setupPanel(seatPanel,seatName);
         for(int i=0;i<seatNum;i++)
             System.out.println(seatID[i]);
 
         for (int i = 0; i < seatNum; i++) {
-            jButton[i] = new JButton(Integer.toString(i + 1));
-            jButton[i].setPreferredSize(new Dimension(50, 50));
+            jButton[i] = new JButton(seatName[i]);
+            jButton[i].setPreferredSize(new Dimension(80, 50));
             seatPanel.add(jButton[i]);
             if (isFree[i]==0) {
                 this.freeSeats--;
@@ -221,7 +235,7 @@ public class seatSelect extends JFrame {
                     else {
                         selectedSeatID=seatID[finalI];
                         System.out.println(selectedSeatID);
-                        selectedSeat.setText("Selected Seat: " + String.valueOf(selectedSeatID+1));
+                        selectedSeat.setText("Selected Seat: " + (jButton[finalI].getText()));
                         selectedSeat.setVisible(true);
                         checkoutButton.setVisible(true);
                     }

@@ -46,22 +46,27 @@ public class FeedBack extends JFrame {
     }
 
     private void submitForm(ActionEvent actionEvent){
-        String query="INSERT INTO feedback_forms (feedback_category,feedback_body) VALUES (?,?)";
-        int categoryState = getCategoryState();
-        try {
-            Connection connection = ConnectDB.createConnectionFeedback();
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, categoryState);
-            ps.setString(2,descriptionField.getText());
-            ps.executeUpdate();
-            JOptionPane.showMessageDialog(null,"Successfully Submitted");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        String descField=descriptionField.getText();
+        if(descField.isEmpty())
+            JOptionPane.showMessageDialog(null,"Form cannot be submitted empty!");
+        else {
+            String query = "INSERT INTO feedback_forms (feedback_category,feedback_body) VALUES (?,?)";
+            int categoryState = getCategoryState();
+            try {
+                Connection connection = ConnectDB.createConnectionFeedback();
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, categoryState);
+                ps.setString(2, descField);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Successfully Submitted");
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
 
-        setVisible(false);
-        dispose();
-        new MainPage().setVisible(true);
+            setVisible(false);
+            dispose();
+            new MainPage().setVisible(true);
+        }
     }
 }
 

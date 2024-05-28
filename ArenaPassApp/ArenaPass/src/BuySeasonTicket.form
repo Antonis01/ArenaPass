@@ -149,7 +149,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
-              <toolTipText value="Aris"/>
+              <toolTipText value="ARIS F.C."/>
             </properties>
           </component>
           <component id="9234c" class="javax.swing.JButton" binding="seasonBtn4">
@@ -158,7 +158,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
-              <toolTipText value="AEK"/>
+              <toolTipText value="A.E.K. F.C."/>
             </properties>
           </component>
           <component id="a9896" class="javax.swing.JButton" binding="seasonBtn5">
@@ -204,6 +204,7 @@
             </constraints>
             <properties>
               <text value="BUY"/>
+              <toolTipText value="ASTERAS TRIPOLI F.C."/>
             </properties>
           </component>
           <component id="648f0" class="javax.swing.JLabel">
