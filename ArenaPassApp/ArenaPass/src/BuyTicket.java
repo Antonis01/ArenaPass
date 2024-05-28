@@ -152,6 +152,7 @@ public class BuyTicket extends JFrame {
     }
 
     private void setupFrame() {
+        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(BuyTicketNewForm);
         setTitle("Buy Ticket");
         setSize(1920, 1080);

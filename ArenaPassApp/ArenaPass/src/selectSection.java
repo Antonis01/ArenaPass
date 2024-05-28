@@ -56,6 +56,7 @@ public class selectSection extends JFrame{
     }
 
     private void setupFrame() {
+        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(SelectTeamForm1);
         setTitle("Choose Match");
         setSize(1920, 1080);

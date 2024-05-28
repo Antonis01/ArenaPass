@@ -22,6 +22,7 @@ public class Busses extends JFrame {
     }
 
     private void setupFrame() {
+        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(BussesForm);
         setTitle("Bus Application Form");
         setSize(1920, 1080);
@@ -70,7 +71,7 @@ public class Busses extends JFrame {
                 addTeams.addItem(rs.getString("team_name"));
             }
         } catch (SQLException e) {
-            System.err.println("Error: " + e);
+            System.err.println("Error: " + e.getMessage());
         }
     }
 

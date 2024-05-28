@@ -16,6 +16,7 @@ public class ChatRoom extends JFrame {
         setUpActions();
     }
     private void setupFrame() {
+        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(ChatRoomForm);
         setTitle("ArenaPass ChatRoom");
         setSize(1920, 1080);

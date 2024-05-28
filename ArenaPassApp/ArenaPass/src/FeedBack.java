@@ -20,6 +20,7 @@ public class FeedBack extends JFrame {
         setUpActions();
     }
     private void setupFrame() {
+        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(FeedBackForm);
         setTitle("ArenaPass FeedBack");
         setSize(1920, 1080);

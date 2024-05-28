@@ -16,6 +16,7 @@ public class MainPage extends JFrame {
     }
 
     private void setupFrame() {
+        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(MainPageForm);
         setTitle("ArenaPass MainPage");
         setSize(1920, 1080);

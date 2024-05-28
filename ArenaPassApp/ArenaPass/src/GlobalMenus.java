@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -8,6 +9,28 @@ public class GlobalMenus {
 
     public GlobalMenus(JFrame currentFrame) {
         this.currentFrame = currentFrame;
+    }
+
+    public static void dropDownFan(JComboBox comboBox) {
+        comboBox.removeAllItems();
+        comboBox.addItem("Home");
+        comboBox.addItem("Buy Ticket");
+        comboBox.addItem("Buy Season Ticket");
+        comboBox.addItem("Cancel Reservation");
+        comboBox.addItem("Ticket History");
+        comboBox.addItem("Leaderboards");
+        comboBox.addItem("Busses");
+        comboBox.addItem("Feedback");
+        comboBox.addItem("Contact us");
+    }
+
+    public static void dropDownAdmin(JComboBox comboBox) {
+        comboBox.removeAllItems();
+        comboBox.addItem("Home");
+        comboBox.addItem("FanID Application Form");
+        comboBox.addItem("Feedback Form");
+        comboBox.addItem("Ban Users Chatroom");
+        comboBox.addItem("Busses Form");
     }
 
     public void switchPanel(ActionEvent actionEvent) {

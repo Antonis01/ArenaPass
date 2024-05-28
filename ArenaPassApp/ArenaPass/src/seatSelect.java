@@ -188,8 +188,6 @@ public class seatSelect extends JFrame {
         }
     }
 
-
-
     private void setupPanel(JPanel panel,String[] seatNames){
         char A;
         int diff;
@@ -246,6 +244,7 @@ public class seatSelect extends JFrame {
     }
 
     private void setupFrame() {
+        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(SelectTeamForm1);
         setTitle("Select Seat");
         setSize(1920, 1080);
