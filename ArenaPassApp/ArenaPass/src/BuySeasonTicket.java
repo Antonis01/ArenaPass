@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.*;
 
 public class BuySeasonTicket extends JFrame{
     private JPanel BuySeasonTicketForm;
@@ -62,12 +63,29 @@ public class BuySeasonTicket extends JFrame{
         seasonBtn14.addActionListener(this::buySeasonTicket);
     }
 
+    private String getLogo(String teamName) throws SQLException {
+        String query = "SELECT team_logo_path FROM teams WHERE team_name = ?";
+        Connection connection = ConnectDB.createConnection();
+        Statement statement = connection.createStatement();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1,teamName);
+        try{
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return "/images/"+rs.getString(1);
+        } catch (SQLException e) {
+            return "FALSE ID";
+        }
+    }
+
     private void buySeasonTicket(ActionEvent actionEvent) {
         JButton button = (JButton) actionEvent.getSource();
         String buttonText = button.getToolTipText();
         JOptionPane.showMessageDialog(null, "Season Ticket for " + buttonText);
+
+
         setVisible(false);
         dispose();
-        new selectSection().setVisible(true);
+        new selectSection(buttonText,)
     }
 }

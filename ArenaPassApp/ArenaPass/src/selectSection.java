@@ -35,6 +35,13 @@ public class selectSection extends JFrame{
         setUpActions();
     }
 
+    public selectSection(String team, Image logo){
+        teamLogo.setIcon(new ImageIcon(logo));
+        teamLogo.setText(team);
+        setupFrame();
+        setUpActions();
+    }
+
 
     public selectSection(){
         setupFrame();
