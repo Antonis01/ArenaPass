@@ -1,6 +1,9 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.*;
 
 public class BuySeasonTicket extends JFrame{
@@ -78,14 +81,41 @@ public class BuySeasonTicket extends JFrame{
         }
     }
 
+    private int getStadiumID(String teamName) throws SQLException{
+        String query = "SELECT team_def_home_stadium_id FROM teams WHERE team_name = ?";
+        Connection connection = ConnectDB.createConnection();
+        Statement statement = connection.createStatement();
+        PreparedStatement ps = connection.prepareStatement(query);
+        ps.setString(1,teamName);
+        try{
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,e);
+            return -1;
+        }
+    }
+
     private void buySeasonTicket(ActionEvent actionEvent) {
         JButton button = (JButton) actionEvent.getSource();
         String buttonText = button.getToolTipText();
         JOptionPane.showMessageDialog(null, "Season Ticket for " + buttonText);
-
+        Image logo = null;
+        try {
+            logo = ImageIO.read(getClass().getResource(getLogo(buttonText)));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         setVisible(false);
         dispose();
-        new selectSection(buttonText,)
+        try {
+            new selectSection(buttonText,logo,getStadiumID(buttonText));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

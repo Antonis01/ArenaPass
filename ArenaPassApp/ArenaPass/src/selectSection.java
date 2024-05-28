@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
 import java.sql.*;
 
 
@@ -13,14 +12,17 @@ public class selectSection extends JFrame{
     private JLabel logo;
     private JTextField textField1;
     private JButton logoutBtn;
-    private JButton button1;
+    private JButton buttonTicket;
     private JLabel sectionLabel;
     private JLabel teamLogo;
     private JComboBox viewSections;
+    private JButton buttonSeason;
     private Match match;
     private String side;
+    private int stadiumID;
 
     public selectSection(Match match, Image logo, int clicked) {
+        buttonSeason.setVisible(false);
         this.match = match;
         teamLogo.setIcon(new ImageIcon(logo));
         if(clicked == 0)   {
@@ -31,19 +33,16 @@ public class selectSection extends JFrame{
             teamLogo.setText(match.getAwayTeam());
             this.side="AT";
         }
+        fillComboBox(viewSections);
         setupFrame();
         setUpActions();
     }
 
-    public selectSection(String team, Image logo){
+    public selectSection(String team, Image logo,int stadiumID){
+        buttonTicket.setVisible(false);
         teamLogo.setIcon(new ImageIcon(logo));
         teamLogo.setText(team);
-        setupFrame();
-        setUpActions();
-    }
-
-
-    public selectSection(){
+        fillComboBoxSeason(viewSections,stadiumID);
         setupFrame();
         setUpActions();
     }
@@ -60,10 +59,31 @@ public class selectSection extends JFrame{
         GlobalMenus globalMenus = new GlobalMenus(this);
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
-        button1.addActionListener(this::seatSelect);
-        fillComboBox(viewSections);
+        buttonTicket.addActionListener(this::seatSelect);
     }
 
+    private void fillComboBoxSeason(JComboBox addSections, int stadiumID){
+        try {
+            Connection connection = ConnectDB.createConnection();
+            String sql = "SELECT DISTINCT seat_section FROM seats WHERE seat_stadium_id = ? AND seat_side = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            // Set the parameters for the placeholders
+            preparedStatement.setInt(1, stadiumID);
+            preparedStatement.setString(2, "HT");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            addSections.removeAllItems();
+
+            while (resultSet.next()) {
+                String item = resultSet.getString(1); // replace with your column
+                addSections.addItem(item);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error connecting to the database: " + e.getMessage());
+        }
+    }
 
 
     public void fillComboBox(JComboBox addSections) {
