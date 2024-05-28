@@ -1,15 +1,19 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Busses extends JFrame {
     private JPanel BussesForm;
     private JButton logoutBtn;
     private JComboBox mainMenuDropDown;
     private JTextField textField1;
-    private JTextField textField2;
-    private JTextField textField3;
-    private JTextField textField4;
-    private JComboBox comboBox1;
+    private JTextField nameTextField;
+    private JTextField phoneTextField;
+    private JTextField seatNumTextField;
+    private JComboBox viewTeamsComboBox;
     private JButton submitButton;
 
     public Busses() {
@@ -27,17 +31,47 @@ public class Busses extends JFrame {
 
     private void submitButton(ActionEvent actionEvent) {
 
-        String field2 = textField2.getText();
-        String field3 = textField3.getText();
-        String field4 = textField4.getText();
-        String comboBoxValue = (String) comboBox1.getSelectedItem();
+        String field1 = nameTextField.getText();
+        String field2 = phoneTextField.getText();
+        String field3 = seatNumTextField.getText();
+        String comboBoxValue = (String) viewTeamsComboBox.getSelectedItem();
 
         // Perform validation
-        if ( field2.isEmpty() || field3.isEmpty() || field4.isEmpty() || comboBoxValue == null) {
+        if ( field1.isEmpty() || field2.isEmpty() || field3.isEmpty() || comboBoxValue == null) {
             JOptionPane.showMessageDialog(this, "All fields must be filled out.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }else{
+            try{
+                Connection conn = ConnectDB.createConnectionBusses();
+                String query = "INSERT INTO busses_res (name, phone, seat_num, team) VALUES (?, ?, ?, ?)";
+                PreparedStatement ps = conn.prepareStatement(query);
+                ps.setString(1, field1);
+                ps.setString(2, field2);
+                ps.setString(3, field3);
+                ps.setString(4, comboBoxValue);
+                ps.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Form submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            }catch (SQLException e){
+                System.err.println("Error: " + e);
+            }
+
         }
-        JOptionPane.showMessageDialog(this, "Form submitted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void showTeamList(JComboBox addTeams) {
+        try {
+            Connection conn = ConnectDB.createConnection();
+            String query = "SELECT team_name FROM teams";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+
+            addTeams.removeAllItems();
+            while (rs.next()) {
+                addTeams.addItem(rs.getString("team_name"));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error: " + e);
+        }
     }
 
     private void setUpActions() {
@@ -45,5 +79,6 @@ public class Busses extends JFrame {
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
         submitButton.addActionListener(this::submitButton);
+        showTeamList(viewTeamsComboBox);
     }
 }

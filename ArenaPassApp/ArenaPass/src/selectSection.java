@@ -110,7 +110,7 @@ public class selectSection extends JFrame{
             addSections.removeAllItems();
 
             while (resultSet.next()) {
-                String item = resultSet.getString(1); // replace with your column
+                String item = resultSet.getString(1);
                 addSections.addItem(item);
             }
         } catch (SQLException e) {

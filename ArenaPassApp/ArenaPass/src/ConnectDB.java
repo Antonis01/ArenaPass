@@ -18,6 +18,14 @@ public class ConnectDB {
         }
     }
 
+    public static Connection createConnectionBusses(){
+        try {
+            return DriverManager.getConnection("jdbc:mysql://localhost:3306/busses_db",JDBC_USER,JDBC_PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static boolean Connector(String username, String password) {
         try {
             // Establish a connection
