@@ -24,9 +24,14 @@ public class seatSelect extends JFrame {
     private int seatNum;
     private int freeSeats;
     private int selectedSeatID;
+    private int stadiumID;
+    private int teamID;
+    private boolean isSeason;
 
     public seatSelect(Match currMatch, String section) {
+        this.isSeason=false;
         this.currMatch= currMatch;
+        this.stadiumID=currMatch.getStadiumID();
         this.section=section;
         getTotalSeats();
         setUpActions();
@@ -35,13 +40,39 @@ public class seatSelect extends JFrame {
         setupFrame();
     }
 
+    public seatSelect(String team,String section,int stadiumID){
+        this.isSeason=true;
+        this.section=section;
+        this.stadiumID=stadiumID;
+        this.teamID=getTeamID(team);
+        getTotalSeats();
+        seatPanel.setLayout(new GridLayout(10, 10));
+        createSeatButtons();
+        setupFrame();
+        setUpActions();
+    }
+
+    private int getTeamID(String teamName){
+        ResultSet rs = null;
+        try {
+            Connection connection = ConnectDB.createConnection();
+            PreparedStatement ps =connection.prepareStatement("SELECT team_id FROM teams WHERE team_name=?");
+            ps.setString(1,teamName);
+            rs=ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void getTotalSeats() {
         try{
             Connection conn = ConnectDB.createConnection();
             String sql = "SELECT COUNT(*) FROM seats WHERE seat_section = ? AND seat_stadium_id = ?;";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, section);
-            ps.setInt(2, currMatch.getStadiumID());
+            ps.setInt(2, stadiumID);
             ResultSet rs = ps.executeQuery();
             rs.next();
             this.seatNum=rs.getInt(1);
@@ -52,7 +83,7 @@ public class seatSelect extends JFrame {
         this.freeSeats=seatNum;
     }
 
-    private void reserveSeats(int[] seat) {
+    private void reserveSeats(int[] seat, int[] seat_id) {
         int i;
         for(i=0;i<seatNum;i++)
             seat[i]=1;
@@ -66,8 +97,35 @@ public class seatSelect extends JFrame {
             ps.setString(2, section);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                seat[i]=0;
-                i++;
+                seat[getSeatIndex(rs.getInt(1),seat_id)]=0;
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private int getSeatIndex(int seatID,int[] seat){
+        for(int i=0;i<seatNum;i++)
+            if(seat[i]==seatID)
+                return i;
+        return -1;
+    }
+
+    private void reserveSeatsSeason(int[] seat,int[] seat_id) {
+        int i;
+        for(i=0;i<seatNum;i++)
+            seat[i]=1;
+        i=0;
+        try {
+            Connection conn = ConnectDB.createConnection();
+            String sql = "select season_tickets.season_ticket_seat_id from season_tickets,seats where season_tickets.season_ticket_team_id = ? and seats.seat_section=? and season_tickets.season_ticket_seat_id=seats.seat_id";
+
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, teamID);
+            ps.setString(2, section);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                seat[getSeatIndex(rs.getInt(1),seat_id)]=0;
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -111,13 +169,32 @@ public class seatSelect extends JFrame {
         }
     }
 
+    private void setupSeatIDSeason(int[] seat_id){
+        int i=0;
+        try {
+            Connection conn = ConnectDB.createConnection();
+            String sql = "select seat_id FROM seats where seat_section=? and seat_stadium_id=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, section);
+            ps.setInt(2, stadiumID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                seat_id[i]= rs.getInt(1);
+                i++;
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     private void createSeatButtons() {
         //this.seatNum=getTotalSeats();
         int[] seatID = new int[seatNum];
         int[] isFree = new int[seatNum];
         JButton[] jButton = new JButton[seatNum];
-        reserveSeats(isFree);
-        setupSeatID(seatID);
+        if(isSeason) { setupSeatIDSeason(seatID); reserveSeatsSeason(isFree,seatID); }
+        else { setupSeatID(seatID); reserveSeats(isFree,seatID); }
 
         for(int i=0;i<seatNum;i++)
             System.out.println(seatID[i]);
@@ -175,23 +252,38 @@ public class seatSelect extends JFrame {
 
     private void checkout(ActionEvent actionEvent) {
         int fanID = LoginUI.getFanPassID();
-        String query = "INSERT INTO tickets (ticket_seat_id,ticket_match_id,ticket_fan_pass_id) VALUES (?,?,?)";
-        try {
-            Connection connection = ConnectDB.createConnection();
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1,selectedSeatID);
-            ps.setInt(2,currMatch.getMatchID());
-            ps.setInt(3,LoginUI.getFanPassID());
-            ps.executeUpdate();
-            String temp2 = Integer.toString(fanID) + Integer.toString(getFanDataForQR());
-            Process p = Runtime.getRuntime().exec("python src/qrcode_generator.py " + temp2);
-            p.waitFor(); // wait for the process to finish
-            setVisible(false);
-            dispose();
-            JOptionPane.showMessageDialog(null, "Transaction Completed");
-            new viewTicketDetails().setVisible(true);
-        } catch (Exception ee) {
-            ee.printStackTrace();
-        }
+        String query = null;
+        PreparedStatement ps = null;
+            try {
+                Connection connection = ConnectDB.createConnection();
+                if(!isSeason) {
+                    query = "INSERT INTO tickets (ticket_seat_id,ticket_match_id,ticket_fan_pass_id) VALUES (?,?,?)";
+                    ps = connection.prepareStatement(query);
+                    ps.setInt(1, selectedSeatID);
+                    ps.setInt(2, currMatch.getMatchID());
+                    ps.setInt(3, fanID);
+                    ps.executeUpdate();
+                    String temp2 = Integer.toString(fanID) + Integer.toString(getFanDataForQR());
+                    Process p = Runtime.getRuntime().exec("python src/qrcode_generator.py " + temp2);
+                    p.waitFor(); // wait for the process to finish
+                    setVisible(false);
+                    dispose();
+                    JOptionPane.showMessageDialog(null, "Transaction Completed");
+                    new viewTicketDetails().setVisible(true);
+                }
+                else{
+                    query = "insert into season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id,season_ticket_fan_pass_id) VALUES (?,?,?,?)";
+                    ps = connection.prepareStatement(query);
+                    ps.setInt(1,selectedSeatID);
+                    ps.setInt(2,teamID);
+                    ps.setInt(3,stadiumID);
+                    ps.setInt(4,fanID);
+                    ps.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Transaction Completed");
+                }
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+
     }
 }

@@ -19,11 +19,15 @@ public class selectSection extends JFrame{
     private JButton buttonSeason;
     private Match match;
     private String side;
+    String teamName;
     private int stadiumID;
+    private boolean isSeason;
 
     public selectSection(Match match, Image logo, int clicked) {
         buttonSeason.setVisible(false);
+        isSeason=false;
         this.match = match;
+        this.stadiumID=match.getStadiumID();
         teamLogo.setIcon(new ImageIcon(logo));
         if(clicked == 0)   {
             teamLogo.setText(match.getHomeTeam());
@@ -39,7 +43,11 @@ public class selectSection extends JFrame{
     }
 
     public selectSection(String team, Image logo,int stadiumID){
+        System.out.println("SEASON");
         buttonTicket.setVisible(false);
+        this.stadiumID=stadiumID;
+        this.teamName=team;
+        isSeason=true;
         teamLogo.setIcon(new ImageIcon(logo));
         teamLogo.setText(team);
         fillComboBoxSeason(viewSections,stadiumID);
@@ -60,6 +68,7 @@ public class selectSection extends JFrame{
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
         buttonTicket.addActionListener(this::seatSelect);
+        buttonSeason.addActionListener(this::seatSelect);
     }
 
     private void fillComboBoxSeason(JComboBox addSections, int stadiumID){
@@ -117,7 +126,12 @@ public class selectSection extends JFrame{
             //seatSelect.setSection(section);
             setVisible(false);
             dispose();
-            new seatSelect(match,section).setVisible(true);
+            if(isSeason)    {
+                System.out.println("SEASON");
+                new seatSelect(teamName,section,stadiumID).setVisible(true);
+            }
+            else
+                new seatSelect(match,section).setVisible(true);
         }
     }
 }

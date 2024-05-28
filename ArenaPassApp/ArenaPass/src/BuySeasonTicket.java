@@ -81,7 +81,7 @@ public class BuySeasonTicket extends JFrame{
         }
     }
 
-    private int getStadiumID(String teamName) throws SQLException{
+    public int getStadiumID(String teamName) throws SQLException{
         String query = "SELECT team_def_home_stadium_id FROM teams WHERE team_name = ?";
         Connection connection = ConnectDB.createConnection();
         Statement statement = connection.createStatement();
