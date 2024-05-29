@@ -29,8 +29,44 @@ public class GlobalMenus {
         comboBox.addItem("Home");
         comboBox.addItem("FanID Application Form");
         comboBox.addItem("Feedback Form");
-        comboBox.addItem("Ban Users Chatroom");
         comboBox.addItem("Busses Form");
+        comboBox.addItem("Ban Users Chatroom");
+    }
+
+    public void switchPanelAdmin(ActionEvent actionEvent){
+        JComboBox comboBox = (JComboBox) actionEvent.getSource();
+        JOptionPane.showMessageDialog(comboBox, comboBox.getSelectedItem());
+
+        switch (comboBox.getSelectedIndex()) {
+            case 0:
+                currentFrame.setVisible(false);
+                currentFrame.dispose();
+                new AppAdminMainPage().setVisible(true);
+                break;
+            case 1:
+                currentFrame.setVisible(false);
+                currentFrame.dispose();
+                try {
+                    new AdminFanApplicationList().setVisible(true);
+                    break;
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            case 2:
+                currentFrame.setVisible(false);
+                currentFrame.dispose();
+                new AdminFeedbackReview().setVisible(true);
+                break;
+            case 3:
+                currentFrame.setVisible(false);
+                currentFrame.dispose();
+                new AdminBussesForm().setVisible(true);
+                break;
+            case 4:
+                currentFrame.setVisible(false);
+                currentFrame.dispose();
+                new BanUserChatRoom().setVisible(true);
+        }
     }
 
     public void switchPanel(ActionEvent actionEvent) {
