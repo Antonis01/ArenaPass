@@ -22,7 +22,6 @@ public class Busses extends JFrame {
     }
 
     private void setupFrame() {
-        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(BussesForm);
         setTitle("Bus Application Form");
         setSize(1920, 1080);
@@ -77,6 +76,7 @@ public class Busses extends JFrame {
 
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFan(mainMenuDropDown);
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
         submitButton.addActionListener(this::submitButton);

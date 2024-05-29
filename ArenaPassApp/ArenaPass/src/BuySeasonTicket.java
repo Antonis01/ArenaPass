@@ -40,7 +40,6 @@ public class BuySeasonTicket extends JFrame{
 
     private void setupFrame(){
         dispose();
-        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(BuySeasonTicketForm);
         setTitle("Buy Tickets");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -49,6 +48,7 @@ public class BuySeasonTicket extends JFrame{
 
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFan(mainMenuDropDown);
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
         seasonBtn1.addActionListener(this::buySeasonTicket);

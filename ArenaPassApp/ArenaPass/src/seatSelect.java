@@ -244,7 +244,7 @@ public class seatSelect extends JFrame {
     }
 
     private void setupFrame() {
-        GlobalMenus.dropDownFan(mainMenuDropDown);
+        //mainMenuDropDown = GlobalMenus.dropDownFan();
         add(SelectTeamForm1);
         setTitle("Select Seat");
         setSize(1920, 1080);
@@ -258,6 +258,7 @@ public class seatSelect extends JFrame {
 
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFan(mainMenuDropDown);
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
         checkoutButton.addActionListener(this::checkout);

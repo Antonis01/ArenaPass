@@ -20,7 +20,7 @@ public class FeedBack extends JFrame {
         setUpActions();
     }
     private void setupFrame() {
-        GlobalMenus.dropDownFan(mainMenuDropDown);
+
         add(FeedBackForm);
         setTitle("ArenaPass FeedBack");
         setSize(1920, 1080);
@@ -29,6 +29,7 @@ public class FeedBack extends JFrame {
     }
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFan(mainMenuDropDown);
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
         submitBtn.addActionListener(this::submitForm);

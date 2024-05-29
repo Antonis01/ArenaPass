@@ -18,6 +18,7 @@ def main():
     # Add data to the QR code
     rng_num = random.randrange(100, 1000)
     data = str(rng_num) + str(args.input) + str(luhn(args.input))
+    print (data)
     qr.add_data(data)
 
     # Create the QR code

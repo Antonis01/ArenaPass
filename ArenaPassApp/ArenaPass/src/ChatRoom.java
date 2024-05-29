@@ -16,7 +16,6 @@ public class ChatRoom extends JFrame {
         setUpActions();
     }
     private void setupFrame() {
-        GlobalMenus.dropDownFan(mainMenuDropDown);
         add(ChatRoomForm);
         setTitle("ArenaPass ChatRoom");
         setSize(1920, 1080);
@@ -25,6 +24,7 @@ public class ChatRoom extends JFrame {
     }
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFan(mainMenuDropDown);
         mainMenuDropDown.addActionListener(globalMenus::switchPanel);
         logoutBtn.addActionListener(globalMenus::logout);
         submitBtn.addActionListener(this::submitForm);

@@ -12,7 +12,7 @@ public class SelectTeam extends JFrame{
 
 
     private void setupFrame() {
-        GlobalMenus.dropDownFan(mainMenuDropDown);
+        //GlobalMenus.dropDownFan(mainMenuDropDown);
         setUpActions();
         setTitle("Select Team");
         setSize(1920, 1080);
