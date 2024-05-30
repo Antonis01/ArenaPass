@@ -30,6 +30,7 @@ CREATE TABLE reservations(
     reservation_seat_id INT(8) NOT NULL,
     reservation_date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     reservation_type ENUM ('TICKET','SEASON TICKET','NOT AVAILABLE','AVAILABLE'),
+    reservation_ticket_type ENUM ('STUDENT','FULL','CHILD') DEFAULT NULL,
     reservation_match_id INT(6) NOT NULL,
     PRIMARY KEY (reservation_id)
 );
@@ -99,6 +100,7 @@ CREATE TABLE tickets (
     ticket_seat_id INT(8) NOT NULL,
     ticket_match_id INT(9) NOT NULL,
     ticket_fan_pass_id INT(9) NOT NULL,
+    ticket_type ENUM ('STUDENT','FULL','CHILD') DEFAULT 'FULL',
     ticket_purchase_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (ticket_number),
     CONSTRAINT SEAT FOREIGN KEY (ticket_seat_id) REFERENCES seats(seat_id),
@@ -233,7 +235,7 @@ BEGIN
     FETCH ticket_cursor INTO res_ticket_number, res_ticket_seat_id, res_ticket_fan_pass_id;
 
      WHILE (finishedFlag=0) DO
-        UPDATE reservations SET reservation_fan_pass_id = res_ticket_fan_pass_id,reservation_ticket_number=res_ticket_number,reservation_type='SEASON TICKET'
+        UPDATE reservations SET reservation_fan_pass_id = res_ticket_fan_pass_id,reservation_ticket_number=res_ticket_number,reservation_type='SEASON TICKET',reservation_ticket_type='FULL'
         WHERE reservation_match_id = r_match_id AND reservation_seat_id = res_ticket_seat_id;
         FETCH ticket_cursor INTO res_ticket_number, res_ticket_seat_id, res_ticket_fan_pass_id;
     END WHILE;
@@ -388,7 +390,7 @@ CREATE TRIGGER ticket_reservation AFTER INSERT ON tickets
 FOR EACH ROW 
 BEGIN
 
-    UPDATE reservations SET reservation_fan_pass_id = NEW.ticket_fan_pass_id,reservation_ticket_number=NEW.ticket_number,reservation_type='TICKET',reservation_date_time=NOW()
+    UPDATE reservations SET reservation_fan_pass_id = NEW.ticket_fan_pass_id,reservation_ticket_number=NEW.ticket_number,reservation_type='TICKET',reservation_date_time=NOW(),reservation_ticket_type=NEW.ticket_type
     WHERE reservation_match_id = NEW.ticket_match_id AND reservation_seat_id = NEW.ticket_seat_id;
 
 END$
