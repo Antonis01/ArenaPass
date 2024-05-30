@@ -4,6 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.sql.*;
+import java.time.LocalDate;
+
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
 
 public class RegisterUI extends JFrame {
@@ -14,7 +18,7 @@ public class RegisterUI extends JFrame {
     private JTextField inFirstNameField;
     private JTextField inEmailField;
     private JButton uploadIDFrontBtn;
-    private JTextField inBirthdate;
+    private DatePicker inBirthdate;
     private JTextField inPhoneNumber;
     private JTextField inHomeAddress;
     private JButton uploadIDBackBtn;
@@ -25,7 +29,7 @@ public class RegisterUI extends JFrame {
     private JPasswordField inPasswordField;
     private JTextField inLastNameField;
     private JTextField inUsernameField;
-    private JTextField inIDExpDate;
+    private DatePicker inIDExpDate;
     private JButton backToLoginButton;
 
     public RegisterUI() {
@@ -68,11 +72,20 @@ public class RegisterUI extends JFrame {
     }
 
     private void setupFrame() {
+        LocalDate today = LocalDate.now();
         add(RegisterForm);
         setTitle("ArenaPass Register");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        inBirthdate.setDateToToday();
+        inIDExpDate.setDateToToday();
+        DatePickerSettings dateSettings = new DatePickerSettings();
+        DatePickerSettings dateSettings2 = new DatePickerSettings();
+        inIDExpDate.setSettings(dateSettings2);
+        inBirthdate.setSettings(dateSettings);
+        dateSettings.setDateRangeLimits(today.minusYears(100), today.plusDays(0));
+        dateSettings2.setDateRangeLimits(today.minusDays(0), today.plusYears(100));
     }
 
     private void setupActions() {
@@ -112,8 +125,8 @@ public class RegisterUI extends JFrame {
                 ps.setString(3, inFirstNameField.getText());
                 ps.setString(4, inLastNameField.getText());
                 ps.setInt(5, Integer.parseInt(inCitizenID.getText()));
-                ps.setDate(6,Date.valueOf(inIDExpDate.getText()));
-                ps.setDate(7,Date.valueOf(inBirthdate.getText()));
+                ps.setDate(6,Date.valueOf(inIDExpDate.getDate()));
+                ps.setDate(7,Date.valueOf(inBirthdate.getDate()));
                 ps.setInt(8,createFanID());
                 ps.setString(9,inPhoneNumber.getText());
                 ps.setString(10, inEmailField.getText());
