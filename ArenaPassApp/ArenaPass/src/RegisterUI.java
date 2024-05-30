@@ -26,25 +26,25 @@ public class RegisterUI extends JFrame {
     private JTextField inLastNameField;
     private JTextField inUsernameField;
     private JTextField inIDExpDate;
+    private JButton backToLoginButton;
 
     public RegisterUI() {
         setupFrame();
         setupActions();
-
     }
 
     private Boolean isNotEmpty(){
-        if(inFirstNameField.getText() == null) return false;
-        if(inLastNameField.getText() == null) return false;
-        if(inEmailField.getText() == null) return false;
-        if(inBirthdate.getText() == null) return false;
-        if(inPhoneNumber.getText() == null) return false;
-        if(inHomeAddress.getText() == null) return false;
-        if(inCity.getText() == null) return false;
-        if(inCitizenID.getText() == null) return false;
-        if(inUsernameField.getText() == null) return false;
-        if(inIDExpDate.getText() == null) return false;
-        if(inPasswordField.getText() == null) return false;
+        if(inFirstNameField.getText().isEmpty()) return false;
+        if(inLastNameField.getText().isEmpty()) return false;
+        if(inEmailField.getText().isEmpty()) return false;
+        if(inBirthdate.getText().isEmpty()) return false;
+        if(inPhoneNumber.getText().isEmpty()) return false;
+        if(inHomeAddress.getText().isEmpty()) return false;
+        if(inCity.getText().isEmpty()) return false;
+        if(inCitizenID.getText().isEmpty()) return false;
+        if(inUsernameField.getText().isEmpty()) return false;
+        if(inIDExpDate.getText().isEmpty()) return false;
+        if(inPasswordField.getText().isEmpty()) return false;
 
         return true;
     }
@@ -80,6 +80,7 @@ public class RegisterUI extends JFrame {
         uploadIDBackBtn.addActionListener(this::uploadFileAction);
         uploadPhotoBtn.addActionListener(this::uploadFileAction);
         registerBtn.addActionListener(this::register);
+        backToLoginButton.addActionListener(this::backToLogin);
     }
 
     private void uploadFileAction(ActionEvent actionEvent) {
@@ -92,6 +93,12 @@ public class RegisterUI extends JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             System.out.println(selectedFile.getName());
         }
+    }
+
+    private void backToLogin(ActionEvent actionEvent) {
+        RegisterForm.setVisible(false);
+        dispose();
+        new LoginUI().setVisible(true);
     }
 
     private void register(ActionEvent actionEvent) {
@@ -114,16 +121,17 @@ public class RegisterUI extends JFrame {
                 ps.setString(12, inCity.getText());
                 ps.executeUpdate();
 
-                new AdminFanApplicationList().setVisible(true);
+                JOptionPane.showMessageDialog(null, "Register successful!");
+                RegisterForm.setVisible(false);
+                dispose();
+                new LoginUI().setVisible(true);
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Register failed!");
-                throw new RuntimeException(ex);
+                ex.printStackTrace();
             }
+        }else {
+            JOptionPane.showMessageDialog(null, "Please fill all the fields!");
         }
-        JOptionPane.showMessageDialog(null, "Register successful!");
-        RegisterForm.setVisible(false);
-        dispose();
-        new MainPage().setVisible(true);
     }
 }
