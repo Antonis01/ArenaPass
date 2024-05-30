@@ -127,7 +127,10 @@ public class RegisterUI extends JFrame {
                 new LoginUI().setVisible(true);
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Register failed!");
+                //JOptionPane.showMessageDialog(null, "Register failed!");
+                if(ex.getMessage().equals("Duplicate entry '"+inUsernameField.getText()+"' for key 'fan_username'")){
+                    JOptionPane.showMessageDialog(null, "Username already exists!");
+                }
                 ex.printStackTrace();
             }catch (Exception e){
                 JOptionPane.showMessageDialog(null, "Register failed!");
