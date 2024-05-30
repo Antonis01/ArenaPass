@@ -10,11 +10,11 @@ public class ChatRoom extends JFrame {
     private JTextField textField3;
     private JButton submitBtn;
 
-
     public ChatRoom() {
         setupFrame();
         setUpActions();
     }
+
     private void setupFrame() {
         add(ChatRoomForm);
         setTitle("ArenaPass ChatRoom");
@@ -22,6 +22,7 @@ public class ChatRoom extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
+
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
         globalMenus.dropDownFan(mainMenuDropDown);
@@ -37,4 +38,3 @@ public class ChatRoom extends JFrame {
         new MainPage().setVisible(true);
     }
 }
-
