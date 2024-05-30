@@ -122,7 +122,7 @@ public class SelectMatchModify extends JFrame{
     private void modify(ActionEvent actionEvent) {
         setVisible(false);
         dispose();
-        new ModifyMatch().setVisible(true);
+        new ModifyMatch(matches.get(matchesComboBox.getSelectedIndex())).setVisible(true);
     }
 }
 

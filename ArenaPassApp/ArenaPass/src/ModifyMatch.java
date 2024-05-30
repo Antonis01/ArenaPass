@@ -13,8 +13,13 @@ public class ModifyMatch extends JFrame{
     private JButton TimeBtn;
     private JTextField changeTime;
     private JButton ScoreBtn;
+    private JLabel awayTeamLabel;
+    private JLabel homeTeamLabel;
+    private Match match;
 
-    public ModifyMatch(){
+
+    public ModifyMatch(Match match){
+        this.match=match;
         setupFrame();
         setUpActions();
 
@@ -23,6 +28,8 @@ public class ModifyMatch extends JFrame{
     private void setupFrame() {
         add(ModifyMatch);
         setTitle("ArenaPass ModifyMatchPage");
+        homeTeamLabel.setText(match.getHomeTeam());
+        awayTeamLabel.setText(match.getAwayTeam());
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
