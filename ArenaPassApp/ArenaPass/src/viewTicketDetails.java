@@ -32,7 +32,7 @@ public class viewTicketDetails extends JFrame{
     }
 
     private void showQrCode() {
-        String path = "qr.jpg";
+        String path = "qr.png";
         try {
             Image img = ImageIO.read(new File(path));
             ImageIcon icon = new ImageIcon(img);

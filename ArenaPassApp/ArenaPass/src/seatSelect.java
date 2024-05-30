@@ -303,8 +303,22 @@ public class seatSelect extends JFrame {
                     ps.setInt(3, fanID);
                     ps.executeUpdate();
                     String temp2 = Integer.toString(fanID) + Integer.toString(getFanDataForQR());
-                    Process p = Runtime.getRuntime().exec("python src/qrcode_generator.py " + temp2);
+                    Process p = Runtime.getRuntime().exec("python qrcode_generator.py " + temp2);
                     p.waitFor(); // wait for the process to finish
+
+                    String t = "ticket.pdf";
+                    String f = Integer.toString(getFanDataForQR());
+                    String name = LoginUI.currFan.getFirstName();
+                    String lname = LoginUI.currFan.getLastName();
+                    String id = Integer.toString(LoginUI.currFan.getID());
+                    String mid = Integer.toString(currMatch.getMatchID());
+
+
+                    String temp3 = t + " " + f + " " + name + " " + lname + " " + id + " " + mid;
+                    System.out.println(temp3);
+                    Process ticket = Runtime.getRuntime().exec("python src/print_pdf.py " + temp3);
+                    ticket.waitFor();
+
                     setVisible(false);
                     dispose();
                     JOptionPane.showMessageDialog(null, "Transaction Completed");

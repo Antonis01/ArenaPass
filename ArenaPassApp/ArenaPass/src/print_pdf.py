@@ -11,12 +11,12 @@ class PDF(FPDF):
         self.set_font('Arial', 'I', 8)
         self.cell(0, 10, f'Page {self.page_no()}', 0, 0, 'C')
 
-def create_arena_pass_pdf(output_path, secondary_image_path, pass_id, name, surname, id_doc_number, reservation_id):
+def create_arena_pass_pdf(output_path, pass_id, name, surname, id_doc_number, reservation_id):
     pdf = PDF()
     pdf.add_page()
 
     # Add the first image (3 times smaller)
-    first_image_path = r"C:\ArenaPass\ArenaPassApp\ArenaPass\src\images\ArenaPass.png"
+    first_image_path = r"images/ArenaPass.png"
     first_image_width = 500 / 3 / 72 * 72  # Convert pixels to points and then to the desired size
     first_image_height = 197 / 3 / 72 * 72  # Convert pixels to points and then to the desired size
     pdf.image(first_image_path, x=10, y=20, w=first_image_width, h=first_image_height)
@@ -25,12 +25,12 @@ def create_arena_pass_pdf(output_path, secondary_image_path, pass_id, name, surn
     pdf.set_y(20 + first_image_height + 10)  # Adjust y position based on the first image size
     pdf.set_x(10)
     pdf.set_font('Arial', 'B', 12)
-    pdf.cell(0, 10, 'QR Code Placeholder', 0, 1)
+    #pdf.cell(0, 10, 'QR Code Placeholder', 0, 1)
 
     # Add the second image (4 times smaller)
     second_image_width = 290 / 4 / 72 * 72  # Convert pixels to points and then to the desired size
     second_image_height = 290 / 4 / 72 * 72  # Convert pixels to points and then to the desired size
-    pdf.image(secondary_image_path, x=10, y=20 + first_image_height + 30, w=second_image_width, h=second_image_height)
+    pdf.image(r"../qr.png", x=10, y=20 + first_image_height + 30, w=second_image_width, h=second_image_height)
 
     # Add details
     pdf.set_y(20 + first_image_height + 30 + second_image_height + 10)  # Adjust y position based on the second image size
@@ -44,16 +44,15 @@ def create_arena_pass_pdf(output_path, secondary_image_path, pass_id, name, surn
     pdf.output(output_path)
 
 if __name__ == '__main__':
-    if len(sys.argv) != 8:
-        print("Usage: python script.py <output_path> <secondary_image_path> <pass_id> <name> <surname> <id_doc_number> <reservation_id>")
+    if len(sys.argv) != 7:
+        print("Usage: python script.py <output_path> <pass_id> <name> <surname> <id_doc_number> <reservation_id>")
         sys.exit(1)
 
     output_path = sys.argv[1]
-    secondary_image_path = sys.argv[2]
-    pass_id = sys.argv[3]
-    name = sys.argv[4]
-    surname = sys.argv[5]
-    id_doc_number = sys.argv[6]
-    reservation_id = sys.argv[7]
+    pass_id = sys.argv[2]
+    name = sys.argv[3]
+    surname = sys.argv[4]
+    id_doc_number = sys.argv[5]
+    reservation_id = sys.argv[6]
 
-    create_arena_pass_pdf(output_path, secondary_image_path, pass_id, name, surname, id_doc_number, reservation_id)
+    create_arena_pass_pdf(output_path, pass_id, name, surname, id_doc_number, reservation_id)

@@ -13,7 +13,7 @@ public class LoginUI extends JFrame {
     private JButton loginButton;
     private JPanel LoginForm;
     private JButton registerButton;
-    private static Fan currFan;
+    public static Fan currFan;
 
     public LoginUI() {
         setupFrame();

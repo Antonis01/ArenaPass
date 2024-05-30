@@ -26,7 +26,7 @@ def main():
 
     img = qr.make_image(fill_color="black", back_color="white")
 
-    with open('qr.jpg', 'wb') as f:
+    with open('qr.png', 'wb') as f:
         img.save(f)
 
 def luhn(value):

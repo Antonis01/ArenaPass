@@ -46,7 +46,7 @@ public class GlobalMenus {
 
     public void switchPanelAdmin(ActionEvent actionEvent){
         JComboBox comboBox = (JComboBox) actionEvent.getSource();
-        JOptionPane.showMessageDialog(comboBox, comboBox.getSelectedItem());
+        //JOptionPane.showMessageDialog(comboBox, comboBox.getSelectedItem());
 
         switch (comboBox.getSelectedIndex()) {
             case 0:
@@ -83,7 +83,7 @@ public class GlobalMenus {
     public void switchPanel(JComboBox comboBox) {
         comboBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
-                JOptionPane.showMessageDialog(null,"SWITCHPANEL");
+                //JOptionPane.showMessageDialog(null,"SWITCHPANEL");
 
                 switch (comboBox.getSelectedIndex()) {
                     case 0:
