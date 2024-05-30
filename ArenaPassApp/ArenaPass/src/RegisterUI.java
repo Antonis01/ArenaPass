@@ -129,6 +129,9 @@ public class RegisterUI extends JFrame {
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Register failed!");
                 ex.printStackTrace();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, "Register failed!");
+                e.printStackTrace();
             }
         }else {
             JOptionPane.showMessageDialog(null, "Please fill all the fields!");
