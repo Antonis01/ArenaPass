@@ -62,27 +62,15 @@
               <text value="Logout"/>
             </properties>
           </component>
-          <component id="c6a65" class="javax.swing.JTextField" binding="changeScore">
-            <constraints>
-              <grid row="10" column="2" row-span="3" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="100" height="-1"/>
-                <preferred-size width="100" height="-1"/>
-                <maximum-size width="100" height="-1"/>
-              </grid>
-            </constraints>
-            <properties>
-              <text value=""/>
-            </properties>
-          </component>
-          <component id="ccb12" class="javax.swing.JButton" binding="ScoreBtn">
+          <component id="ccb12" class="javax.swing.JButton" binding="stadiumButton">
             <constraints>
               <grid row="11" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Change Score"/>
+              <text value="Change Stadium"/>
             </properties>
           </component>
-          <component id="6d0f3" class="javax.swing.JButton" binding="DateBtn">
+          <component id="6d0f3" class="javax.swing.JButton" binding="changeDateButton">
             <constraints>
               <grid row="3" column="5" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -90,19 +78,15 @@
               <text value="Change Date"/>
             </properties>
           </component>
-          <component id="91227" class="javax.swing.JTextField" binding="changeDate">
+          <component id="91227" class="com.github.lgooddatepicker.components.DatePicker" binding="changeDate">
             <constraints>
-              <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="100" height="-1"/>
-                <preferred-size width="100" height="-1"/>
-                <maximum-size width="100" height="-1"/>
-              </grid>
+              <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value=""/>
             </properties>
           </component>
-          <component id="8f31c" class="javax.swing.JButton" binding="TimeBtn">
+          <component id="8f31c" class="javax.swing.JButton" binding="changeTimeButton">
             <constraints>
               <grid row="6" column="5" row-span="3" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
@@ -110,13 +94,9 @@
               <text value="Change Time"/>
             </properties>
           </component>
-          <component id="3c7d8" class="javax.swing.JTextField" binding="changeTime">
+          <component id="3c7d8" class="com.github.lgooddatepicker.components.TimePicker" binding="changeTime">
             <constraints>
-              <grid row="7" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false">
-                <minimum-size width="100" height="-1"/>
-                <preferred-size width="100" height="-1"/>
-                <maximum-size width="100" height="-1"/>
-              </grid>
+              <grid row="7" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
           </component>
@@ -194,6 +174,12 @@
               <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
           </hspacer>
+          <component id="4f850" class="javax.swing.JComboBox" binding="stadiumBox">
+            <constraints>
+              <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+          </component>
         </children>
       </grid>
     </children>
