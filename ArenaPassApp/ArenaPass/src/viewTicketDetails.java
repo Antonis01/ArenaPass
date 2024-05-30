@@ -26,7 +26,7 @@ public class viewTicketDetails extends JFrame{
 
     private void setupActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
-        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        globalMenus.switchPanel(mainMenuDropDown);
         logoutBtn.addActionListener(globalMenus::logout);
         showQrCode();
     }

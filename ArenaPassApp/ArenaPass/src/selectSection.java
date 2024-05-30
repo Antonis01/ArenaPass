@@ -5,7 +5,6 @@ import java.sql.*;
 
 
 public class selectSection extends JFrame{
-
     private JPanel SelectTeamForm1;
     private JPanel selectTeamForm;
     private JComboBox mainMenuDropDown;
@@ -42,7 +41,7 @@ public class selectSection extends JFrame{
         setUpActions();
     }
 
-    public selectSection(String team, Image logo,int stadiumID){
+    public selectSection(String team, Image logo,int stadiumID){ //FOR SEASON
         System.out.println("SEASON");
         buttonTicket.setVisible(false);
         this.stadiumID=stadiumID;
@@ -57,7 +56,7 @@ public class selectSection extends JFrame{
 
     private void setupFrame() {
         add(SelectTeamForm1);
-        setTitle("Choose Match");
+        setTitle("Select Section");
         setSize(1920, 1080);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -66,7 +65,7 @@ public class selectSection extends JFrame{
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
         globalMenus.dropDownFan(mainMenuDropDown);
-        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        globalMenus.switchPanel(mainMenuDropDown);
         logoutBtn.addActionListener(globalMenus::logout);
         buttonTicket.addActionListener(this::seatSelect);
         buttonSeason.addActionListener(this::seatSelect);

@@ -26,7 +26,7 @@ public class MainPage extends JFrame {
 
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
-        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        globalMenus.switchPanel(mainMenuDropDown);
         logoutBtn.addActionListener(globalMenus::logout);
     }
 }

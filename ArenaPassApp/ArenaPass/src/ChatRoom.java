@@ -25,7 +25,7 @@ public class ChatRoom extends JFrame {
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
         globalMenus.dropDownFan(mainMenuDropDown);
-        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        globalMenus.switchPanel(mainMenuDropDown);
         logoutBtn.addActionListener(globalMenus::logout);
         submitBtn.addActionListener(this::submitForm);
     }

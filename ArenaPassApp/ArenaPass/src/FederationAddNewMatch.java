@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 public class FederationAddNewMatch extends JFrame {
     private JPanel FederationAddNewMatchForm;
-    private JComboBox AppAdminMenuDropDown;
+    private JComboBox FedAdminMenuDropDown;
     private JButton logoutBtn;
     private JTextField textField1;
     private JComboBox stadiumBox;
@@ -121,7 +121,9 @@ public class FederationAddNewMatch extends JFrame {
     }
 
     private void setUpActions() {
-        AppAdminMenuDropDown.addActionListener(this::switchPanel);
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFedAdmin(FedAdminMenuDropDown);
+        FedAdminMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
         addMatchBttn.addActionListener(this::addBttn);
         matchRestrictions.addItemListener(this::setupRestrictionsState);
@@ -219,9 +221,9 @@ public class FederationAddNewMatch extends JFrame {
     }
 
     private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(AppAdminMenuDropDown, AppAdminMenuDropDown.getSelectedItem());
+        JOptionPane.showMessageDialog(FedAdminMenuDropDown, FedAdminMenuDropDown.getSelectedItem());
 
-        switch (AppAdminMenuDropDown.getSelectedIndex()){
+        switch (FedAdminMenuDropDown.getSelectedIndex()){
             case 0:
                 setVisible(false);
                 dispose();

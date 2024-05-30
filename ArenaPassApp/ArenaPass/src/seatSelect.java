@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class seatSelect extends JFrame {
 
-    private JPanel SelectTeamForm1;
+    private JPanel SelectSectionForm1;
     private JPanel selectTeamForm;
     private JComboBox mainMenuDropDown;
     private JLabel logo;
@@ -245,7 +245,7 @@ public class seatSelect extends JFrame {
 
     private void setupFrame() {
         //mainMenuDropDown = GlobalMenus.dropDownFan();
-        add(SelectTeamForm1);
+        add(SelectSectionForm1);
         setTitle("Select Seat");
         setSize(1920, 1080);
         sectionNumber.setText("Section "+section);
@@ -259,7 +259,7 @@ public class seatSelect extends JFrame {
     private void setUpActions() {
         GlobalMenus globalMenus = new GlobalMenus(this);
         globalMenus.dropDownFan(mainMenuDropDown);
-        mainMenuDropDown.addActionListener(globalMenus::switchPanel);
+        globalMenus.switchPanel(mainMenuDropDown);
         logoutBtn.addActionListener(globalMenus::logout);
         checkoutButton.addActionListener(this::checkout);
     }

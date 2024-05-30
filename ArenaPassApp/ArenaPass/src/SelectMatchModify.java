@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 public class SelectMatchModify extends JFrame{
     private JPanel panel1;
     private JPanel SelectMatchModifyForm;
-    private JComboBox AdminMenuDropDown;
+    private JComboBox FedAdminMenuDropDown;
     private JTextField textField1;
     private JButton logoutBtn;
     private JButton ModifyBtn;
@@ -24,15 +24,17 @@ public class SelectMatchModify extends JFrame{
     }
 
     private void setUpActions() {
-        AdminMenuDropDown.addActionListener(this::switchPanel);
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFedAdmin(FedAdminMenuDropDown);
+        FedAdminMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
         ModifyBtn.addActionListener(this::modify);
     }
 
     private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(AdminMenuDropDown, AdminMenuDropDown.getSelectedItem());
+        JOptionPane.showMessageDialog(FedAdminMenuDropDown, FedAdminMenuDropDown.getSelectedItem());
 
-        switch (AdminMenuDropDown.getSelectedIndex()){
+        switch (FedAdminMenuDropDown.getSelectedIndex()){
             case 0:
                 setVisible(false);
                 dispose();
@@ -41,15 +43,18 @@ public class SelectMatchModify extends JFrame{
             case 1:
                 setVisible(false);
                 dispose();
+                new FederationAddNewMatch().setVisible(true);
+                break;
+            case 2:
+                setVisible(false);
+                dispose();
                 new SelectMatchModify().setVisible(true);
                 break;
-
-            case 2:
+            case 3:
                 setVisible(false);
                 dispose();
                 new ModifyTickets().setVisible(true);
                 break;
-
         }
     }
 

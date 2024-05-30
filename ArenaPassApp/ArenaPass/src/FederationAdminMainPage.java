@@ -5,7 +5,7 @@ public class FederationAdminMainPage extends JFrame {
     private JPanel AdminMainPageForm;
     private JTextField textField1;
     private JButton logoutBtn;
-    private JComboBox AdminMenuDropDown;
+    private JComboBox FedAdminMenuDropDown;
 
 
     public FederationAdminMainPage() {
@@ -22,14 +22,16 @@ public class FederationAdminMainPage extends JFrame {
     }
 
     private void setUpActions() {
-        AdminMenuDropDown.addActionListener(this::switchPanel);
+        GlobalMenus globalMenus = new GlobalMenus(this);
+        globalMenus.dropDownFedAdmin(FedAdminMenuDropDown);
+        FedAdminMenuDropDown.addActionListener(this::switchPanel);
         logoutBtn.addActionListener(this::logout);
     }
 
     private void switchPanel(ActionEvent actionEvent) {
-        JOptionPane.showMessageDialog(AdminMenuDropDown, AdminMenuDropDown.getSelectedItem());
+        JOptionPane.showMessageDialog(FedAdminMenuDropDown, FedAdminMenuDropDown.getSelectedItem());
 
-        switch (AdminMenuDropDown.getSelectedIndex()){
+        switch (FedAdminMenuDropDown.getSelectedIndex()){
             case 0:
                 setVisible(false);
                 dispose();
