@@ -3,6 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class seatSelect extends JFrame {
 
@@ -13,19 +14,24 @@ public class seatSelect extends JFrame {
     private JTextField textField1;
     private JButton logoutBtn;
     private JButton checkoutButton;
-    private JButton button1;
+    private JButton checkoutWithManualInputButton;
     private JLabel selectedSeat;
     private JLabel seatAvailability;
     private JLabel sectionNumber;
     private JPanel seatPanel;
+    private JRadioButton multipleTickets;
     private  String section;
     private Match currMatch;
     private int seatNum;
     private int freeSeats;
-    private int selectedSeatID;
     private int stadiumID;
     private int teamID;
     private boolean isSeason;
+    private int previousSelected=-1;
+    private int[] seatID;
+    private int[] isFree;
+    private String[] seatName;
+    ArrayList<Integer> selectedID;
 
     public seatSelect(Match currMatch, String section) {
         this.isSeason=false;
@@ -44,6 +50,9 @@ public class seatSelect extends JFrame {
         this.stadiumID=stadiumID;
         this.teamID=getTeamID(team);
         getTotalSeats();
+        checkoutWithManualInputButton.setVisible(false);
+        checkoutButton.setText("Checkout");
+        multipleTickets.setVisible(false);
         seatPanel.setLayout(new GridLayout(10, 10));
         createSeatButtons();
         setupFrame();
@@ -201,10 +210,12 @@ public class seatSelect extends JFrame {
     }
 
     private void createSeatButtons() {
-        int[] seatID = new int[seatNum];
-        int[] isFree = new int[seatNum];
-        String[] seatName= new String[seatNum];
+        this.seatID = new int[seatNum];
+        this.isFree = new int[seatNum];
+        this.seatName= new String[seatNum];
         JButton[] jButton = new JButton[seatNum];
+        selectedID = new ArrayList<Integer>(seatNum);
+
         if(isSeason) { setupSeatIDSeason(seatID,seatName); reserveSeatsSeason(isFree,seatID); }
         else { setupSeatID(seatID,seatName); reserveSeats(isFree,seatID); }
         setupPanel(seatPanel,seatName);
@@ -231,27 +242,39 @@ public class seatSelect extends JFrame {
                     if (isFree[finalI]==0)
                         JOptionPane.showMessageDialog(null, "Seat Taken");
                     else {
-                        selectedSeatID=seatID[finalI];
-                        System.out.println(selectedSeatID);
-                        selectedSeat.setText("Selected Seat: " + (jButton[finalI].getText()));
-                        selectedSeat.setVisible(true);
-                        checkoutButton.setVisible(true);
+                        if(!selectedID.contains(seatID[finalI])){
+                            jButton[finalI].setBackground(Color.CYAN);
+                            if(!multipleTickets.isSelected()) {
+                                if (previousSelected != -1){
+                                    jButton[previousSelected].setBackground(Color.GREEN);
+                                    selectedID.remove(Integer.valueOf(seatID[previousSelected]));
+                                }
+                                previousSelected = finalI;
+                            }
+                            else
+                                jButton[finalI].setBackground(Color.CYAN);
+                            selectedID.add(seatID[finalI]);
+                        }
+                        else{
+                            jButton[finalI].setBackground(Color.GREEN);
+                            selectedID.remove(Integer.valueOf(seatID[finalI]));
+                        }
                     }
                 }
             });
-        }
 
+        }
     }
 
+
     private void setupFrame() {
-        //mainMenuDropDown = GlobalMenus.dropDownFan();
         add(SelectSectionForm1);
         setTitle("Select Seat");
         setSize(1920, 1080);
         sectionNumber.setText("Section "+section);
         seatAvailability.setText("Available seats: "+freeSeats);
         selectedSeat.setVisible(false);
-        checkoutButton.setVisible(false);
+        //checkoutButton.setVisible(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -262,18 +285,20 @@ public class seatSelect extends JFrame {
         globalMenus.switchPanel(mainMenuDropDown);
         logoutBtn.addActionListener(globalMenus::logout);
         checkoutButton.addActionListener(this::checkout);
+        checkoutWithManualInputButton.addActionListener(this::checkoutManualInput);
     }
 
     private void checkout(ActionEvent actionEvent) {
         int fanID = LoginUI.getFanPassID();
         String query = null;
         PreparedStatement ps = null;
+        if (selectedID.size() == 1) {
             try {
                 Connection connection = ConnectDB.createConnection();
-                if(!isSeason) {
+                if (!isSeason) {
                     query = "INSERT INTO tickets (ticket_seat_id,ticket_match_id,ticket_fan_pass_id) VALUES (?,?,?)";
                     ps = connection.prepareStatement(query);
-                    ps.setInt(1, selectedSeatID);
+                    ps.setInt(1, selectedID.get(0));
                     ps.setInt(2, currMatch.getMatchID());
                     ps.setInt(3, fanID);
                     ps.executeUpdate();
@@ -284,20 +309,32 @@ public class seatSelect extends JFrame {
                     dispose();
                     JOptionPane.showMessageDialog(null, "Transaction Completed");
                     new viewTicketDetails().setVisible(true);
-                }
-                else{
+                } else {
                     query = "insert into season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id,season_ticket_fan_pass_id) VALUES (?,?,?,?)";
                     ps = connection.prepareStatement(query);
-                    ps.setInt(1,selectedSeatID);
-                    ps.setInt(2,teamID);
-                    ps.setInt(3,stadiumID);
-                    ps.setInt(4,fanID);
+                    ps.setInt(1, selectedID.get(0));
+                    ps.setInt(2, teamID);
+                    ps.setInt(3, stadiumID);
+                    ps.setInt(4, fanID);
                     ps.executeUpdate();
                     JOptionPane.showMessageDialog(null, "Transaction Completed");
                 }
             } catch (Exception ee) {
-                JOptionPane.showMessageDialog(null,ee.getMessage());
+                JOptionPane.showMessageDialog(null, ee.getMessage());
             }
 
+        }
+        else{
+            JOptionPane.showMessageDialog(null,"Cannot autofill with multiple tickets");
+        }
+    }
+
+    private void checkoutManualInput(ActionEvent actionEvent){
+        for(int i=0;i<selectedID.size();i++)
+        {
+            new BuyTicketCheckoutManual(seatName[i],selectedID.get(i),currMatch);
+        }
+        this.dispose();
+        this.setVisible(false);
     }
 }
