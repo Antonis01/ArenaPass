@@ -396,3 +396,76 @@ BEGIN
 END$
 
 DELIMITER ;
+
+
+
+DELIMITER $
+CREATE PROCEDURE check_correct_match (IN ht_cap INT, IN at_cap INT, IN stad_id INT, IN restrictions INT, OUT check_resault INT)
+BEGIN
+    DECLARE ht_max INT;
+    DECLARE at_max INT;
+    SELECT count(*) INTO ht_max FROM seats WHERE seat_stadium_id=stad_id AND seat_side='HT';
+    SELECT count(*) INTO at_max FROM seats WHERE seat_stadium_id=stad_id AND seat_side='AT';
+
+    SET check_resault = 0;
+
+    IF (restrictions = 1) THEN
+        IF (ht_cap>ht_max ) THEN
+            SET check_resault = 1;
+        END IF;
+        IF (at_cap>at_max) THEN
+            SET check_resault = 1;
+        END IF;
+
+    ELSEIF (restrictions = 2) THEN
+        IF (at_cap!=0) THEN
+            SET check_resault = 2;
+        ELSEIF (ht_cap>ht_max) THEN
+            SET check_resault = 1;
+        END IF;
+
+    ELSEIF (restrictions = 3) THEN
+        IF (at_cap!=0 OR ht_cap!=0) THEN
+            SET check_resault = 3;
+        END IF;
+
+    ELSE
+        SET check_resault = -1;
+
+    END IF;
+
+END $
+DELIMITER ;
+
+
+
+
+DELIMITER $
+CREATE TRIGGER check_fan_capacity BEFORE INSERT ON matches
+FOR EACH ROW
+BEGIN
+    DECLARE resault INT;
+
+    IF (NEW.match_restrictions=1) THEN 
+        CALL check_correct_match(NEW.match_ht_max_capacity,NEW.match_at_max_capacity,NEW.match_stadium_id,1,resault);
+    ELSEIF (NEW.match_restrictions=2) THEN 
+        CALL check_correct_match(NEW.match_ht_max_capacity,NEW.match_at_max_capacity,NEW.match_stadium_id,2,resault);
+    ELSEIF (NEW.match_restrictions=3) THEN 
+        CALL check_correct_match(NEW.match_ht_max_capacity,NEW.match_at_max_capacity,NEW.match_stadium_id,3,resault);
+    END IF;
+
+    IF (resault = 1) THEN
+        SIGNAL SQLSTATE VALUE '45000'
+        SET MESSAGE_TEXT = 'Tickets (ht and/or at) exceed stadium capacity!';
+    ELSEIF (resault = 2) THEN
+        SIGNAL SQLSTATE VALUE '45000'
+        SET MESSAGE_TEXT = 'Tickets cannot be alocated to away fans in a match with "NO AWAY FANS" RESTRICTION!';
+    ELSEIF (resault = 3) THEN
+        SIGNAL SQLSTATE VALUE '45000'
+        SET MESSAGE_TEXT = 'Tickets cannot be alocated to fans in a match with "NO FANS" RESTRICTION!';
+    ELSEIF (resault = -1) THEN
+        SIGNAL SQLSTATE VALUE '45000'
+        SET MESSAGE_TEXT = 'SOMETHING WENT WRONG ADDING A NEW MATCH';
+    END IF;
+END $
+DELIMITER ;
