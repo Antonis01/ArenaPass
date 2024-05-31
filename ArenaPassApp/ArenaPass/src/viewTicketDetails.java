@@ -50,22 +50,42 @@ public class viewTicketDetails extends JFrame{
     }
 
     private void downloadTicket(ActionEvent actionEvent){
+        boolean check = true, check2 = true;
         try {
             File file = new File("\"ticket.pdf\"");
+            File file2 = new File("ticket.pdf");
             if (!file.exists()) {
-                throw new FileNotFoundException();
+                check = false;
             }
 
-            JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            int option = fileChooser.showSaveDialog(null);
-            if (option == JFileChooser.APPROVE_OPTION) {
-                File dir = fileChooser.getSelectedFile();
-                File newFile = new File(dir, file.getName());
-                Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                Desktop desktop = Desktop.getDesktop();
-                desktop.open(dir);
+            if (!file2.exists()){
+                check2 = false;
             }
+
+            if (check) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int option = fileChooser.showSaveDialog(null);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    File dir = fileChooser.getSelectedFile();
+                    File newFile = new File(dir, file.getName());
+                    Files.copy(file.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Desktop desktop = Desktop.getDesktop();
+                    desktop.open(dir);
+                }
+            }else if (check2){
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+                int option = fileChooser.showSaveDialog(null);
+                if (option == JFileChooser.APPROVE_OPTION) {
+                    File dir = fileChooser.getSelectedFile();
+                    File newFile = new File(dir, file2.getName());
+                    Files.copy(file2.toPath(), newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                    Desktop desktop = Desktop.getDesktop();
+                    desktop.open(dir);
+                }
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
