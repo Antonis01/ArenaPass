@@ -306,15 +306,15 @@ public class seatSelect extends JFrame {
                     Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py " + temp2);
                     p.waitFor(); // wait for the process to finish
 
-                    String t = "ticket.pdf";
-                    String f = Integer.toString(getFanDataForQR());
-                    String name = LoginUI.currFan.getFirstName();
+                    String outp = "ticket.pdf";
+                    String fdqr = Integer.toString(getFanDataForQR());
+                    String fname = LoginUI.currFan.getFirstName();
                     String lname = LoginUI.currFan.getLastName();
                     String id = Integer.toString(LoginUI.currFan.getID());
                     String mid = Integer.toString(currMatch.getMatchID());
 
 
-                    String temp3 ="\"" + t + "\" \"" + f + "\" \"" + name + "\" \"" + lname + "\" \"" + id + "\" \"" + mid + "\"";
+                    String temp3 ="\"" + outp + "\" \"" + fdqr + "\" \"" + fname + "\" \"" + lname + "\" \"" + id + "\" \"" + mid + "\"";
                     System.out.println(temp3);
                     Process ticket = Runtime.getRuntime().exec("python3 src/print_pdf.py " + temp3);
                     ticket.waitFor();
