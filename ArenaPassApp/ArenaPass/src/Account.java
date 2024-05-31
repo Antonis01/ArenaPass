@@ -10,7 +10,6 @@ public class Account {
     String city;
     int ID;
     String emailAddress;
-    String password=null;
     Date birthDate;
 
 
@@ -61,10 +60,6 @@ public class Account {
 
     public String getEmailAddress() {
         return emailAddress;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public Date getBirthDate() {
