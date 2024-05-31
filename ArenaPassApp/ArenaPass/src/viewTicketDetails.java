@@ -36,6 +36,7 @@ public class viewTicketDetails extends JFrame{
         logoutBtn.addActionListener(globalMenus::logout);
         showQrCode();
         downloadTicketButton.addActionListener(this::downloadTicket);
+        sendTicketViaEmailButton.addActionListener(this::sendTicketViaEmail);
     }
 
     private void showQrCode() {
@@ -89,5 +90,9 @@ public class viewTicketDetails extends JFrame{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void sendTicketViaEmail(ActionEvent actionEvent){
+        JOptionPane.showMessageDialog(null, "Ticket sent to email");
     }
 }

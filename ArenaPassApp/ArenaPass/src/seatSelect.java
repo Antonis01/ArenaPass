@@ -292,54 +292,70 @@ public class seatSelect extends JFrame {
         int fanID = LoginUI.getFanPassID();
         String query = null;
         PreparedStatement ps = null;
-        if (selectedID.size() == 1) {
-            try {
-                Connection connection = ConnectDB.createConnection();
-                if (!isSeason) {
-                    query = "INSERT INTO tickets (ticket_seat_id,ticket_match_id,ticket_fan_pass_id) VALUES (?,?,?)";
-                    ps = connection.prepareStatement(query);
-                    ps.setInt(1, selectedID.get(0));
-                    ps.setInt(2, currMatch.getMatchID());
-                    ps.setInt(3, fanID);
-                    ps.executeUpdate();
-                    String temp2 = Integer.toString(fanID) + Integer.toString(getFanDataForQR());
-                    Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py " + temp2);
-                    p.waitFor(); // wait for the process to finish
+        Object[] options = {"Accept", "Decline"};
+        int n = JOptionPane.showOptionDialog(null,
+                "Accept terms and conditions to proceed",
+                "Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,     //do not use a custom Icon
+                options,  //the titles of buttons
+                options[0]); //default button title
 
-                    String outp = "ticket.pdf";
-                    String fdqr = Integer.toString(getFanDataForQR());
-                    String fname = LoginUI.currFan.getFirstName();
-                    String lname = LoginUI.currFan.getLastName();
-                    String id = Integer.toString(LoginUI.currFan.getID());
-                    String mid = Integer.toString(currMatch.getMatchID());
+        if (n == JOptionPane.YES_OPTION) {
+            if (selectedID.size() == 1) {
+                try {
+                    Connection connection = ConnectDB.createConnection();
+                    if (!isSeason) {
+                        query = "INSERT INTO tickets (ticket_seat_id,ticket_match_id,ticket_fan_pass_id) VALUES (?,?,?)";
+                        ps = connection.prepareStatement(query);
+                        ps.setInt(1, selectedID.get(0));
+                        ps.setInt(2, currMatch.getMatchID());
+                        ps.setInt(3, fanID);
+                        ps.executeUpdate();
+                        String temp2 = Integer.toString(fanID) + Integer.toString(getFanDataForQR());
+                        Process p = Runtime.getRuntime().exec("python3 src/qrcode_generator.py " + temp2);
+                        p.waitFor(); // wait for the process to finish
+
+                        String outp = "ticket.pdf";
+                        String fdqr = Integer.toString(getFanDataForQR());
+                        String fname = LoginUI.currFan.getFirstName();
+                        String lname = LoginUI.currFan.getLastName();
+                        String id = Integer.toString(LoginUI.currFan.getID());
+                        String mid = Integer.toString(currMatch.getMatchID());
 
 
-                    String temp3 ="\"" + outp + "\" \"" + fdqr + "\" \"" + fname + "\" \"" + lname + "\" \"" + id + "\" \"" + mid + "\"";
-                    System.out.println(temp3);
-                    Process ticket = Runtime.getRuntime().exec("python3 src/print_pdf.py " + temp3);
-                    ticket.waitFor();
+                        String temp3 ="\"" + outp + "\" \"" + fdqr + "\" \"" + fname + "\" \"" + lname + "\" \"" + id + "\" \"" + mid + "\"";
+                        System.out.println(temp3);
+                        Process ticket = Runtime.getRuntime().exec("python3 src/print_pdf.py " + temp3);
+                        ticket.waitFor();
 
-                    setVisible(false);
-                    dispose();
-                    JOptionPane.showMessageDialog(null, "Transaction Completed");
-                    new viewTicketDetails().setVisible(true);
-                } else {
-                    query = "insert into season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id,season_ticket_fan_pass_id) VALUES (?,?,?,?)";
-                    ps = connection.prepareStatement(query);
-                    ps.setInt(1, selectedID.get(0));
-                    ps.setInt(2, teamID);
-                    ps.setInt(3, stadiumID);
-                    ps.setInt(4, fanID);
-                    ps.executeUpdate();
-                    JOptionPane.showMessageDialog(null, "Transaction Completed");
+                        setVisible(false);
+                        dispose();
+                        JOptionPane.showMessageDialog(null, "Transaction Completed");
+                        new viewTicketDetails().setVisible(true);
+                    } else {
+                        query = "insert into season_tickets (season_ticket_seat_id,season_ticket_team_id,season_ticket_stadium_id,season_ticket_fan_pass_id) VALUES (?,?,?,?)";
+                        ps = connection.prepareStatement(query);
+                        ps.setInt(1, selectedID.get(0));
+                        ps.setInt(2, teamID);
+                        ps.setInt(3, stadiumID);
+                        ps.setInt(4, fanID);
+                        ps.executeUpdate();
+                        JOptionPane.showMessageDialog(null, "Transaction Completed");
+                    }
+                } catch (Exception ee) {
+                    JOptionPane.showMessageDialog(null, ee.getMessage());
                 }
-            } catch (Exception ee) {
-                JOptionPane.showMessageDialog(null, ee.getMessage());
-            }
 
-        }
-        else{
-            JOptionPane.showMessageDialog(null,"Cannot autofill with multiple tickets");
+            }
+            else{
+                JOptionPane.showMessageDialog(null,"Cannot autofill with multiple tickets");
+            }
+        } else if (n == JOptionPane.NO_OPTION) {
+           setVisible(false);
+           dispose();
+           new MainPage().setVisible(true);
         }
     }
 
