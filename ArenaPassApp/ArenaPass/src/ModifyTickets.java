@@ -6,18 +6,18 @@ public class ModifyTickets extends JFrame{
     private JButton logoutBtn;
     private JComboBox AdminMenuDropDown;
     private JTextField textField1;
-    private JTextField textField3;
-    private JTextField textField2;
     private JComboBox comboBox2;
+    private JTextField textField2;
+    private JTextField textField3;
     private JTextField textField4;
+    private JTextField SETAVAILABLETICKETSHOMETextField;
+    private JTextField textField5;
+    private JTextField textField6;
     private JButton EDITButton3;
     private JButton EDITButton2;
     private JButton EDITButton1;
-    private JTextField SETAVAILABLETICKETSHOMETextField;
     private JButton EDITButton;
-    private JTextField textField5;
     private JButton EDITButton4;
-    private JTextField textField6;
     private JButton EDITButton5;
 
 

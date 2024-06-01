@@ -53,6 +53,10 @@ public class RegisterUI extends JFrame {
         return true;
     }
 
+    private boolean notEmptyImages(){
+        return true;
+    }
+
     private int createFanID(){
         String query="SELECT MAX(fan_pass_id) from fans";
         Connection connection = null;
@@ -115,7 +119,7 @@ public class RegisterUI extends JFrame {
     }
 
     private void register(ActionEvent actionEvent) {
-        if(isNotEmpty()) {
+        if(isNotEmpty() && notEmptyImages()) {
             try {
                 String query = "INSERT INTO fans (`fan_username`, `fan_password`, `fan_legal_name`, `fan_legal_surname`, `fan_citizen_id_number`, `fan_citizen_id_expiration_date`, `fan_citizen_id_dob`, `fan_pass_id`, `fan_account_status`,  `fan_phone`, `fan_email`,`fan_address`,`fan_city`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, 3, ?, ?, ?, ?)";
                 Connection connection = ConnectDB.createConnection();
@@ -149,8 +153,10 @@ public class RegisterUI extends JFrame {
                 JOptionPane.showMessageDialog(null, "Register failed!");
                 e.printStackTrace();
             }
-        }else {
+        }else if (!isNotEmpty()) {
             JOptionPane.showMessageDialog(null, "Please fill all the fields!");
+        } else if (!notEmptyImages()){
+            JOptionPane.showMessageDialog(null, "Please upload all the images!");
         }
     }
 }
