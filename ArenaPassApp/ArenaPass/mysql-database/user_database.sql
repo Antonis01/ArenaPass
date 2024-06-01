@@ -397,6 +397,18 @@ END$
 
 DELIMITER ;
 
+DELIMITER $
+CREATE TRIGGER delete_ticket_reservation AFTER DELETE ON tickets 
+FOR EACH ROW 
+BEGIN
+
+    UPDATE reservations SET reservation_fan_pass_id = -1,reservation_ticket_number=-1,reservation_type='AVAILABLE',reservation_date_time=NOW(),reservation_ticket_type='NULL'
+    WHERE reservation_fan_pass_id=OLD.ticket_fan_pass_id AND reservation_match_id = OLD.ticket_match_id;
+
+END$
+
+DELIMITER ;
+
 
 
 DELIMITER $
